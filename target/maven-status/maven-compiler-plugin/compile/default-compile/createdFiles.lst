@@ -1,0 +1,8 @@
+Modelo\Alimento.class
+com\mycompany\gp1_nutricionista\GP1_Nutricionista.class
+Modelo\Paciente.class
+Modelo\Dieta.class
+Persistencia\PacienteData.class
+Modelo\MenuDiario.class
+Modelo\RenglonDeMenu.class
+Persistencia\Conexion.class
