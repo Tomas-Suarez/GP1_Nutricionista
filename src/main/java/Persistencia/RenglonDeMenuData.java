@@ -78,7 +78,7 @@ public class RenglonDeMenuData {
     }
     
     public RenglonDeMenu BuscarRenglon (int cod){
-        String sql = "SELECT * FROM paciente WHERE codRenglon = ?;";
+        String sql = "SELECT * FROM renglondemenu WHERE codRenglon = ?;";
         
         RenglonDeMenu ren = null;
         
@@ -101,22 +101,24 @@ public class RenglonDeMenuData {
             ali.setCodComida(rs.getInt("codComida"));
             ren.setAlimento(ali);
             men.setCodMenu(rs.getInt("codMenu"));
+            ren.setAlimento(ali);
+            ali.setCodComida(rs.getInt("codComida"));
             
             rs.close();
             ps.close();
             
             
             if (ren !=null){
-                 JOptionPane.showMessageDialog(null, "se encontro");
+                 JOptionPane.showMessageDialog(null, "se encontro el renglon");
             }else{
-                 JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar");
+                 JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el renglon");
             }
            
         }
             
             
         }catch(SQLException e) {
-             JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar al paciente!");
+             JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el renglon");
         }
         
        return ren; 
