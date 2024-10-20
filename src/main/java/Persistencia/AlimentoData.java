@@ -42,6 +42,7 @@ public class AlimentoData {
             if (rs.next()) {
                 alimento.setCodComida(rs.getInt(1));
             }
+            ps.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -66,6 +67,7 @@ public class AlimentoData {
                 );
                 lista.add(a);
             }
+            ps.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -89,6 +91,7 @@ public class AlimentoData {
                         rs.getBoolean("baja")
                 );
             }
+            ps.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -107,6 +110,7 @@ public class AlimentoData {
             ps.setBoolean(5, a.getBaja());
             ps.setInt(6, a.getCodComida());
             r = ps.executeUpdate();
+            ps.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
@@ -119,6 +123,7 @@ public class AlimentoData {
             var sql = "delete from alimento where codComida = ?";
             var ps = connection.prepareStatement(sql);
             r = ps.executeUpdate();
+            ps.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
