@@ -15,6 +15,7 @@ public class AlimentoData {
 
     private Connection connection;
     private static AlimentoData object = null;
+    private static String[] tbHeader = new String[]{"codComida", "nombre", "tipoComida", "caloriasPor100g", "detalle", "baja"};
 
     private AlimentoData() {
         this.connection = Conexion.getConexion();
@@ -32,7 +33,7 @@ public class AlimentoData {
             var sql = """
                   insert into alimento(nombre,	tipoComida, caloriasPor100g, detalle, baja) 
                   values(?, ?, ?, ?, ?) returning codComida;""";
-            var ps = connection.prepareStatement(sql, new String[]{"codComida", "nombre", "tipoComida", "caloriasPor100g", "detalle", "baja"});
+            var ps = connection.prepareStatement(sql, tbHeader);
             ps.setString(1, alimento.getNombre());
             ps.setString(2, alimento.getTipoComida());
             ps.setInt(3, alimento.getCaloriasPor100g());
@@ -44,12 +45,13 @@ public class AlimentoData {
             }
             ps.close();
         } catch (Exception ex) {
+            System.out.println("error guardando alimento");
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return alimento;
     }
 
-    public List<Alimento> listarAlimentos() throws SQLException {
+    public List<Alimento> listarAlimentos() {
         List<Alimento> lista = new ArrayList<>();
         try {
             var sql = "select * from alimento";
@@ -69,17 +71,19 @@ public class AlimentoData {
             }
             ps.close();
         } catch (Exception ex) {
+            System.out.println("error listando alimentos");
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return lista;
     }
 
-    public Alimento getAlimentById() {
+    public Alimento getAlimentById(int id) {
         Alimento a = null;
         try {
-            var sql = "select * from alimento where alimento.codComida = ?";
-            var ps = connection.prepareStatement(sql);
-            var rs = ps.executeQuery(sql);
+            var sql = "select * from alimento where codComida = ?;";
+            var ps = connection.prepareStatement(sql, tbHeader);
+            ps.setInt(1, id);
+            var rs = ps.executeQuery();
 
             while (rs.next()) {
                 a = new Alimento(
@@ -93,12 +97,13 @@ public class AlimentoData {
             }
             ps.close();
         } catch (Exception ex) {
+            System.out.println("error obteniendo aliment");
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return a;
     }
 
-    public boolean actualizarAlimento(Alimento a) throws SQLException {
+    public boolean actualizarAlimento(Alimento a) {
         int r = 0;
         try {
             var sql = "UPDATE alimento SET nombre=?, tipoComida=?, caloriasPor100g=?,detalle=?,baja=? WHERE codComida = ?";
@@ -112,19 +117,22 @@ public class AlimentoData {
             r = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
+            System.out.println("error actualizando aliment");
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return r == 1;
     }
 
-    public boolean remove(int codComida) throws SQLException {
+    public boolean remove(int codComida) {
         var r = 0;
         try {
             var sql = "delete from alimento where codComida = ?";
             var ps = connection.prepareStatement(sql);
+            ps.setInt(1, codComida);
             r = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {
+            System.out.println("error removiendo");
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return r == 1;

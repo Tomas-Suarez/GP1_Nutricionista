@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.Objects;
+
 
 public class Alimento {
     private int codComida;
@@ -76,6 +78,29 @@ public class Alimento {
     public void setBaja(Boolean baja) {
         this.baja = baja;
     }
+
+    @Override
+    public String toString() {
+        return "Alimento{" + "codComida=" + codComida + ", nombre=" + nombre + ", tipoComida=" + tipoComida + ", caloriasPor100g=" + caloriasPor100g + ", detalle=" + detalle + ", baja=" + baja + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + this.codComida;
+        hash = 83 * hash + Objects.hashCode(this.nombre);
+        hash = 83 * hash + Objects.hashCode(this.tipoComida);
+        hash = 83 * hash + this.caloriasPor100g;
+        hash = 83 * hash + Objects.hashCode(this.detalle);
+        hash = 83 * hash + Objects.hashCode(this.baja);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.hashCode() == obj.hashCode();
+    }
+    
     
     //public List<Alimento> filtrarxIngred(Alimento a){
         
