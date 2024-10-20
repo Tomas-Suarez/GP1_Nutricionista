@@ -8,7 +8,7 @@ public class MenuDiario {
     private int codMenu;
     private int dia;
     private List<RenglonDeMenu> comidas;
-    private boolean bajar;
+    private boolean baja;
     private int caloriasDelMenu;
     private Dieta dieta;
 
@@ -16,7 +16,7 @@ public class MenuDiario {
         this.codMenu = codMenu;
         this.dia = dia;
         this.comidas = comidas;
-        this.bajar = bajar;
+        this.baja = bajar;
         this.caloriasDelMenu = caloriasDelMenu;
         this.dieta = dieta;
     }
@@ -24,7 +24,7 @@ public class MenuDiario {
     public MenuDiario(int dia, List<RenglonDeMenu> comidas, boolean bajar, int caloriasDelMenu, Dieta dieta) {
         this.dia = dia;
         this.comidas = comidas;
-        this.bajar = bajar;
+        this.baja = bajar;
         this.caloriasDelMenu = caloriasDelMenu;
         this.dieta = dieta;
     }
@@ -56,12 +56,12 @@ public class MenuDiario {
         this.comidas = comidas;
     }
 
-    public boolean isBajar() {
-        return bajar;
+    public boolean isBaja() {
+        return baja;
     }
 
-    public void setBajar(boolean bajar) {
-        this.bajar = bajar;
+    public void setBaja(boolean bajar) {
+        this.baja = bajar;
     }
 
     public int getCaloriasDelMenu() {
