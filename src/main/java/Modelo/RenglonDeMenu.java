@@ -5,12 +5,14 @@ public class RenglonDeMenu {
     private double cantidadGrs;
     private int subTotalCalorias;
     private Alimento alimento;
+    private MenuDiario menu;
 
-    public RenglonDeMenu(int codRenglon, double cantidadGrs, int subTotalCalorias, Alimento alimento) {
+    public RenglonDeMenu(int codRenglon, double cantidadGrs, int subTotalCalorias, Alimento alimento,MenuDiario menu) {
         this.codRenglon = codRenglon;
         this.cantidadGrs = cantidadGrs;
         this.subTotalCalorias = subTotalCalorias;
         this.alimento = alimento;
+        this.menu = menu;
     }
 
     public RenglonDeMenu(double cantidadGrs, int subTotalCalorias, Alimento alimento) {
@@ -53,6 +55,16 @@ public class RenglonDeMenu {
     public void setAlimento(Alimento alimento) {
         this.alimento = alimento;
     }
+
+    public MenuDiario getMenu() {
+        return menu;
+    }
+
+    public void setMenu(MenuDiario menu) {
+        this.menu = menu;
+    }
+    
+    
     
     public void modificarRenglon(){
         
@@ -65,6 +77,7 @@ public class RenglonDeMenu {
     public void addAlimento(Alimento alimento){
         
     }
+    
     
     
 }
