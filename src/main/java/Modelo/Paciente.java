@@ -88,6 +88,21 @@ public class Paciente {
         this.baja = baja;
     }
 
+    public void cambiarPeso(){
+        
+    }
     
+    public void actualizarPesoAct(){
+        
+    }
+    
+    //public boolean seAcercaAlPeso(Dieta dieta){
+        
+        
+    //}
+    
+    //public List<Paciente> listarLosQueLlegaron(){
+        
+    //}
     
 }

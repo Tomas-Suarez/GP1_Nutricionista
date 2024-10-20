@@ -114,7 +114,12 @@ public class Dieta {
         this.paciente = paciente;
     }
     
+    public void cargarPesoyFinalizar(float peso){
+        
+    }
     
-    
+    public void imprimirDieta(){
+        
+    }    
 }
     

@@ -54,7 +54,17 @@ public class RenglonDeMenu {
         this.alimento = alimento;
     }
     
+    public void modificarRenglon(){
+        
+    }
     
+    public void imprimirRenglon(){
+        
+    }
+    
+    public void addAlimento(Alimento alimento){
+        
+    }
     
     
 }

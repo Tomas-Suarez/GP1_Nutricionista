@@ -77,5 +77,21 @@ public class Alimento {
         this.baja = baja;
     }
     
+    //public List<Alimento> filtrarxIngred(Alimento a){
+        
+    //}
+    
+    //public String filtrarNombre(Alimento a){
+        
+    //}
+    
+    //public int filtrarxCalorias100(Alimento a){
+        
+    //}
+    
+    public void modificarAlimento(Alimento alimento){
+        
+    }
+    
     
 }

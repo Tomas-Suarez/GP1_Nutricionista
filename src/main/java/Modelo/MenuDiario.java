@@ -80,4 +80,23 @@ public class MenuDiario {
         this.dieta = dieta;
     }
     
+    public void alterarMenuDiaria(){
+        
+    }
+    
+   // public MenuDiario generarMenuDiario(){
+        
+    //}
+    
+    //public MenuDiario armarMenuDiaria(){
+        
+    //}
+    
+    //public MenuDiario armarMenuDiario(){
+        
+    //}
+    
+    public void addRenglon(RenglonDeMenu menu){
+        
+    }
 }
