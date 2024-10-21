@@ -14,9 +14,17 @@ import javax.swing.JOptionPane;
 
 public class MenuDiarioData {
     private Connection con = null;
+    private static MenuDiario object = null;
 
     public MenuDiarioData() {
         con = Conexion.getConexion();
+    }
+    
+    public static MenuDiario getRepo() {
+        if (object == null) {
+            object = new MenuDiario();
+        }
+        return object;
     }
     
     public void agregarMenuDiario(MenuDiario menu){
@@ -79,17 +87,22 @@ public class MenuDiarioData {
             
             while(rs.next()){
                 MenuDiario menu = new MenuDiario();
+                Dieta dieta = new Dieta();
                 
                 menu.setCodMenu(rs.getInt("codMenu"));
                 menu.setDia(rs.getInt("dia"));
                 menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
-                menu.setComidas(new ArrayList<>());
+                int codDieta = rs.getInt("codDieta");
+                dieta.setCodDieta(codDieta);
+                menu.setBaja(rs.getBoolean("baja"));
+
                 
                 ListarMenuDiarioSinBaja.add(menu);
             }
             
         }catch(SQLException e){
-            
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al mostrar Menu Diario");
+
         }
         return ListarMenuDiarioSinBaja;
     }
@@ -106,16 +119,21 @@ public class MenuDiarioData {
             
             while(rs.next()){
                 MenuDiario menu = new MenuDiario();
+                Dieta dieta = new Dieta();
                 
                 menu.setCodMenu(rs.getInt("codMenu"));
                 menu.setDia(rs.getInt("dia"));
                 menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
+                int codDieta = rs.getInt("codDieta");
+                dieta.setCodDieta(codDieta);
+                menu.setBaja(rs.getBoolean("baja"));
+
                 
                 ListarMenuDiarioBaja.add(menu);
             }
             
         }catch(SQLException e){
-            
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al mostrar Menu Diario");
         }
         return ListarMenuDiarioBaja;
     }

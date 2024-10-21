@@ -2,6 +2,7 @@ package Modelo;
 
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class MenuDiario {
@@ -79,6 +80,44 @@ public class MenuDiario {
     public void setDieta(Dieta dieta) {
         this.dieta = dieta;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MenuDiario other = (MenuDiario) obj;
+        if (this.codMenu != other.codMenu) {
+            return false;
+        }
+        if (this.dia != other.dia) {
+            return false;
+        }
+        if (this.baja != other.baja) {
+            return false;
+        }
+        if (this.caloriasDelMenu != other.caloriasDelMenu) {
+            return false;
+        }
+        if (!Objects.equals(this.comidas, other.comidas)) {
+            return false;
+        }
+        return Objects.equals(this.dieta, other.dieta);
+    }
+    
+    
     
     public void alterarMenuDiaria(){
         
