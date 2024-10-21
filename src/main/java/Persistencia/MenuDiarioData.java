@@ -34,7 +34,7 @@ public class MenuDiarioData {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, menu.getDia());
             ps.setInt(2, menu.getCaloriasDelMenu());
-            ps.setInt(3, menu.getDieta().getCodDieta());
+            //ps.setInt(3, menu.getDieta().getCodDieta());
             ps.setBoolean(4, menu.isBaja());
             
             //Ejecutamos la actualización
@@ -66,8 +66,13 @@ public class MenuDiarioData {
             ps.setInt(1, menu.getDia());
             ps.setInt(2, menu.getCaloriasDelMenu());
             ps.setBoolean(3, menu.isBaja());
-            ps.setInt(4, menu.getDieta().getCodDieta());
+            //ps.setInt(4, menu.getDieta().getCodDieta());
             ps.setInt(5, menu.getCodMenu());
+            
+            ps.executeUpdate();
+
+            
+            JOptionPane.showMessageDialog(null, "El menu diario fue modificado correctamente!");
             
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar al Menu diario");
@@ -159,7 +164,7 @@ public class MenuDiarioData {
                 menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
                 int codDieta = rs.getInt("codDieta");
                 dieta.setCodDieta(codDieta);
-                menu.setDieta(dieta);    
+                //menu.setDieta(dieta);    
             }
             
             if(menu != null){

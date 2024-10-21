@@ -98,6 +98,9 @@ public class PacienteData {
         ps.setFloat(5, paciente.getPesoBuscado());
         ps.setBoolean(6, paciente.isBaja());
         ps.setInt(7, paciente.getNroPaciente());
+        
+        ps.executeUpdate();
+        
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el paciente!");
         }

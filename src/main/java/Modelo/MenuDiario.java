@@ -11,23 +11,23 @@ public class MenuDiario {
     private List<RenglonDeMenu> comidas;
     private boolean baja;
     private int caloriasDelMenu;
-    private Dieta dieta;
+    private String tipo;
 
-    public MenuDiario(int codMenu, int dia, List<RenglonDeMenu> comidas, boolean bajar, int caloriasDelMenu, Dieta dieta) {
+    public MenuDiario(int codMenu, int dia, List<RenglonDeMenu> comidas, boolean baja, int caloriasDelMenu, String tipo) {
         this.codMenu = codMenu;
         this.dia = dia;
         this.comidas = comidas;
-        this.baja = bajar;
+        this.baja = baja;
         this.caloriasDelMenu = caloriasDelMenu;
-        this.dieta = dieta;
+        this.tipo = tipo;
     }
 
-    public MenuDiario(int dia, List<RenglonDeMenu> comidas, boolean bajar, int caloriasDelMenu, Dieta dieta) {
+    public MenuDiario(int dia, List<RenglonDeMenu> comidas, boolean baja, int caloriasDelMenu, String tipo) {
         this.dia = dia;
         this.comidas = comidas;
-        this.baja = bajar;
+        this.baja = baja;
         this.caloriasDelMenu = caloriasDelMenu;
-        this.dieta = dieta;
+        this.tipo = tipo;
     }
 
     public MenuDiario() {
@@ -73,17 +73,23 @@ public class MenuDiario {
         this.caloriasDelMenu = caloriasDelMenu;
     }
 
-    public Dieta getDieta() {
-        return dieta;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setDieta(Dieta dieta) {
-        this.dieta = dieta;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
+        hash = 89 * hash + this.codMenu;
+        hash = 89 * hash + this.dia;
+        hash = 89 * hash + Objects.hashCode(this.comidas);
+        hash = 89 * hash + (this.baja ? 1 : 0);
+        hash = 89 * hash + this.caloriasDelMenu;
+        hash = 89 * hash + Objects.hashCode(this.tipo);
         return hash;
     }
 
@@ -111,10 +117,10 @@ public class MenuDiario {
         if (this.caloriasDelMenu != other.caloriasDelMenu) {
             return false;
         }
-        if (!Objects.equals(this.comidas, other.comidas)) {
+        if (!Objects.equals(this.tipo, other.tipo)) {
             return false;
         }
-        return Objects.equals(this.dieta, other.dieta);
+        return Objects.equals(this.comidas, other.comidas);
     }
     
     
