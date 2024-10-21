@@ -12,28 +12,31 @@ public class Dieta {
     private LocalDate fechaInicio;
     private LocalDate fechaFinal;
     private float pesoInicial;
+    private float pesoFinal;
     private Boolean baja;
     private int TotalCalorias;
     private Paciente paciente;
 
-    public Dieta(int codDieta, String nombre, List<MenuDiario> Menus, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, Boolean baja, int TotalCalorias, Paciente paciente) {
+    public Dieta(int codDieta, String nombre, List<MenuDiario> Menus, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.codDieta = codDieta;
         this.nombre = nombre;
         this.Menus = Menus;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.pesoInicial = pesoInicial;
+        this.pesoFinal = pesoFinal;
         this.baja = baja;
         this.TotalCalorias = TotalCalorias;
         this.paciente = paciente;
     }
 
-    public Dieta(String nombre, List<MenuDiario> Menus, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, Boolean baja, int TotalCalorias, Paciente paciente) {
+    public Dieta(String nombre, List<MenuDiario> Menus, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.nombre = nombre;
         this.Menus = Menus;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.pesoInicial = pesoInicial;
+        this.pesoFinal = pesoFinal;
         this.baja = baja;
         this.TotalCalorias = TotalCalorias;
         this.paciente = paciente;
@@ -113,6 +116,16 @@ public class Dieta {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
+    public float getPesoFinal() {
+        return pesoFinal;
+    }
+
+    public void setPesoFinal(float pesoFinal) {
+        this.pesoFinal = pesoFinal;
+    }
+    
+    
     
     public void cargarPesoyFinalizar(float peso){
         

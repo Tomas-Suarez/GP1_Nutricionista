@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 public class MenuDiarioData {
     private Connection con = null;
     private static MenuDiario object = null;
+    private Dieta dieta;
 
     public MenuDiarioData() {
         con = Conexion.getConexion();
