@@ -19,7 +19,7 @@ public class GP1_Nutricionista {
 
     public static void main(String[] args) throws SQLException {
         // testAlimentoData();
-        testMenuDiario();
+        //testMenuDiario();
         //testPaciente();
     }
 
@@ -38,7 +38,7 @@ public class GP1_Nutricionista {
         repoAlimentos.remove(alimento.getCodComida());
     }
 
-    public static void testMenuDiario() throws SQLException {
+    public static void testMenuDiario() throws SQLException { //falta el codDieta
         MenuDiarioData menuData = new MenuDiarioData();
 
         Dieta dieta = new Dieta();
@@ -79,7 +79,7 @@ public class GP1_Nutricionista {
         PacienteData pacData = new PacienteData();
 
         // Creamos un paciente y lo agregamos
-        Paciente nuevoPaciente = new Paciente("Jepeto", 20, 176, 60, false);
+        //Paciente nuevoPaciente = new Paciente("Jepeto", 20, 176, 60, false);ver
         //pacData.agregarPaciente(nuevoPaciente);
 
         // Modificamos los datos del paciente
@@ -89,6 +89,7 @@ public class GP1_Nutricionista {
         pacienteModificado.setEdad(17);
         pacienteModificado.setAltura(176);
         pacienteModificado.setBaja(true);
+        //Falta peso actual
 
         pacData.modificarPaciente(pacienteModificado);
         List<Paciente> pacientesActivos = pacData.ListarPacienteActivos();

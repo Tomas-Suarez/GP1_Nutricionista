@@ -3,24 +3,29 @@ package Modelo;
 public class RenglonDeMenu {
 
     private int codRenglon;
-    private double cantidadGrs;
+    private float cantidadGrs;
     private int subTotalCalorias;
     private Alimento alimento;
     private MenuDiario menu;
+    private String horario; //Desayuno, almuerzo, merienda, cena
 
-    public RenglonDeMenu(int codRenglon, double cantidadGrs, int subTotalCalorias, Alimento alimento, MenuDiario menu) {
+    public RenglonDeMenu(int codRenglon, float cantidadGrs, int subTotalCalorias, Alimento alimento, MenuDiario menu, String horario) {
         this.codRenglon = codRenglon;
         this.cantidadGrs = cantidadGrs;
         this.subTotalCalorias = subTotalCalorias;
         this.alimento = alimento;
         this.menu = menu;
+        this.horario = horario;
     }
 
-    public RenglonDeMenu(double cantidadGrs, int subTotalCalorias, Alimento alimento) {
+    public RenglonDeMenu(float cantidadGrs, int subTotalCalorias, Alimento alimento, MenuDiario menu, String horario) {
         this.cantidadGrs = cantidadGrs;
         this.subTotalCalorias = subTotalCalorias;
         this.alimento = alimento;
+        this.menu = menu;
+        this.horario = horario;
     }
+
 
     public RenglonDeMenu() {
     }
@@ -33,11 +38,11 @@ public class RenglonDeMenu {
         this.codRenglon = codRenglon;
     }
 
-    public double getCantidadGrs() {
+    public float getCantidadGrs() {
         return cantidadGrs;
     }
 
-    public void setCantidadGrs(double cantidadGrs) {
+    public void setCantidadGrs(float cantidadGrs) {
         this.cantidadGrs = cantidadGrs;
     }
 
@@ -64,6 +69,16 @@ public class RenglonDeMenu {
     public void setMenu(MenuDiario menu) {
         this.menu = menu;
     }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+
 
     public void modificarRenglon() {
 

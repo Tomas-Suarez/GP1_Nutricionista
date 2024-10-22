@@ -6,30 +6,13 @@ import java.util.Objects;
 public class Paciente {
     private int nroPaciente;
     private String nombre;
+    private int dni;
     private int edad;
     private float altura;
-    private float pesoBuscado;
+    private float pesoActual;
     private boolean baja;
 
-    public Paciente(int nroPaciente, String nombre, int edad, float altura, float pesoBuscado, boolean baja) {
-        this.nroPaciente = nroPaciente;
-        this.nombre = nombre;
-        this.edad = edad;
-        this.altura = altura;
-        this.pesoBuscado = pesoBuscado;
-        this.baja = baja;
-    }
 
-    public Paciente(String nombre, int edad, float altura, float pesoBuscado, boolean baja) {
-        this.nombre = nombre;
-        this.edad = edad;
-        this.altura = altura;
-        this.pesoBuscado = pesoBuscado;
-        this.baja = baja;
-    }
-
-    public Paciente() {
-    }
 
     
 
@@ -65,14 +48,6 @@ public class Paciente {
         this.altura = altura;
     }
 
-    public float getPesoBuscado() {
-        return pesoBuscado;
-    }
-
-    public void setPesoBuscado(float pesoBuscado) {
-        this.pesoBuscado = pesoBuscado;
-    }
-
     public boolean isBaja() {
         return baja;
     }
@@ -84,12 +59,12 @@ public class Paciente {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + this.nroPaciente;
-        hash = 53 * hash + Objects.hashCode(this.nombre);
-        hash = 53 * hash + this.edad;
-        hash = 53 * hash + Float.floatToIntBits(this.altura);
-        hash = 53 * hash + Float.floatToIntBits(this.pesoBuscado);
-        hash = 53 * hash + (this.baja ? 1 : 0);
+        hash = 19 * hash + this.nroPaciente;
+        hash = 19 * hash + Objects.hashCode(this.nombre);
+        hash = 19 * hash + this.edad;
+        hash = 19 * hash + Float.floatToIntBits(this.altura);
+        hash = 19 * hash + (this.baja ? 1 : 0);
+        hash = 19 * hash + this.dni;
         return hash;
     }
 
@@ -114,14 +89,15 @@ public class Paciente {
         if (Float.floatToIntBits(this.altura) != Float.floatToIntBits(other.altura)) {
             return false;
         }
-        if (Float.floatToIntBits(this.pesoBuscado) != Float.floatToIntBits(other.pesoBuscado)) {
+        if (this.baja != other.baja) {
             return false;
         }
-        if (this.baja != other.baja) {
+        if (this.dni != other.dni) {
             return false;
         }
         return Objects.equals(this.nombre, other.nombre);
     }
+
 
     
     

@@ -33,7 +33,7 @@ public class PacienteData {
         ps.setString(1, paciente.getNombre());
         ps.setInt(2, paciente.getEdad());
         ps.setFloat(3, paciente.getAltura());
-        ps.setFloat(4, paciente.getPesoBuscado());
+        //ps.setFloat(4, paciente.getPesoBuscado());
         ps.setBoolean(5, paciente.isBaja());
         
         // Ejecutar la actualización
@@ -73,7 +73,7 @@ public class PacienteData {
             paciente.setNombre(rs.getString("nombre"));
             paciente.setEdad(rs.getInt("edad"));
             paciente.setAltura(rs.getFloat("altura"));
-            paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
+            //paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
             paciente.setBaja(rs.getBoolean("baja"));
             }
             
@@ -100,7 +100,7 @@ public class PacienteData {
         ps.setString(1, paciente.getNombre());
         ps.setInt(2, paciente.getEdad());
         ps.setFloat(3, paciente.getAltura());
-        ps.setFloat(4, paciente.getPesoBuscado());
+        //ps.setFloat(4, paciente.getPesoBuscado());
         ps.setBoolean(5, paciente.isBaja());
         ps.setInt(6, paciente.getNroPaciente());
         
@@ -128,7 +128,7 @@ public class PacienteData {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setEdad(rs.getInt("edad"));
                 paciente.setAltura(rs.getFloat("altura"));
-                paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
+                //paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
                 paciente.setBaja(rs.getBoolean("baja"));
                 
                 listarPaciente.add(paciente);
@@ -157,7 +157,7 @@ public class PacienteData {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setEdad(rs.getInt("edad"));
                 paciente.setAltura(rs.getFloat("altura"));
-                paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
+                //paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
                 paciente.setBaja(rs.getBoolean("baja"));
                 
                 listarPaciente.add(paciente);

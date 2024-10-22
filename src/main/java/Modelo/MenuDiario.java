@@ -12,25 +12,29 @@ public class MenuDiario {
     private boolean baja;
     private int caloriasDelMenu;
     private String tipo;
-    private Dieta dieta;
+    private Dieta dieta; //Para el codigo
 
-    public MenuDiario(int codMenu, int dia, boolean baja, int caloriasDelMenu, String tipo) {
+    public MenuDiario(int codMenu, int dia, boolean baja, int caloriasDelMenu, String tipo, Dieta dieta) {
         this.codMenu = codMenu;
         this.dia = dia;
         this.baja = baja;
         this.caloriasDelMenu = caloriasDelMenu;
         this.tipo = tipo;
+        this.dieta = dieta;
     }
 
-    public MenuDiario(int dia, boolean baja, int caloriasDelMenu, String tipo) {
+    public MenuDiario(int dia, boolean baja, int caloriasDelMenu, String tipo, Dieta dieta) {
         this.dia = dia;
         this.baja = baja;
         this.caloriasDelMenu = caloriasDelMenu;
         this.tipo = tipo;
+        this.dieta = dieta;
     }
 
     public MenuDiario() {
     }
+
+    
 
     public int getCodMenu() {
         return codMenu;

@@ -87,7 +87,7 @@ public class RenglonDeMenuData {
                 men = new MenuDiario();
 
                 ren.setCodRenglon(rs.getInt("codRenglon"));
-                ren.setCantidadGrs(rs.getDouble("cantidadGrs"));
+                ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
                 ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
                 ali.setCodComida(rs.getInt("codComida"));
                 ren.setAlimento(ali);
@@ -148,7 +148,7 @@ public class RenglonDeMenuData {
                 men = new MenuDiario();
 
                 ren.setCodRenglon(rs.getInt("codRenglon"));
-                ren.setCantidadGrs(rs.getDouble("cantidadGrs"));
+                ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
                 ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
                 ali.setCodComida(rs.getInt("codComida"));
                 ren.setAlimento(ali);
