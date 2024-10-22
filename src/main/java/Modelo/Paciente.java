@@ -1,36 +1,37 @@
 package Modelo;
 
+import java.util.Objects;
+
 
 public class Paciente {
     private int nroPaciente;
     private String nombre;
     private int edad;
     private float altura;
-    private float pesoActual;
     private float pesoBuscado;
     private boolean baja;
 
-    public Paciente(int nroPaciente, String nombre, int edad, float altura, float pesoActual, float pesoBuscado, boolean baja) {
+    public Paciente(int nroPaciente, String nombre, int edad, float altura, float pesoBuscado, boolean baja) {
         this.nroPaciente = nroPaciente;
         this.nombre = nombre;
         this.edad = edad;
         this.altura = altura;
-        this.pesoActual = pesoActual;
         this.pesoBuscado = pesoBuscado;
         this.baja = baja;
     }
 
-    public Paciente(String nombre, int edad, float altura, float pesoActual, float pesoBuscado, boolean baja) {
+    public Paciente(String nombre, int edad, float altura, float pesoBuscado, boolean baja) {
         this.nombre = nombre;
         this.edad = edad;
         this.altura = altura;
-        this.pesoActual = pesoActual;
         this.pesoBuscado = pesoBuscado;
         this.baja = baja;
     }
 
     public Paciente() {
     }
+
+    
 
     public int getNroPaciente() {
         return nroPaciente;
@@ -64,14 +65,6 @@ public class Paciente {
         this.altura = altura;
     }
 
-    public float getPesoActual() {
-        return pesoActual;
-    }
-
-    public void setPesoActual(float pesoActual) {
-        this.pesoActual = pesoActual;
-    }
-
     public float getPesoBuscado() {
         return pesoBuscado;
     }
@@ -88,6 +81,50 @@ public class Paciente {
         this.baja = baja;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.nroPaciente;
+        hash = 53 * hash + Objects.hashCode(this.nombre);
+        hash = 53 * hash + this.edad;
+        hash = 53 * hash + Float.floatToIntBits(this.altura);
+        hash = 53 * hash + Float.floatToIntBits(this.pesoBuscado);
+        hash = 53 * hash + (this.baja ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Paciente other = (Paciente) obj;
+        if (this.nroPaciente != other.nroPaciente) {
+            return false;
+        }
+        if (this.edad != other.edad) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.altura) != Float.floatToIntBits(other.altura)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.pesoBuscado) != Float.floatToIntBits(other.pesoBuscado)) {
+            return false;
+        }
+        if (this.baja != other.baja) {
+            return false;
+        }
+        return Objects.equals(this.nombre, other.nombre);
+    }
+
+    
+    
     public void cambiarPeso(){
         
     }

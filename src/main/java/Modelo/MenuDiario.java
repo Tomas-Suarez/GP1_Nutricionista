@@ -12,19 +12,18 @@ public class MenuDiario {
     private boolean baja;
     private int caloriasDelMenu;
     private String tipo;
+    private Dieta dieta;
 
-    public MenuDiario(int codMenu, int dia, List<RenglonDeMenu> comidas, boolean baja, int caloriasDelMenu, String tipo) {
+    public MenuDiario(int codMenu, int dia, boolean baja, int caloriasDelMenu, String tipo) {
         this.codMenu = codMenu;
         this.dia = dia;
-        this.comidas = comidas;
         this.baja = baja;
         this.caloriasDelMenu = caloriasDelMenu;
         this.tipo = tipo;
     }
 
-    public MenuDiario(int dia, List<RenglonDeMenu> comidas, boolean baja, int caloriasDelMenu, String tipo) {
+    public MenuDiario(int dia, boolean baja, int caloriasDelMenu, String tipo) {
         this.dia = dia;
-        this.comidas = comidas;
         this.baja = baja;
         this.caloriasDelMenu = caloriasDelMenu;
         this.tipo = tipo;

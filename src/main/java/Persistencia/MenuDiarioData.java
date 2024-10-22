@@ -29,13 +29,13 @@ public class MenuDiarioData {
     }
     
     public void agregarMenuDiario(MenuDiario menu){
-        String sql = "INSERT INTO MenuDiario(dia, caloriasdelMenu, codDieta, baja) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO menudiario(dia, caloriasdelMenu, codDieta, baja) VALUES (?, ?, ?, ?)";
         
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, menu.getDia());
             ps.setInt(2, menu.getCaloriasDelMenu());
-            //ps.setInt(3, menu.getDieta().getCodDieta());
+            ps.setInt(3, dieta.getCodDieta());
             ps.setBoolean(4, menu.isBaja());
             
             //Ejecutamos la actualización
@@ -67,7 +67,7 @@ public class MenuDiarioData {
             ps.setInt(1, menu.getDia());
             ps.setInt(2, menu.getCaloriasDelMenu());
             ps.setBoolean(3, menu.isBaja());
-            //ps.setInt(4, menu.getDieta().getCodDieta());
+            ps.setInt(4, dieta.getCodDieta());
             ps.setInt(5, menu.getCodMenu());
             
             ps.executeUpdate();
@@ -93,7 +93,6 @@ public class MenuDiarioData {
             
             while(rs.next()){
                 MenuDiario menu = new MenuDiario();
-                Dieta dieta = new Dieta();
                 
                 menu.setCodMenu(rs.getInt("codMenu"));
                 menu.setDia(rs.getInt("dia"));
@@ -125,7 +124,6 @@ public class MenuDiarioData {
             
             while(rs.next()){
                 MenuDiario menu = new MenuDiario();
-                Dieta dieta = new Dieta();
                 
                 menu.setCodMenu(rs.getInt("codMenu"));
                 menu.setDia(rs.getInt("dia"));
@@ -148,7 +146,6 @@ public class MenuDiarioData {
         String sql = "SELECT * FROM MenuDiario WHERE codMenu = ?";
         
         MenuDiario menu = null;
-        Dieta dieta = null;
         
         try{
             PreparedStatement ps = con.prepareStatement(sql);
@@ -158,14 +155,12 @@ public class MenuDiarioData {
             
             if(rs.next()){
                 menu = new MenuDiario();
-                dieta = new Dieta();
                 
                 menu.setCodMenu(rs.getInt("codMenu"));
                 menu.setDia(rs.getInt("dia"));
                 menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
                 int codDieta = rs.getInt("codDieta");
                 dieta.setCodDieta(codDieta);
-                //menu.setDieta(dieta);    
             }
             
             if(menu != null){

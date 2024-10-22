@@ -12,22 +12,29 @@ import javax.swing.JOptionPane;
 
 public class PacienteData {
     private Connection con = null;
-
+    private static Paciente object = null;
+    
     public PacienteData() {
     con = Conexion.getConexion();
     }
     
+    public static Paciente getRepo() {
+        if (object == null) {
+            object = new Paciente();
+        }
+        return object;
+    }
+    
     public void agregarPaciente(Paciente paciente) throws SQLException{
-        String sql = "INSERT INTO paciente(nombre, edad, altura, pesoActual, pesoBuscado, baja) VALUES (?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO paciente(nombre, edad, altura, pesoBuscado, baja) VALUES (?, ?, ?, ?, ?);";
      
         try{
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, paciente.getNombre());
         ps.setInt(2, paciente.getEdad());
         ps.setFloat(3, paciente.getAltura());
-        ps.setFloat(4, paciente.getPesoActual());
-        ps.setFloat(5, paciente.getPesoBuscado());
-        ps.setBoolean(6, paciente.isBaja());
+        ps.setFloat(4, paciente.getPesoBuscado());
+        ps.setBoolean(5, paciente.isBaja());
         
         // Ejecutar la actualización
         ps.executeUpdate();
@@ -66,7 +73,6 @@ public class PacienteData {
             paciente.setNombre(rs.getString("nombre"));
             paciente.setEdad(rs.getInt("edad"));
             paciente.setAltura(rs.getFloat("altura"));
-            paciente.setPesoActual(rs.getFloat("pesoActual"));
             paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
             paciente.setBaja(rs.getBoolean("baja"));
             }
@@ -86,7 +92,7 @@ public class PacienteData {
     }
     
     public void modificarPaciente(Paciente paciente) throws SQLException{
-        String sql = "UPDATE paciente SET nombre = ?, edad = ?, altura = ?, pesoActual = ?, pesoBuscado = ?, baja = ? WHERE nroPaciente = ?;";
+        String sql = "UPDATE paciente SET nombre = ?, edad = ?, altura = ?, pesoBuscado = ?, baja = ? WHERE nroPaciente = ?;";
         
         PreparedStatement ps = con.prepareStatement(sql);
         
@@ -94,10 +100,9 @@ public class PacienteData {
         ps.setString(1, paciente.getNombre());
         ps.setInt(2, paciente.getEdad());
         ps.setFloat(3, paciente.getAltura());
-        ps.setFloat(4, paciente.getPesoActual());
-        ps.setFloat(5, paciente.getPesoBuscado());
-        ps.setBoolean(6, paciente.isBaja());
-        ps.setInt(7, paciente.getNroPaciente());
+        ps.setFloat(4, paciente.getPesoBuscado());
+        ps.setBoolean(5, paciente.isBaja());
+        ps.setInt(6, paciente.getNroPaciente());
         
         ps.executeUpdate();
         
@@ -107,10 +112,10 @@ public class PacienteData {
         
     }
     
-    public List<Paciente> ListarPaciente(){
+    public List<Paciente> ListarPacienteActivos(){
         ArrayList<Paciente> listarPaciente = new ArrayList<>();
         
-        String sql = "SELECT * FROM paciente";
+        String sql = "SELECT * FROM paciente WHERE baja = false;";
 
         try{
             PreparedStatement ps = con.prepareStatement(sql);
@@ -123,7 +128,35 @@ public class PacienteData {
                 paciente.setNombre(rs.getString("nombre"));
                 paciente.setEdad(rs.getInt("edad"));
                 paciente.setAltura(rs.getFloat("altura"));
-                paciente.setPesoActual(rs.getFloat("pesoActual"));
+                paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
+                paciente.setBaja(rs.getBoolean("baja"));
+                
+                listarPaciente.add(paciente);
+            }
+            rs.close();
+            ps.close();   
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al listar los pacientes");
+        }
+        return listarPaciente;        
+    }
+    
+    public List<Paciente> ListarPacienteDadoBaja(){
+        ArrayList<Paciente> listarPaciente = new ArrayList<>();
+        
+        String sql = "SELECT * FROM paciente WHERE baja = true;";
+
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Paciente paciente = new Paciente();
+                
+                paciente.setNroPaciente(rs.getInt("nroPaciente"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setEdad(rs.getInt("edad"));
+                paciente.setAltura(rs.getFloat("altura"));
                 paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
                 paciente.setBaja(rs.getBoolean("baja"));
                 

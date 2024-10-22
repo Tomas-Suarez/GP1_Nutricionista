@@ -1,13 +1,14 @@
 package Modelo;
 
 public class RenglonDeMenu {
+
     private int codRenglon;
     private double cantidadGrs;
     private int subTotalCalorias;
     private Alimento alimento;
     private MenuDiario menu;
 
-    public RenglonDeMenu(int codRenglon, double cantidadGrs, int subTotalCalorias, Alimento alimento,MenuDiario menu) {
+    public RenglonDeMenu(int codRenglon, double cantidadGrs, int subTotalCalorias, Alimento alimento, MenuDiario menu) {
         this.codRenglon = codRenglon;
         this.cantidadGrs = cantidadGrs;
         this.subTotalCalorias = subTotalCalorias;
@@ -63,21 +64,17 @@ public class RenglonDeMenu {
     public void setMenu(MenuDiario menu) {
         this.menu = menu;
     }
-    
-    
-    
-    public void modificarRenglon(){
-        
+
+    public void modificarRenglon() {
+
     }
-    
-    public void imprimirRenglon(){
-        
+
+    public void imprimirRenglon() {
+
     }
-    
-    public void addAlimento(Alimento alimento){
-        
+
+    public void addAlimento(Alimento alimento) {
+
     }
-    
-    
-    
+
 }

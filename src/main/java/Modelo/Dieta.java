@@ -17,10 +17,9 @@ public class Dieta {
     private int TotalCalorias;
     private Paciente paciente;
 
-    public Dieta(int codDieta, String nombre, List<MenuDiario> Menus, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
+    public Dieta(int codDieta, String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.codDieta = codDieta;
         this.nombre = nombre;
-        this.Menus = Menus;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.pesoInicial = pesoInicial;
@@ -30,9 +29,8 @@ public class Dieta {
         this.paciente = paciente;
     }
 
-    public Dieta(String nombre, List<MenuDiario> Menus, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
+    public Dieta(String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.nombre = nombre;
-        this.Menus = Menus;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.pesoInicial = pesoInicial;
@@ -59,14 +57,6 @@ public class Dieta {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public List<MenuDiario> getMenus() {
-        return Menus;
-    }
-
-    public void setMenus(List<MenuDiario> Menus) {
-        this.Menus = Menus;
     }
 
     public LocalDate getFechaInicio() {
