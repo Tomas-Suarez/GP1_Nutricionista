@@ -13,32 +13,36 @@ public class Dieta {
     private LocalDate fechaFinal;
     private float pesoInicial;
     private float pesoFinal;
+    private float pesoObjetivo;
     private Boolean baja;
     private int TotalCalorias;
     private Paciente paciente;
 
-    public Dieta(int codDieta, String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
+    public Dieta(int codDieta, String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, float pesoObjetivo, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.codDieta = codDieta;
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.pesoInicial = pesoInicial;
         this.pesoFinal = pesoFinal;
+        this.pesoObjetivo = pesoObjetivo;
         this.baja = baja;
         this.TotalCalorias = TotalCalorias;
         this.paciente = paciente;
     }
 
-    public Dieta(String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, Boolean baja, int TotalCalorias, Paciente paciente) {
+    public Dieta(String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, float pesoObjetivo, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFinal = fechaFinal;
         this.pesoInicial = pesoInicial;
         this.pesoFinal = pesoFinal;
+        this.pesoObjetivo = pesoObjetivo;
         this.baja = baja;
         this.TotalCalorias = TotalCalorias;
         this.paciente = paciente;
     }
+
 
     public Dieta() {
     }
