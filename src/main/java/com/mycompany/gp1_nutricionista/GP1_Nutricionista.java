@@ -4,9 +4,11 @@ import Modelo.Alimento;
 import Modelo.Dieta;
 import Modelo.MenuDiario;
 import Modelo.Paciente;
+import Modelo.RenglonDeMenu;
 import Persistencia.AlimentoData;
 import Persistencia.MenuDiarioData;
 import Persistencia.PacienteData;
+import Persistencia.RenglonDeMenuData;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,9 +20,10 @@ import java.util.List;
 public class GP1_Nutricionista {
 
     public static void main(String[] args) throws SQLException {
-        // testAlimentoData();
+         testAlimentoData();
         //testMenuDiario();
         //testPaciente();
+        //testReglon();
     }
 
     private static void testAlimentoData() {
@@ -115,4 +118,22 @@ public class GP1_Nutricionista {
         }
 
     }
+    
+    public static void testReglon () throws SQLException {
+        RenglonDeMenuData dat = new RenglonDeMenuData();
+        
+        
+        Alimento ali = new Alimento();
+        ali.setCodComida(1);
+        MenuDiario men = new MenuDiario();
+        men.setCodMenu(1);
+        
+        RenglonDeMenu ren = new RenglonDeMenu(123,123,ali,men,"manana");
+        
+        dat.agregarRen(ren);
+        
+        
+        
+    }
+    
 }
