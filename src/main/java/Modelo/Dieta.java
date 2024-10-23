@@ -3,6 +3,7 @@ package Modelo;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Dieta {
@@ -118,6 +119,77 @@ public class Dieta {
     public void setPesoFinal(float pesoFinal) {
         this.pesoFinal = pesoFinal;
     }
+
+    public float getPesoObjetivo() {
+        return pesoObjetivo;
+    }
+
+    public void setPesoObjetivo(float pesoObjetivo) {
+        this.pesoObjetivo = pesoObjetivo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + this.codDieta;
+        hash = 79 * hash + Objects.hashCode(this.nombre);
+        hash = 79 * hash + Objects.hashCode(this.Menus);
+        hash = 79 * hash + Objects.hashCode(this.fechaInicio);
+        hash = 79 * hash + Objects.hashCode(this.fechaFinal);
+        hash = 79 * hash + Float.floatToIntBits(this.pesoInicial);
+        hash = 79 * hash + Float.floatToIntBits(this.pesoFinal);
+        hash = 79 * hash + Float.floatToIntBits(this.pesoObjetivo);
+        hash = 79 * hash + Objects.hashCode(this.baja);
+        hash = 79 * hash + this.TotalCalorias;
+        hash = 79 * hash + Objects.hashCode(this.paciente);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Dieta other = (Dieta) obj;
+        if (this.codDieta != other.codDieta) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.pesoInicial) != Float.floatToIntBits(other.pesoInicial)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.pesoFinal) != Float.floatToIntBits(other.pesoFinal)) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.pesoObjetivo) != Float.floatToIntBits(other.pesoObjetivo)) {
+            return false;
+        }
+        if (this.TotalCalorias != other.TotalCalorias) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.Menus, other.Menus)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaInicio, other.fechaInicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaFinal, other.fechaFinal)) {
+            return false;
+        }
+        if (!Objects.equals(this.baja, other.baja)) {
+            return false;
+        }
+        return Objects.equals(this.paciente, other.paciente);
+    }
+    
     
     
     

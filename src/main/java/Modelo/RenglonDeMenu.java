@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.Objects;
+
 public class RenglonDeMenu {
 
     private int codRenglon;
@@ -76,6 +78,48 @@ public class RenglonDeMenu {
 
     public void setHorario(String horario) {
         this.horario = horario;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + this.codRenglon;
+        hash = 37 * hash + Float.floatToIntBits(this.cantidadGrs);
+        hash = 37 * hash + this.subTotalCalorias;
+        hash = 37 * hash + Objects.hashCode(this.alimento);
+        hash = 37 * hash + Objects.hashCode(this.menu);
+        hash = 37 * hash + Objects.hashCode(this.horario);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RenglonDeMenu other = (RenglonDeMenu) obj;
+        if (this.codRenglon != other.codRenglon) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.cantidadGrs) != Float.floatToIntBits(other.cantidadGrs)) {
+            return false;
+        }
+        if (this.subTotalCalorias != other.subTotalCalorias) {
+            return false;
+        }
+        if (!Objects.equals(this.horario, other.horario)) {
+            return false;
+        }
+        if (!Objects.equals(this.alimento, other.alimento)) {
+            return false;
+        }
+        return Objects.equals(this.menu, other.menu);
     }
 
 
