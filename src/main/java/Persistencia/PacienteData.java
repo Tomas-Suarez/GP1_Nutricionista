@@ -11,18 +11,18 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PacienteData {
-    private Connection con = null;
-    private static Paciente object = null;
-    
-    public PacienteData() {
-    con = Conexion.getConexion();
+    private Connection con;
+    private static PacienteData obj = null;
+
+    private PacienteData() {
+        con = Conexion.getConexion();
     }
-    
-    public static Paciente getRepo() {
-        if (object == null) {
-            object = new Paciente();
+
+    public static PacienteData getRepo() {
+        if (obj == null) {
+            obj = new PacienteData();
         }
-        return object;
+        return obj;
     }
     
     public void agregarPaciente(Paciente paciente) throws SQLException{
