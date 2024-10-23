@@ -2,9 +2,9 @@ package Persistencia;
 
 import Modelo.Alimento;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,17 +32,20 @@ public class AlimentoData {
         try {
             var sql = """
                   insert into alimento(nombre,	tipoComida, caloriasPor100g, detalle, baja) 
-                  values(?, ?, ?, ?, ?) returning idAlimento;""";
-            var ps = connection.prepareStatement(sql, tbHeader);
+                  values(?, ?, ?, ?, ?)""";
+            var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, alimento.getNombre());
             ps.setString(2, alimento.getTipoComida());
             ps.setInt(3, alimento.getCaloriasPor100g());
             ps.setString(4, alimento.getDetalle());
             ps.setBoolean(5, alimento.getBaja());
-            var rs = ps.executeQuery();
+            
+            ps.executeUpdate();
+            var rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 alimento.setCodComida(rs.getInt(1));
             }
+            
             ps.close();
         } catch (Exception ex) {
             System.out.println("error guardando alimento");

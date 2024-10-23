@@ -33,7 +33,7 @@ public class DietaData {
     public void save(Dieta dieta) {
         try {
             var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, nroPaciente, baja)"
-                    + "values (?,?,?,?,?,?,?) returning codDieta";
+                    + "values (?,?,?,?,?,?,?);";
             var ps = connection.prepareStatement(sql);
 
             ps.setString(1, dieta.getNombre());
@@ -44,7 +44,9 @@ public class DietaData {
             ps.setInt(6, dieta.getPaciente().getNroPaciente());
             ps.setBoolean(7, dieta.getBaja());
 
-            var rs = ps.executeQuery();
+            ps.executeQuery();
+
+            var rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 dieta.setCodDieta(rs.getInt(1));
             }

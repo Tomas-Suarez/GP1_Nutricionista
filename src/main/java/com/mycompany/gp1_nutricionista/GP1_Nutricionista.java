@@ -38,11 +38,11 @@ public class GP1_Nutricionista {
         repoAlimentos.guardarAlimento(alimento);
 
         var a2 = repoAlimentos.getAlimentById(alimento.getCodComida());
-
+        
         alimento.setNombre("editado");
         repoAlimentos.actualizarAlimento(alimento);
-
-        repoAlimentos.remove(alimento.getCodComida());
+        System.out.println(alimento.getCodComida());
+        //repoAlimentos.remove(alimento.getCodComida());
     }
 
     public static void testMenuDiario() throws SQLException { //falta el codDieta
