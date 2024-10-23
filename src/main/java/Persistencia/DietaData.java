@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
 
 import Modelo.Dieta;
 
@@ -34,7 +35,7 @@ public class DietaData {
         try {
             var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, nroPaciente, baja)"
                     + "values (?,?,?,?,?,?,?);";
-            var ps = connection.prepareStatement(sql);
+            var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, dieta.getNombre());
             ps.setDate(2, Date.valueOf(dieta.getFechaInicio()));
