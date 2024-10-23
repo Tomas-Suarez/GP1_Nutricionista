@@ -14,11 +14,12 @@ public class PacienteData {
     private Connection con;
     private static PacienteData obj = null;
 
-    public PacienteData() {
+    private PacienteData() {
         con = Conexion.getConexion();
     }
 
     public static PacienteData getRepo() {
+        
         if (obj == null) {
             obj = new PacienteData();
         }
