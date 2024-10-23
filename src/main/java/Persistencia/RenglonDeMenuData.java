@@ -44,22 +44,22 @@ public class RenglonDeMenuData {
         String sql = "INSERT INTO renglondemenu (cantidadGrs,subtotalCalorias,codMenu,codComida VALUES (?,?,?,?);";
 
         try {
-            PreparedStatement cosa = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            cosa.setDouble(1, dato.getCantidadGrs());
-            cosa.setInt(2, dato.getSubTotalCalorias());
-            cosa.setInt(3, dato.getMenu().getCodMenu());
-            cosa.setInt(4, dato.getAlimento().getCodComida());
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setDouble(1, dato.getCantidadGrs());
+            ps.setInt(2, dato.getSubTotalCalorias());
+            ps.setInt(3, dato.getMenu().getCodMenu());
+            ps.setInt(4, dato.getAlimento().getCodComida());
 
-            cosa.executeUpdate();
+            ps.executeUpdate();
 
-            ResultSet rs = cosa.getGeneratedKeys();
+            ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
                 dato.setCodRenglon(rs.getInt(1));
             }
 
             rs.close();
-            cosa.close();
+            ps.close();
 
             JOptionPane.showMessageDialog(null, "Renglon del menu agregado exitosamente!");
 
@@ -92,8 +92,7 @@ public class RenglonDeMenuData {
                 ali.setCodComida(rs.getInt("codComida"));
                 ren.setAlimento(ali);
                 men.setCodMenu(rs.getInt("codMenu"));
-                ren.setAlimento(ali);
-                ali.setCodComida(rs.getInt("codComida"));
+                ren.setMenu(men);
 
                 rs.close();
                 ps.close();
@@ -119,13 +118,13 @@ public class RenglonDeMenuData {
         String sql = "UPDATE renglondemenu SET cantidadGrs=?,subtotalCalorias=?,codMenu=?,codComida=? WHERE codRenglon =?";
 
         try {
-            PreparedStatement cosa = con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
 
-            cosa.setDouble(1, dato.getCantidadGrs());
-            cosa.setInt(2, dato.getSubTotalCalorias());
-            cosa.setInt(3, dato.getMenu().getCodMenu());
-            cosa.setInt(4, dato.getAlimento().getCodComida());
-
+            ps.setDouble(1, dato.getCantidadGrs());
+            ps.setInt(2, dato.getSubTotalCalorias());
+            ps.setInt(3, dato.getMenu().getCodMenu());
+            ps.setInt(4, dato.getAlimento().getCodComida());
+            ps.setInt(5, dato.getCodRenglon());
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el renglon!");
         }
@@ -153,8 +152,7 @@ public class RenglonDeMenuData {
                 ali.setCodComida(rs.getInt("codComida"));
                 ren.setAlimento(ali);
                 men.setCodMenu(rs.getInt("codMenu"));
-                ren.setAlimento(ali);
-                ali.setCodComida(rs.getInt("codComida"));
+                
 
                 listarrenglon.add(ren);
             }

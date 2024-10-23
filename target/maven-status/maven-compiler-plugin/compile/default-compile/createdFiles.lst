@@ -5,4 +5,5 @@ Modelo\Dieta.class
 Persistencia\PacienteData.class
 Modelo\MenuDiario.class
 Modelo\RenglonDeMenu.class
+Persistencia\MenuDiarioData.class
 Persistencia\Conexion.class
