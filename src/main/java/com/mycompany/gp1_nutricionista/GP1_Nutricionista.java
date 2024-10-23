@@ -18,7 +18,7 @@ import java.util.List;
 public class GP1_Nutricionista {
 
     public static void main(String[] args) throws SQLException {
-        // testAlimentoData();
+        testAlimentoData();
         //testMenuDiario();
         //testPaciente();
     }
@@ -29,8 +29,6 @@ public class GP1_Nutricionista {
         repoAlimentos.guardarAlimento(alimento);
 
         var a2 = repoAlimentos.getAlimentById(alimento.getCodComida());
-
-        System.out.println(alimento.equals(a2));
 
         alimento.setNombre("editado");
         repoAlimentos.actualizarAlimento(alimento);
@@ -76,7 +74,7 @@ public class GP1_Nutricionista {
     }
 
     public static void testPaciente() throws SQLException {
-        PacienteData pacData = new PacienteData();
+        PacienteData pacData = PacienteData.getRepo();
 
         // Creamos un paciente y lo agregamos
         //Paciente nuevoPaciente = new Paciente("Jepeto", 20, 176, 60, false);ver
