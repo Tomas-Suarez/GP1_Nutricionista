@@ -14,7 +14,7 @@ public class PacienteData {
     private Connection con;
     private static PacienteData obj = null;
 
-    private PacienteData() {
+    public PacienteData() {
         con = Conexion.getConexion();
     }
 
