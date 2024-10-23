@@ -1,5 +1,6 @@
 package com.mycompany.gp1_nutricionista;
 
+
 import Modelo.Alimento;
 import Modelo.Dieta;
 import Modelo.MenuDiario;
@@ -13,11 +14,16 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import Modelo.RenglonDeMenu;
+import Persistencia.RenglonDeMenuData;
+
+
 /**
  *
  * @author Tomi
  */
 public class GP1_Nutricionista {
+
 
     public static void main(String[] args) throws SQLException {
         testAlimentoData();
@@ -133,5 +139,29 @@ public class GP1_Nutricionista {
         
         
     }
+
+    /*public static void main(String[] args) {
+        // Crear una instancia de RenglonDeMenuData
+        RenglonDeMenuData renglonDeMenuData = new RenglonDeMenuData();
+
+        // Supongamos que 'codRenglon' es el código del renglón que estás buscando
+        int codRenglon = 1; // Cambia este valor por uno válido que exista en tu base de datos
+
+        // Llamar al método BuscarRenglon y pasar el código del renglón
+        RenglonDeMenu renglon = renglonDeMenuData.BuscarRenglon(codRenglon);
+
+        // Verificar si el objeto no es nulo y mostrar el resultado
+        if (renglon != null) {
+            System.out.println("Codigo del Renglon: " + renglon.getCodRenglon());
+            System.out.println("Cantidad de Gramos: " + renglon.getCantidadGrs());
+            System.out.println("Subtotal de Calorias: " + renglon.getSubTotalCalorias());
+            System.out.println("Codigo de Comida: " + renglon.getAlimento().getCodComida());
+        } else {
+            System.out.println("No se encontró el renglón con el codigo: " + codRenglon);
+        }
+    }*/
+    
+  
+
     
 }
