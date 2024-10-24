@@ -14,7 +14,7 @@ public class DietaData {
     private String[] header;
     private PacienteData repoPaciente;
 
-    private DietaData() {
+    DietaData() {
         obj = new DietaData();
         connection = Conexion.getConexion();
         repoPaciente = PacienteData.getRepo();

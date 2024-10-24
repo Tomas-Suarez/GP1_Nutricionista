@@ -135,6 +135,12 @@ public class Paciente {
         }
         return Objects.equals(this.nombre, other.nombre);
     }
+
+    @Override
+    public String toString() {
+        return "Paciente{" + "nroPaciente=" + nroPaciente + ", nombre=" + nombre + ", dni=" + dni + ", edad=" + edad + ", altura=" + altura + ", pesoActual=" + pesoActual + ", baja=" + baja + '}';
+    }
+    
     
     
     public void cambiarPeso(){

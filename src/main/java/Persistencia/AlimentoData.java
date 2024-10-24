@@ -15,7 +15,7 @@ public class AlimentoData {
 
     private Connection connection;
     private static AlimentoData object = null;
-    private static String[] tbHeader = new String[]{"codComida", "nombre", "tipoComida", "caloriasPor100g", "detalle", "baja"};
+    private static String[] tbHeader = new String[]{"idAlimento", "nombre", "tipoComida", "caloriasPor100g", "detalle", "baja"};
 
     private AlimentoData() {
         this.connection = Conexion.getConexion();
@@ -32,7 +32,7 @@ public class AlimentoData {
         try {
             var sql = """
                   insert into alimento(nombre,	tipoComida, caloriasPor100g, detalle, baja) 
-                  values(?, ?, ?, ?, ?) returning codComida;""";
+                  values(?, ?, ?, ?, ?) returning idAlimento;""";
             var ps = connection.prepareStatement(sql, tbHeader);
             ps.setString(1, alimento.getNombre());
             ps.setString(2, alimento.getTipoComida());
@@ -58,9 +58,9 @@ public class AlimentoData {
             var ps = connection.prepareStatement(sql);
             var rs = ps.executeQuery(sql);
             while (rs.next()) {
-                //"codComida", "nombre", "tipoComida", "caloriasPor100g", "detalle", "baja"
+                //"idAlimento", "nombre", "tipoComida", "caloriasPor100g", "detalle", "baja"
                 Alimento a = new Alimento(
-                        rs.getInt("codComida"),
+                        rs.getInt("idAlimento"),
                         rs.getString("nombre"),
                         rs.getString("tipoComida"),
                         rs.getInt("caloriasPor100g"),
@@ -80,14 +80,14 @@ public class AlimentoData {
     public Alimento getAlimentById(int id) {
         Alimento a = null;
         try {
-            var sql = "select * from alimento where codComida = ?;";
+            var sql = "select * from alimento where idAlimento = ?;";
             var ps = connection.prepareStatement(sql, tbHeader);
             ps.setInt(1, id);
             var rs = ps.executeQuery();
 
             while (rs.next()) {
                 a = new Alimento(
-                        rs.getInt("codComida"),
+                        rs.getInt("idAlimento"),
                         rs.getString("nombre"),
                         rs.getString("tipoComida"),
                         rs.getInt("caloriasPor100g"),
@@ -106,7 +106,7 @@ public class AlimentoData {
     public boolean actualizarAlimento(Alimento a) {
         int r = 0;
         try {
-            var sql = "UPDATE alimento SET nombre=?, tipoComida=?, caloriasPor100g=?,detalle=?,baja=? WHERE codComida = ?";
+            var sql = "UPDATE alimento SET nombre=?, tipoComida=?, caloriasPor100g=?,detalle=?,baja=? WHERE idAlimento = ?";
             var ps = connection.prepareStatement(sql);
             ps.setString(1, a.getNombre());
             ps.setString(2, a.getTipoComida());
@@ -123,12 +123,12 @@ public class AlimentoData {
         return r == 1;
     }
 
-    public boolean remove(int codComida) {
+    public boolean remove(int idAlimento) {
         var r = 0;
         try {
-            var sql = "delete from alimento where codComida = ?";
+            var sql = "delete from alimento where idAlimento = ?";
             var ps = connection.prepareStatement(sql);
-            ps.setInt(1, codComida);
+            ps.setInt(1, idAlimento);
             r = ps.executeUpdate();
             ps.close();
         } catch (Exception ex) {

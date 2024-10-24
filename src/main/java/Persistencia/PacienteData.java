@@ -17,7 +17,7 @@ public class PacienteData {
     public PacienteData() {
         con = Conexion.getConexion();
     }
-
+    
     public static PacienteData getRepo() {
         if (obj == null) {
             obj = new PacienteData();
@@ -26,15 +26,16 @@ public class PacienteData {
     }
     
     public void agregarPaciente(Paciente paciente) throws SQLException{
-        String sql = "INSERT INTO paciente(nombre, edad, altura, pesoBuscado, baja) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO paciente(nombre, dni, edad, altura, baja, pesoActual) VALUES (?, ?, ?, ?, ?, ?);";
      
         try{
         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, paciente.getNombre());
-        ps.setInt(2, paciente.getEdad());
-        ps.setFloat(3, paciente.getAltura());
-        //ps.setFloat(4, paciente.getPesoBuscado());
+        ps.setInt(2, paciente.getDni());
+        ps.setInt(3, paciente.getEdad());
+        ps.setFloat(4, paciente.getAltura());
         ps.setBoolean(5, paciente.isBaja());
+        ps.setFloat(6, paciente.getPesoActual());
         
         // Ejecutar la actualización
         ps.executeUpdate();
@@ -56,7 +57,7 @@ public class PacienteData {
     }
     
     public Paciente buscarPaciente(int id){
-        String sql = "SELECT * FROM paciente WHERE nroPaciente = ?;";
+        String sql = "SELECT * FROM paciente WHERE idPaciente = ?;";
         
         Paciente paciente = null;
         
@@ -69,12 +70,13 @@ public class PacienteData {
         if (rs.next()) {
             paciente = new Paciente();
             
-            paciente.setNroPaciente(rs.getInt("nroPaciente"));
+            paciente.setNroPaciente(rs.getInt("idPaciente"));
             paciente.setNombre(rs.getString("nombre"));
+            paciente.setDni(rs.getInt("dni"));
             paciente.setEdad(rs.getInt("edad"));
             paciente.setAltura(rs.getFloat("altura"));
-            //paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
             paciente.setBaja(rs.getBoolean("baja"));
+            paciente.setPesoActual(rs.getFloat("pesoActual"));
             }
             
             rs.close();
@@ -92,17 +94,18 @@ public class PacienteData {
     }
     
     public void modificarPaciente(Paciente paciente) throws SQLException{
-        String sql = "UPDATE paciente SET nombre = ?, edad = ?, altura = ?, pesoBuscado = ?, baja = ? WHERE nroPaciente = ?;";
+    String sql = "UPDATE paciente SET nombre = ?, dni = ?, edad = ?, altura = ?, baja = ?, pesoActual = ? WHERE idPaciente = ?;";
         
         PreparedStatement ps = con.prepareStatement(sql);
         
         try{
         ps.setString(1, paciente.getNombre());
-        ps.setInt(2, paciente.getEdad());
-        ps.setFloat(3, paciente.getAltura());
-        //ps.setFloat(4, paciente.getPesoBuscado());
+        ps.setInt(2, paciente.getDni());
+        ps.setInt(3, paciente.getEdad());
+        ps.setFloat(4, paciente.getAltura());
         ps.setBoolean(5, paciente.isBaja());
-        ps.setInt(6, paciente.getNroPaciente());
+        ps.setFloat(6, paciente.getPesoActual());
+        ps.setInt(7, paciente.getNroPaciente());
         
         ps.executeUpdate();
         
@@ -124,12 +127,13 @@ public class PacienteData {
             while(rs.next()){
                 Paciente paciente = new Paciente();
                 
-                paciente.setNroPaciente(rs.getInt("nroPaciente"));
-                paciente.setNombre(rs.getString("nombre"));
-                paciente.setEdad(rs.getInt("edad"));
-                paciente.setAltura(rs.getFloat("altura"));
-                //paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
-                paciente.setBaja(rs.getBoolean("baja"));
+            paciente.setNroPaciente(rs.getInt("idPaciente"));
+            paciente.setNombre(rs.getString("nombre"));
+            paciente.setDni(rs.getInt("dni"));
+            paciente.setEdad(rs.getInt("edad"));
+            paciente.setAltura(rs.getFloat("altura"));
+            paciente.setBaja(rs.getBoolean("baja"));
+            paciente.setPesoActual(rs.getFloat("pesoActual"));
                 
                 listarPaciente.add(paciente);
             }
@@ -153,12 +157,13 @@ public class PacienteData {
             while(rs.next()){
                 Paciente paciente = new Paciente();
                 
-                paciente.setNroPaciente(rs.getInt("nroPaciente"));
-                paciente.setNombre(rs.getString("nombre"));
-                paciente.setEdad(rs.getInt("edad"));
-                paciente.setAltura(rs.getFloat("altura"));
-                //paciente.setPesoBuscado(rs.getFloat("pesoBuscado"));
-                paciente.setBaja(rs.getBoolean("baja"));
+            paciente.setNroPaciente(rs.getInt("idPaciente"));
+            paciente.setNombre(rs.getString("nombre"));
+            paciente.setDni(rs.getInt("dni"));
+            paciente.setEdad(rs.getInt("edad"));
+            paciente.setAltura(rs.getFloat("altura"));
+            paciente.setBaja(rs.getBoolean("baja"));
+            paciente.setPesoActual(rs.getFloat("pesoActual"));
                 
                 listarPaciente.add(paciente);
             }
@@ -170,8 +175,8 @@ public class PacienteData {
         return listarPaciente;        
     }
     
-    public void darDeBajaPaciente(int id) {
-        String sql = "UPDATE paciente SET baja = ? WHERE nroPaciente = ?";
+    public void estadoAltaPaciente(int id) {
+        String sql = "UPDATE paciente SET baja = ? WHERE idPaciente = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -181,7 +186,7 @@ public class PacienteData {
             int filasAfectadas = ps.executeUpdate();
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "El paciente ha sido dado de baja correctamente.");
+                JOptionPane.showMessageDialog(null, "El paciente ha sido dado de ALTA correctamente.");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró el paciente con el ID proporcionado.");
             }
@@ -192,8 +197,8 @@ public class PacienteData {
         }
     }
     
-    public void darDePaciente(int id) {
-        String sql = "UPDATE paciente SET baja = ? WHERE nroPaciente = ?";
+    public void estadoBajaPaciente(int id) {
+        String sql = "UPDATE paciente SET baja = ? WHERE idPaciente = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -203,7 +208,7 @@ public class PacienteData {
             int filasAfectadas = ps.executeUpdate();
 
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "El paciente ha sido dado de alta correctamente.");
+                JOptionPane.showMessageDialog(null, "El paciente ha sido dado de BAJA correctamente.");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró el paciente con el ID proporcionado.");
             }
@@ -217,7 +222,7 @@ public class PacienteData {
     
     public void eliminarPaciente(int id) {
         try {
-            String sql = "DELETE FROM paciente WHERE nroPaciente = ?";
+            String sql = "DELETE FROM paciente WHERE idPaciente = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
 
