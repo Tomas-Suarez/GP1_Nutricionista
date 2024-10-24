@@ -23,8 +23,10 @@ public class GP1_Nutricionista {
         //
         
         // Creamos un paciente y lo agregamos
-        Paciente nuevoPaciente = new Paciente("Jepeto", 44562221, 19, 160, 70, false);
-        //pacData.agregarPaciente(nuevoPaciente); /* Borrar el comentario para probar el agregar Paciente */
+        Paciente nuevoPaciente1 = new Paciente("Pepito", 41563259, 21, 180, 65, true);
+        Paciente nuevoPaciente2 = new Paciente("Jepeto", 42562222, 19, 160, 70, false);
+        pacData.agregarPaciente(nuevoPaciente1); /* Borrar el comentario para probar el agregar Paciente */
+        pacData.agregarPaciente(nuevoPaciente2); /* Borrar el comentario para probar el agregar Paciente */
 
         // Modificamos los datos del paciente
         Paciente pacienteModificado = new Paciente(); 
@@ -33,10 +35,10 @@ public class GP1_Nutricionista {
         pacienteModificado.setEdad(17);
         pacienteModificado.setAltura(176);
         pacienteModificado.setBaja(true);
-        pacienteModificado.setNroPaciente(2);
+        pacienteModificado.setNroPaciente(2); //ID del paciente
         pacienteModificado.setPesoActual(70);
 
-        //pacData.modificarPaciente(pacienteModificado); /* Borrar el comentario para probar el modificar Paciente */
+        //pacData.actualizarPaciente(pacienteModificado); /* Borrar el comentario para probar el modificar Paciente */
         
         
         //Mostramos los pacientes Activos

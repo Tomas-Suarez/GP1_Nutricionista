@@ -52,7 +52,7 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Paciente agregado exitosamente!");
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar al paciente!");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar al paciente: " + e.getMessage());
         }
     }
     
@@ -93,7 +93,7 @@ public class PacienteData {
         return paciente;
     }
     
-    public void modificarPaciente(Paciente paciente) throws SQLException{
+    public void actualizarPaciente(Paciente paciente) throws SQLException{
     String sql = "UPDATE paciente SET nombre = ?, dni = ?, edad = ?, altura = ?, baja = ?, pesoActual = ? WHERE idPaciente = ?;";
         
         PreparedStatement ps = con.prepareStatement(sql);
