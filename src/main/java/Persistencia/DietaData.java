@@ -14,11 +14,13 @@ public class DietaData {
     private Connection connection;
     private String[] header;
     private PacienteData repoPaciente;
+    private MenuDiarioData repoMenu;
 
     private DietaData() {
         obj = new DietaData();
         connection = Conexion.getConexion();
         repoPaciente = PacienteData.getRepo();
+        repoMenu = new MenuDiarioData();
 
         header = new String[] { "codDieta", "nombre", "fechaInicio", "fechaFin",
                 "pesoInicial", "pesoFinal", "totalCalorias", "nroPaciente", "baja" };
@@ -51,6 +53,10 @@ public class DietaData {
             if (rs.next()) {
                 dieta.setCodDieta(rs.getInt(1));
             }
+
+            dieta.getMenu().forEach(menu -> {
+                repoMenu.agregarMenuDiario(menu);
+            });
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -71,6 +77,7 @@ public class DietaData {
             dieta.setTotalCalorias(rs.getInt("totalCalorias"));
             dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("nroPaciente")));
             dieta.setBaja(rs.getBoolean("baja"));
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

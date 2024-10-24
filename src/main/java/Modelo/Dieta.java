@@ -51,6 +51,14 @@ public class Dieta {
         return codDieta;
     }
 
+    public List<MenuDiario> getMenu() {
+        return this.Menus;
+    }
+
+    public void setMenu(List<MenuDiario> menu) {
+        this.Menus = menu;
+    }
+
     public void setCodDieta(int codDieta) {
         this.codDieta = codDieta;
     }
