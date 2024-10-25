@@ -73,6 +73,16 @@ public class MenuDiario {
         this.caloriasDelMenu = caloriasDelMenu;
     }
 
+    public Dieta getDieta() {
+        return dieta;
+    }
+
+    public void setDieta(Dieta dieta) {
+        this.dieta = dieta;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;

@@ -1,4 +1,3 @@
- 
 package Persistencia;
 
 import Modelo.Dieta;
@@ -13,34 +12,33 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class MenuDiarioData {
+
     private Connection con = null;
     private static MenuDiario object = null;
-    private Dieta dieta;
 
     public MenuDiarioData() {
         con = Conexion.getConexion();
     }
-    
+
     public static MenuDiario getRepo() {
         if (object == null) {
             object = new MenuDiario();
         }
         return object;
     }
-    
-    public void agregarMenuDiario(MenuDiario menu){
-        String sql = "INSERT INTO menudiario(dia, caloriasdelMenu, codDieta, baja) VALUES (?, ?, ?, ?)";
-        
-        try{
+
+    public void agregarMenuDiario(MenuDiario menu) {
+        String sql = "INSERT INTO menudiario(dia, calorias, idDieta, baja) VALUES (?, ?, ?, ?)";
+
+        try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, menu.getDia());
             ps.setInt(2, menu.getCaloriasDelMenu());
-            ps.setInt(3, dieta.getCodDieta());
+            ps.setInt(3, menu.getDieta().getCodDieta());
             ps.setBoolean(4, menu.isBaja());
-            
-            //Ejecutamos la actualización
+
             ps.execute();
-            
+
             //Agregamos las claves primarias (En caso que sea necesario)
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
@@ -49,130 +47,138 @@ public class MenuDiarioData {
 
             rs.close();
             ps.close();
-            
+
             JOptionPane.showMessageDialog(null, "El Menu diario fue agregado exitosamente!");
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el Menu diario");
         }
-        
+
     }
-    
-    public void modificarMenuDiario(MenuDiario menu) throws SQLException{
-        String sql = "UPDATE menudiario SET dia = ?, caloriasdelMenu = ?, baja = ?, codDieta = ? WHERE codMenu = ?;";
-        
-        PreparedStatement ps = con.prepareStatement(sql);
-        
-        try{
+
+    public void modificarMenuDiario(MenuDiario menu) throws SQLException {
+        String sql = "UPDATE menudiario SET dia = ?, calorias = ?, baja = ?, idDieta = ? WHERE idMenu = ?;";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, menu.getDia());
             ps.setInt(2, menu.getCaloriasDelMenu());
             ps.setBoolean(3, menu.isBaja());
-            ps.setInt(4, dieta.getCodDieta());
+            ps.setInt(4, menu.getDieta().getCodDieta());
             ps.setInt(5, menu.getCodMenu());
-            
-            ps.executeUpdate();
 
-            
-            JOptionPane.showMessageDialog(null, "El menu diario fue modificado correctamente!");
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar al Menu diario");
+            int filasAfectadas = ps.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "El menu diario fue modificado correctamente!");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el menú diario a modificar.");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el menu diario: " + e.getMessage());
         }
     }
-    
-    
-    //Retonamos una lista del menuDiario los que no estan de baja
-    public List<MenuDiario> ListarMenuDiarioSinBaja(){
-        ArrayList<MenuDiario> ListarMenuDiarioSinBaja = new ArrayList<>();
-        
-        String sql = "SELECT * FROM menudiario WHERE baja = false;";
-        
-        try{
+
+    //Retonamos una lista del menuDiario los que estan de baja
+    public List<MenuDiario> MenuDiarioBaja(boolean baja) {
+        ArrayList<MenuDiario> menusDiariosBaja = new ArrayList<>();
+        String sql;
+
+        if (baja) { //Si la condicion se cumple, se le da de baja 
+            sql = "SELECT * FROM menudiario WHERE baja = true;";
+        } else {//Si la condicion no se cumple, no se le dara de baja (Osea quedara Activo)
+            sql = "SELECT * FROM menudiario WHERE baja = false;";
+        }
+
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 MenuDiario menu = new MenuDiario();
-                
-                menu.setCodMenu(rs.getInt("codMenu"));
+
+                menu.setCodMenu(rs.getInt("idMenu"));
                 menu.setDia(rs.getInt("dia"));
-                menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
-                int codDieta = rs.getInt("codDieta");
-                dieta.setCodDieta(codDieta);
+                menu.setCaloriasDelMenu(rs.getInt("calorias"));
                 menu.setBaja(rs.getBoolean("baja"));
 
-                
-                ListarMenuDiarioSinBaja.add(menu);
-            }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al mostrar Menu Diario");
+                Dieta dieta = new Dieta();
+                dieta.setCodDieta(rs.getInt("idDieta"));
+                menu.setDieta(dieta);
 
-        }
-        return ListarMenuDiarioSinBaja;
-    }
-    
-        //Retonamos una lista del menuDiario los que estan de baja
-    public List<MenuDiario> ListarMenuDiarioBaja(){
-        ArrayList<MenuDiario> ListarMenuDiarioBaja = new ArrayList<>();
-        
-        String sql = "SELECT * FROM menudiario WHERE baja = true;";
-        
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
-                MenuDiario menu = new MenuDiario();
-                
-                menu.setCodMenu(rs.getInt("codMenu"));
-                menu.setDia(rs.getInt("dia"));
-                menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
-                int codDieta = rs.getInt("codDieta");
-                dieta.setCodDieta(codDieta);
-                menu.setBaja(rs.getBoolean("baja"));
-
-                
-                ListarMenuDiarioBaja.add(menu);
+                menusDiariosBaja.add(menu);
             }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al mostrar Menu Diario");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al mostrar Menu Diario dado de baja: " + e.getMessage());
         }
-        return ListarMenuDiarioBaja;
+
+        return menusDiariosBaja;
     }
-    
-    public MenuDiario buscarMenuComida(int id){
-        String sql = "SELECT * FROM MenuDiario WHERE codMenu = ?";
-        
+
+    public MenuDiario buscarMenuComida(int id) {
+        String sql = "SELECT * FROM menudiario WHERE idMenu = ?";
         MenuDiario menu = null;
-        
-        try{
+
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
-            
+
             ResultSet rs = ps.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 menu = new MenuDiario();
-                
-                menu.setCodMenu(rs.getInt("codMenu"));
+
+                menu.setCodMenu(rs.getInt("idMenu"));
                 menu.setDia(rs.getInt("dia"));
-                menu.setCaloriasDelMenu(rs.getInt("caloriasdelMenu"));
-                int codDieta = rs.getInt("codDieta");
-                dieta.setCodDieta(codDieta);
+                menu.setCaloriasDelMenu(rs.getInt("calorias"));
+
+                Dieta dieta = new Dieta();
+                dieta.setCodDieta(rs.getInt("idDieta"));
+                menu.setDieta(dieta);
             }
-            
-            if(menu != null){
+
+            if (menu != null) {
                 JOptionPane.showMessageDialog(null, "Menu diario encontrado!");
-            }else{
-                JOptionPane.showMessageDialog(null, "No se encontro ningun Menu diario");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro ningun menu diario.");
             }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el Menu Comida");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el Menu Comida: " + e.getMessage());
         }
         return menu;
     }
-    
+
+    public List<MenuDiario> obtenerMenusPorDieta(int idDieta) {
+        ArrayList<MenuDiario> MenusxDieta = new ArrayList<>();
+        String sql = "SELECT * FROM menudiario WHERE idDieta = ? AND baja = false;";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDieta);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                MenuDiario menu = new MenuDiario();
+
+                menu.setCodMenu(rs.getInt("idMenu"));
+                menu.setDia(rs.getInt("dia"));
+                menu.setCaloriasDelMenu(rs.getInt("calorias"));
+                menu.setBaja(rs.getBoolean("baja"));
+
+                Dieta dieta = new Dieta();
+                dieta.setCodDieta(idDieta);
+                menu.setDieta(dieta);
+
+                MenusxDieta.add(menu);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al mostrar Menu Diario: " + e.getMessage());
+        }
+
+        return MenusxDieta;
+    }
+
 }
