@@ -221,8 +221,8 @@ public class PacienteData {
     }
     
     public void eliminarPaciente(int id) {
-        try {
             String sql = "DELETE FROM paciente WHERE idPaciente = ?";
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
 
@@ -238,5 +238,7 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al acceder a la tabla Paciente!");
         }
     }
+    
+
     
 }

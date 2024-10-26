@@ -2,6 +2,7 @@
 package Vistas;
 
 import Vistas.Alimentou.DetallesAlimento;
+import Vistas.Dieta.AgregarDieta;
 import Vistas.Formulario.DetallesPaciente;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -20,34 +21,36 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup3 = new javax.swing.ButtonGroup();
-        bpaciente = new javax.swing.JToggleButton();
-        balimento = new javax.swing.JToggleButton();
-        bestats = new javax.swing.JToggleButton();
+        bPaciente = new javax.swing.JToggleButton();
+        bAlimento = new javax.swing.JToggleButton();
+        bConsultas = new javax.swing.JToggleButton();
         Tablero = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        bDieta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        buttonGroup3.add(bpaciente);
-        bpaciente.setText("paciente");
-        bpaciente.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup3.add(bPaciente);
+        bPaciente.setText("Paciente");
+        bPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bpacienteActionPerformed(evt);
+                bPacienteActionPerformed(evt);
             }
         });
 
-        buttonGroup3.add(balimento);
-        balimento.setText("alimento");
-        balimento.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup3.add(bAlimento);
+        bAlimento.setText("Alimento");
+        bAlimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                balimentoActionPerformed(evt);
+                bAlimentoActionPerformed(evt);
             }
         });
 
-        buttonGroup3.add(bestats);
-        bestats.setText("estadisticas");
-        bestats.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup3.add(bConsultas);
+        bConsultas.setText("Consultas");
+        bConsultas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bestatsActionPerformed(evt);
+                bConsultasActionPerformed(evt);
             }
         });
 
@@ -55,57 +58,78 @@ public class Principal extends javax.swing.JFrame {
         Tablero.setLayout(TableroLayout);
         TableroLayout.setHorizontalGroup(
             TableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 764, Short.MAX_VALUE)
+            .addGap(0, 597, Short.MAX_VALUE)
         );
         TableroLayout.setVerticalGroup(
             TableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        bDieta.setText("Dieta");
+        bDieta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDietaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bpaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(balimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bestats, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(36, 36, 36)
-                .addComponent(Tablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(bPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bConsultas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bDieta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Tablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Tablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(112, 112, 112)
-                .addComponent(bpaciente)
-                .addGap(18, 18, 18)
-                .addComponent(balimento)
-                .addGap(29, 29, 29)
-                .addComponent(bestats)
-                .addContainerGap(219, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Tablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(bPaciente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bDieta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bAlimento)
+                        .addGap(32, 32, 32)
+                        .addComponent(bConsultas))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bpacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpacienteActionPerformed
+    private void bPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPacienteActionPerformed
         DetallesPaciente detPaciente = new DetallesPaciente();
         ShowPanel(detPaciente);
-    }//GEN-LAST:event_bpacienteActionPerformed
+    }//GEN-LAST:event_bPacienteActionPerformed
 
-    private void balimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_balimentoActionPerformed
+    private void bAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAlimentoActionPerformed
         DetallesAlimento detAlimento = new DetallesAlimento();
         ShowPanel(detAlimento);
-    }//GEN-LAST:event_balimentoActionPerformed
+    }//GEN-LAST:event_bAlimentoActionPerformed
 
-    private void bestatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bestatsActionPerformed
+    private void bConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bestatsActionPerformed
+    }//GEN-LAST:event_bConsultasActionPerformed
+
+    private void bDietaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDietaActionPerformed
+        AgregarDieta detDieta = new AgregarDieta();
+    }//GEN-LAST:event_bDietaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,14 +168,16 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Tablero;
-    private javax.swing.JToggleButton balimento;
-    private javax.swing.JToggleButton bestats;
-    private javax.swing.JToggleButton bpaciente;
+    private javax.swing.JToggleButton bAlimento;
+    private javax.swing.JToggleButton bConsultas;
+    private javax.swing.JButton bDieta;
+    private javax.swing.JToggleButton bPaciente;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 
     private void ShowPanel(JPanel p){
-        p.setSize(680, 420);
+        p.setSize(580, 350);
         p.setLocation(0, 0);
         
         Tablero.removeAll();
