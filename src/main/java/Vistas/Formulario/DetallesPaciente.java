@@ -4,17 +4,27 @@
  */
 package Vistas.Formulario;
 
+import Modelo.Paciente;
+import Persistencia.PacienteData;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author cisco
  */
 public class DetallesPaciente extends javax.swing.JPanel {
-
+    private DefaultTableModel tablas = new DefaultTableModel();
+    private PacienteData pacData;
     /**
      * Creates new form DetallesPaciente
      */
     public DetallesPaciente() {
         initComponents();
+        pacData = new PacienteData();
+        resetearTabla();
+
+        TablaPaciente();
     }
 
     /**
@@ -28,7 +38,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
 
         jSpinner2 = new javax.swing.JSpinner();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ldieta = new javax.swing.JTable();
+        tPaciente = new javax.swing.JTable();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
@@ -45,8 +55,9 @@ public class DetallesPaciente extends javax.swing.JPanel {
         jSpinner3 = new javax.swing.JSpinner();
         jSpinner4 = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
-        ldieta.setModel(new javax.swing.table.DefaultTableModel(
+        tPaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,7 +68,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(ldieta);
+        jScrollPane1.setViewportView(tPaciente);
 
         jRadioButton1.setText("Activos");
 
@@ -145,38 +156,47 @@ public class DetallesPaciente extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        jLabel6.setText("AGREGAR PACIENTE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addGap(53, 53, 53)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel6)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
                         .addComponent(jRadioButton2)
-                        .addGap(106, 106, 106))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton2)
                     .addComponent(jRadioButton1))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -194,6 +214,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
@@ -204,6 +225,38 @@ public class DetallesPaciente extends javax.swing.JPanel {
     private javax.swing.JSpinner jSpinner4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTable ldieta;
+    private javax.swing.JTable tPaciente;
     // End of variables declaration//GEN-END:variables
+
+public void TablaPaciente(){
+    String tablaHeader[] = {"idPaciente", "Nombre", "Edad", "Altura", "Peso actual", "Peso buscado", "Baja"};
+    DefaultTableModel model = new DefaultTableModel(tablaHeader, 0); // Crear el modelo para la tabla
+    tPaciente.setModel(model); // Asignar el modelo a la tabla
+    tPaciente.setDefaultEditor(Object.class, null); // Deshabilitar edición de las celdas
+    
+    resetearTabla();
+    // Agregar los productos del carrito al modelo
+    List<Paciente> pacientesActivos = pacData.ListarPacienteActivos();
+        for (Paciente paciente : pacientesActivos) {
+        System.out.println(paciente);
+        model.addRow(new Object[]{paciente.getNroPaciente(),
+            paciente.getDni(),
+            paciente.getNombre(),
+            paciente.getEdad(),
+            paciente.getAltura(),
+            paciente.getPesoActual(),
+            paciente.getPesoBuscado(),
+            paciente.isBaja()
+        }
+        );
+    }
+}
+
+    public void resetearTabla() {
+        String tablaHeader[] = {"idPaciente", "Nombre", "Edad", "Altura", "Peso actual", "Peso buscado", "Baja"};
+        DefaultTableModel model = new DefaultTableModel(tablaHeader, 0); // Crear el modelo para la tabla    
+        tPaciente.setModel(model); // Asignar el modelo a la tabla
+        tPaciente.setDefaultEditor(Object.class, null);// Deshabilitar edición de las celdas
+    }
+    
 }

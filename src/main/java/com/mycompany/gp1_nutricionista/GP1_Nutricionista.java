@@ -22,7 +22,7 @@ public class GP1_Nutricionista {
     public static void main(String[] args) throws SQLException {
         //testAlimentoData();
         //testMenuDiario(); FUNCIONA
-        //testPaciente(); FUNCIONA
+        testPaciente(); 
         //testReglon();
     }
 
@@ -83,8 +83,8 @@ public class GP1_Nutricionista {
         /*Estan todos los metodos hechos, Solo tiene que borrar el comentario para probar*/
         //
         // Creamos un paciente y lo agregamos
-        Paciente nuevoPaciente1 = new Paciente("Pepito", 41563259, 21, 180, 65, true);
-        Paciente nuevoPaciente2 = new Paciente("Jepeto", 42562222, 19, 160, 70, false);
+        Paciente nuevoPaciente1 = new Paciente("Pepito", 41563259, 21, 180, 65, 121 ,true);
+        Paciente nuevoPaciente2 = new Paciente("Jepeto", 42562222, 19, 160, 70, 120, false);
         pacData.agregarPaciente(nuevoPaciente1);
         /* Borrar el comentario para probar el agregar Paciente */
         pacData.agregarPaciente(nuevoPaciente2);

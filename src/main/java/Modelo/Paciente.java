@@ -10,24 +10,27 @@ public class Paciente {
     private int edad;
     private float altura;
     private float pesoActual;
+    private float pesoBuscado;
     private boolean baja;
 
-    public Paciente(int nroPaciente, String nombre, int dni, int edad, float altura, float pesoActual, boolean baja) {
+    public Paciente(int nroPaciente, String nombre, int dni, int edad, float altura, float pesoActual, float pesoBuscado, boolean baja) {
         this.nroPaciente = nroPaciente;
         this.nombre = nombre;
         this.dni = dni;
         this.edad = edad;
         this.altura = altura;
         this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
         this.baja = baja;
     }
 
-    public Paciente(String nombre, int dni, int edad, float altura, float pesoActual, boolean baja) {
+    public Paciente(String nombre, int dni, int edad, float altura, float pesoActual, float pesoBuscado, boolean baja) {
         this.nombre = nombre;
         this.dni = dni;
         this.edad = edad;
         this.altura = altura;
         this.pesoActual = pesoActual;
+        this.pesoBuscado = pesoBuscado;
         this.baja = baja;
     }
 
@@ -82,6 +85,16 @@ public class Paciente {
         this.pesoActual = pesoActual;
     }
 
+    public float getPesoBuscado() {
+        return pesoBuscado;
+    }
+
+    public void setPesoBuscado(float pesoBuscado) {
+        this.pesoBuscado = pesoBuscado;
+    }
+    
+    
+
     public boolean isBaja() {
         return baja;
     }
@@ -93,15 +106,18 @@ public class Paciente {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 41 * hash + this.nroPaciente;
-        hash = 41 * hash + Objects.hashCode(this.nombre);
-        hash = 41 * hash + this.dni;
-        hash = 41 * hash + this.edad;
-        hash = 41 * hash + Float.floatToIntBits(this.altura);
-        hash = 41 * hash + Float.floatToIntBits(this.pesoActual);
-        hash = 41 * hash + (this.baja ? 1 : 0);
+        hash = 67 * hash + this.nroPaciente;
+        hash = 67 * hash + Objects.hashCode(this.nombre);
+        hash = 67 * hash + this.dni;
+        hash = 67 * hash + this.edad;
+        hash = 67 * hash + Float.floatToIntBits(this.altura);
+        hash = 67 * hash + Float.floatToIntBits(this.pesoActual);
+        hash = 67 * hash + Float.floatToIntBits(this.pesoBuscado);
+        hash = 67 * hash + (this.baja ? 1 : 0);
         return hash;
     }
+
+
 
     @Override
     public boolean equals(Object obj) {
@@ -135,6 +151,12 @@ public class Paciente {
         }
         return Objects.equals(this.nombre, other.nombre);
     }
+
+    @Override
+    public String toString() {
+        return "Paciente{" + "nroPaciente=" + nroPaciente + ", nombre=" + nombre + ", dni=" + dni + ", edad=" + edad + ", altura=" + altura + ", pesoActual=" + pesoActual + ", pesoBuscado=" + pesoBuscado + ", baja=" + baja + '}';
+    }
+    
     
     
     public void cambiarPeso(){
