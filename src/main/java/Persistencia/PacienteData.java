@@ -11,43 +11,44 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class PacienteData {
+
     private Connection con;
     private static PacienteData obj = null;
 
     public PacienteData() {
         con = Conexion.getConexion();
     }
-    
+
     public static PacienteData getRepo() {
         if (obj == null) {
             obj = new PacienteData();
         }
         return obj;
     }
-    
-    public void agregarPaciente(Paciente paciente) throws SQLException{
+
+    public void agregarPaciente(Paciente paciente) throws SQLException {
         String sql = "INSERT INTO paciente(nombre, dni, edad, altura, baja, pesoActual) VALUES (?, ?, ?, ?, ?, ?);";
-     
-        try{
-        PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, paciente.getNombre());
-        ps.setInt(2, paciente.getDni());
-        ps.setInt(3, paciente.getEdad());
-        ps.setFloat(4, paciente.getAltura());
-        ps.setBoolean(5, paciente.isBaja());
-        ps.setFloat(6, paciente.getPesoActual());
-        
-        // Ejecutar la actualización
-        ps.executeUpdate();
 
-        // Manejar claves generadas (si es necesario)
-        ResultSet rs = ps.getGeneratedKeys();
-        if (rs.next()) {
-            paciente.setNroPaciente(rs.getInt(1));
-        }
+        try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, paciente.getNombre());
+            ps.setInt(2, paciente.getDni());
+            ps.setInt(3, paciente.getEdad());
+            ps.setFloat(4, paciente.getAltura());
+            ps.setBoolean(5, paciente.isBaja());
+            ps.setFloat(6, paciente.getPesoActual());
 
-        rs.close();
-        ps.close();
+            // Ejecutar la actualización
+            ps.executeUpdate();
+
+            // Manejar claves generadas (si es necesario)
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                paciente.setNroPaciente(rs.getInt(1));
+            }
+
+            rs.close();
+            ps.close();
 
             JOptionPane.showMessageDialog(null, "Paciente agregado exitosamente!");
 
@@ -55,126 +56,103 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar al paciente: " + e.getMessage());
         }
     }
-    
-    public Paciente buscarPaciente(int id){
+
+    public Paciente buscarPaciente(int id) {
         String sql = "SELECT * FROM paciente WHERE idPaciente = ?;";
-        
+
         Paciente paciente = null;
-        
-        try{
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, id);
 
-        ResultSet rs = ps.executeQuery();
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
 
-        if (rs.next()) {
-            paciente = new Paciente();
-            
-            paciente.setNroPaciente(rs.getInt("idPaciente"));
-            paciente.setNombre(rs.getString("nombre"));
-            paciente.setDni(rs.getInt("dni"));
-            paciente.setEdad(rs.getInt("edad"));
-            paciente.setAltura(rs.getFloat("altura"));
-            paciente.setBaja(rs.getBoolean("baja"));
-            paciente.setPesoActual(rs.getFloat("pesoActual"));
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                paciente = new Paciente();
+
+                paciente.setNroPaciente(rs.getInt("idPaciente"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setDni(rs.getInt("dni"));
+                paciente.setEdad(rs.getInt("edad"));
+                paciente.setAltura(rs.getFloat("altura"));
+                paciente.setBaja(rs.getBoolean("baja"));
+                paciente.setPesoActual(rs.getFloat("pesoActual"));
             }
-            
+
             rs.close();
             ps.close();
-            
-            if(paciente != null){
+
+            if (paciente != null) {
                 JOptionPane.showMessageDialog(null, "Paciente encontrado!");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se encontro ningun paciente con el ID proporcionado!");
-            }      
-        }catch (SQLException e){
+            }
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar al paciente!");
         }
         return paciente;
     }
-    
-    public void actualizarPaciente(Paciente paciente) throws SQLException{
-    String sql = "UPDATE paciente SET nombre = ?, dni = ?, edad = ?, altura = ?, baja = ?, pesoActual = ? WHERE idPaciente = ?;";
-        
+
+    public void actualizarPaciente(Paciente paciente) throws SQLException {
+        String sql = "UPDATE paciente SET nombre = ?, dni = ?, edad = ?, altura = ?, baja = ?, pesoActual = ? WHERE idPaciente = ?;";
+
         PreparedStatement ps = con.prepareStatement(sql);
-        
-        try{
-        ps.setString(1, paciente.getNombre());
-        ps.setInt(2, paciente.getDni());
-        ps.setInt(3, paciente.getEdad());
-        ps.setFloat(4, paciente.getAltura());
-        ps.setBoolean(5, paciente.isBaja());
-        ps.setFloat(6, paciente.getPesoActual());
-        ps.setInt(7, paciente.getNroPaciente());
-        
-        ps.executeUpdate();
-        
-        }catch(SQLException e){
+
+        try {
+            ps.setString(1, paciente.getNombre());
+            ps.setInt(2, paciente.getDni());
+            ps.setInt(3, paciente.getEdad());
+            ps.setFloat(4, paciente.getAltura());
+            ps.setBoolean(5, paciente.isBaja());
+            ps.setFloat(6, paciente.getPesoActual());
+            ps.setInt(7, paciente.getNroPaciente());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el paciente!");
         }
-        
-    }
-    
-    public List<Paciente> ListarPacienteActivos(){
-        ArrayList<Paciente> listarPaciente = new ArrayList<>();
-        
-        String sql = "SELECT * FROM paciente WHERE baja = false;";
 
-        try{
+    }
+
+    public List<Paciente> listarPacientesBaja(boolean estado) {
+        ArrayList<Paciente> listarPaciente = new ArrayList<>();
+        String sql;
+
+        if (estado) { //Si la condicion se cumple, se le da de baja 
+            sql = "SELECT * FROM paciente WHERE baja = true;";
+        } else { //Si la condicion no se cumple, no se le dara de baja (Osea quedara Activo)
+            sql = "SELECT * FROM paciente WHERE baja = false;";
+        }
+
+        try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
-                Paciente paciente = new Paciente();
-                
-            paciente.setNroPaciente(rs.getInt("idPaciente"));
-            paciente.setNombre(rs.getString("nombre"));
-            paciente.setDni(rs.getInt("dni"));
-            paciente.setEdad(rs.getInt("edad"));
-            paciente.setAltura(rs.getFloat("altura"));
-            paciente.setBaja(rs.getBoolean("baja"));
-            paciente.setPesoActual(rs.getFloat("pesoActual"));
-                
-                listarPaciente.add(paciente);
-            }
-            rs.close();
-            ps.close();   
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al listar los pacientes");
-        }
-        return listarPaciente;        
-    }
-    
-    public List<Paciente> ListarPacienteDadoBaja(){
-        ArrayList<Paciente> listarPaciente = new ArrayList<>();
-        
-        String sql = "SELECT * FROM paciente WHERE baja = true;";
 
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            
-            while(rs.next()){
+            while (rs.next()) {
                 Paciente paciente = new Paciente();
-                
-            paciente.setNroPaciente(rs.getInt("idPaciente"));
-            paciente.setNombre(rs.getString("nombre"));
-            paciente.setDni(rs.getInt("dni"));
-            paciente.setEdad(rs.getInt("edad"));
-            paciente.setAltura(rs.getFloat("altura"));
-            paciente.setBaja(rs.getBoolean("baja"));
-            paciente.setPesoActual(rs.getFloat("pesoActual"));
-                
+
+                paciente.setNroPaciente(rs.getInt("idPaciente"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setDni(rs.getInt("dni"));
+                paciente.setEdad(rs.getInt("edad"));
+                paciente.setAltura(rs.getFloat("altura"));
+                paciente.setBaja(rs.getBoolean("baja"));
+                paciente.setPesoActual(rs.getFloat("pesoActual"));
+
                 listarPaciente.add(paciente);
             }
+
             rs.close();
-            ps.close();   
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al listar los pacientes");
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al listar los pacientes: " + e.getMessage());
         }
-        return listarPaciente;        
+
+        return listarPaciente;
     }
-    
+
     public void estadoAltaPaciente(int id) {
         String sql = "UPDATE paciente SET baja = ? WHERE idPaciente = ?";
 
@@ -196,7 +174,7 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al dar de baja el paciente");
         }
     }
-    
+
     public void estadoBajaPaciente(int id) {
         String sql = "UPDATE paciente SET baja = ? WHERE idPaciente = ?";
 
@@ -219,9 +197,9 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Error al dar de alta el paciente");
         }
     }
-    
+
     public void eliminarPaciente(int id) {
-            String sql = "DELETE FROM paciente WHERE idPaciente = ?";
+        String sql = "DELETE FROM paciente WHERE idPaciente = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -238,7 +216,5 @@ public class PacienteData {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al acceder a la tabla Paciente!");
         }
     }
-    
 
-    
 }

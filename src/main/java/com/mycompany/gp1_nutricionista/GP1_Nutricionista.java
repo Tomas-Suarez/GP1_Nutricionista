@@ -22,7 +22,7 @@ public class GP1_Nutricionista {
     public static void main(String[] args) throws SQLException {
         //testAlimentoData();
         //testMenuDiario(); FUNCIONA
-        testPaciente(); 
+        //testPaciente(); 
         //testReglon();
     }
 
@@ -83,8 +83,8 @@ public class GP1_Nutricionista {
         /*Estan todos los metodos hechos, Solo tiene que borrar el comentario para probar*/
         //
         // Creamos un paciente y lo agregamos
-        Paciente nuevoPaciente1 = new Paciente("Pepito", 41563259, 21, 180, 65, 121 ,true);
-        Paciente nuevoPaciente2 = new Paciente("Jepeto", 42562222, 19, 160, 70, 120, false);
+        Paciente nuevoPaciente1 = new Paciente("Pepito", 41563259, 21, 180, 65,true);
+        Paciente nuevoPaciente2 = new Paciente("Jepeto", 42562222, 19, 160, 70,false);
         pacData.agregarPaciente(nuevoPaciente1);
         /* Borrar el comentario para probar el agregar Paciente */
         pacData.agregarPaciente(nuevoPaciente2);
@@ -102,7 +102,7 @@ public class GP1_Nutricionista {
 
         //pacData.actualizarPaciente(pacienteModificado); /* Borrar el comentario para probar el modificar Paciente */
         //Mostramos los pacientes Activos
-        List<Paciente> pacientesActivos = pacData.ListarPacienteActivos();
+        List<Paciente> pacientesActivos = pacData.listarPacientesBaja(false);
         System.out.println("Pacientes activos");
         for (Paciente paciente : pacientesActivos) {
             System.out.println(paciente);
@@ -110,7 +110,7 @@ public class GP1_Nutricionista {
 
         System.out.println("----------------------------------------------------");
         //Mostramos los pacientes dados de Baja
-        List<Paciente> pacientesDadosDeBaja = pacData.ListarPacienteDadoBaja();
+        List<Paciente> pacientesDadosDeBaja = pacData.listarPacientesBaja(true);
         System.out.println("Pacientes dados de baja:");
         for (Paciente paciente : pacientesDadosDeBaja) {
             System.out.println(paciente);
