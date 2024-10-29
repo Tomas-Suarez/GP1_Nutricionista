@@ -6,18 +6,10 @@ package Vistas;
 
 import Modelo.Paciente;
 import Persistencia.PacienteData;
-import java.awt.Component;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,13 +20,21 @@ public class DetallesPaciente extends javax.swing.JPanel {
 
     private DefaultTableModel tablas = new DefaultTableModel();
     private PacienteData pacData;
+    private static DetallesPaciente obj = null;
+
+    public static DetallesPaciente getRepo() {
+        if (obj == null) {
+            obj = new DetallesPaciente();
+        }
+        return obj;
+    }
 
     /**
      * Creates new form DetallesPaciente
      */
-    public DetallesPaciente() {
+    private DetallesPaciente() {
         initComponents();
-        pacData = new PacienteData();
+        pacData = PacienteData.getRepo();
         if (jrActivo.isSelected()) {
             TablaPaciente(false);
         } else {
@@ -62,23 +62,12 @@ public class DetallesPaciente extends javax.swing.JPanel {
         tPaciente = new javax.swing.JTable();
         jrActivo = new javax.swing.JRadioButton();
         jrNoActivo = new javax.swing.JRadioButton();
-        jpDatos = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        tNombre = new javax.swing.JTextField();
-        tDni = new javax.swing.JTextField();
-        jsEdad = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jcActivo = new javax.swing.JCheckBox();
-        tAltura = new javax.swing.JTextField();
-        tPeso = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
 
         tPaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,184 +99,76 @@ public class DetallesPaciente extends javax.swing.JPanel {
             }
         });
 
-        jpDatos.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jButton2.setText("Agregar paciente");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        tDni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tDniActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Nombre");
-
-        jLabel2.setText("DNI");
-
-        jLabel3.setText("Edad");
-
-        jLabel4.setText("Altura");
-
-        jLabel5.setText("Peso");
-
-        jcActivo.setSelected(true);
-        jcActivo.setText("Activo");
-
-        javax.swing.GroupLayout jpDatosLayout = new javax.swing.GroupLayout(jpDatos);
-        jpDatos.setLayout(jpDatosLayout);
-        jpDatosLayout.setHorizontalGroup(
-            jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDatosLayout.createSequentialGroup()
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpDatosLayout.createSequentialGroup()
-                        .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpDatosLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)))
-                            .addGroup(jpDatosLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDatosLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(tDni)))
-                    .addGroup(jpDatosLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jpDatosLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(98, 98, 98))
-                            .addComponent(jsEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jcActivo)
-                                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tPeso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-                                    .addComponent(tAltura, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                    .addGroup(jpDatosLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-        jpDatosLayout.setVerticalGroup(
-            jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDatosLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jsEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tAltura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcActivo)
-                .addGap(30, 30, 30)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel6.setText("AGREGAR PACIENTE");
-
         jLabel8.setText("BUSCAR");
 
         jLabel9.setText("Doble click para modificar un paciente");
+
+        jButton1.setText("Nuevo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Borrar");
+
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jpDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel6)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jrActivo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jrNoActivo)
-                                .addGap(0, 11, Short.MAX_VALUE)))
-                        .addContainerGap())
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addGap(137, 137, 137))))
+                        .addComponent(jrActivo)
+                        .addGap(34, 34, 34)
+                        .addComponent(jrNoActivo)))
+                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(115, 115, 115)
+                .addComponent(jbEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jrActivo)
-                            .addComponent(jrNoActivo)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 4, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jrActivo)
+                    .addComponent(jrNoActivo)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jbEditar)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tDniActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tDniActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            crearPaciente();
-            if (jrActivo.isSelected()) {
-                TablaPaciente(false); //Actualizamos los valores de la tabla, una vez ingresado un dato
-            } else {
-                TablaPaciente(true); //Actualizamos los valores de la tabla, una vez ingresado un dato
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DetallesPaciente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jrActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrActivoActionPerformed
         TablaPaciente(false);
@@ -297,34 +178,66 @@ public class DetallesPaciente extends javax.swing.JPanel {
         TablaPaciente(true);
     }//GEN-LAST:event_jrNoActivoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ActualizarPaciente actPaciente = new ActualizarPaciente(this);
+
+        JFrame nuevaVista = new JFrame("Nuevo Paciente");
+        nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nuevaVista.getContentPane().add(actPaciente);
+        nuevaVista.pack();
+        nuevaVista.setVisible(true);
+        nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        int rowSelected = tPaciente.getSelectedRow();
+
+        if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
+
+            int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
+            String nombre = (String) tablas.getValueAt(rowSelected, 1);
+            int dni = (Integer) tablas.getValueAt(rowSelected, 2);
+            int edad = (Integer) tablas.getValueAt(rowSelected, 3);
+            float altura = (Float) tablas.getValueAt(rowSelected, 4);
+            float pesoActual = (Float) tablas.getValueAt(rowSelected, 5);
+            String estado = (String) tablas.getValueAt(rowSelected, 6);
+            boolean estadoPaciente;
+            if (estado.equalsIgnoreCase("activo")) {
+                estadoPaciente = false;
+            } else {
+                estadoPaciente = true;
+            }
+
+            Paciente pac = new Paciente(idPaciente, nombre, dni, edad, altura, pesoActual, estadoPaciente);
+            ActualizarPaciente actPaciente = new ActualizarPaciente(pac, this);
+
+            JFrame nuevaVista = new JFrame("Actualizar Paciente");
+            nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            nuevaVista.getContentPane().add(actPaciente);
+            nuevaVista.pack();
+            nuevaVista.setVisible(true);
+            nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
+
+        }
+    }//GEN-LAST:event_jbEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup groupBaja;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JCheckBox jcActivo;
-    private javax.swing.JPanel jpDatos;
+    private javax.swing.JButton jbEditar;
     private javax.swing.JRadioButton jrActivo;
     private javax.swing.JRadioButton jrNoActivo;
-    private javax.swing.JSpinner jsEdad;
-    private javax.swing.JTextField tAltura;
-    private javax.swing.JTextField tDni;
-    private javax.swing.JTextField tNombre;
     private javax.swing.JTable tPaciente;
-    private javax.swing.JTextField tPeso;
     // End of variables declaration//GEN-END:variables
 
-    private void TablaPaciente(boolean estado) {
+    public void TablaPaciente(boolean estado) {
         String tablaHeader[] = {"ID", "Nombre", "DNI", "Edad", "Altura", "Peso", "Estado"};
         tablas.setColumnIdentifiers(tablaHeader);
         tPaciente.setModel(tablas); //Le asiganamos el modelo a la tabla
@@ -346,110 +259,26 @@ public class DetallesPaciente extends javax.swing.JPanel {
         }
     }
 
-    private void crearPaciente() throws SQLException {
-        if (!validarCamposVacios(jpDatos)) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
-            return; //Detenemos el metodo
-        }
-        try {
-            String nombre = tNombre.getText();
-            int dni = Integer.parseInt(tDni.getText());
-            int edad = (int) jsEdad.getValue();
-            float altura = Float.parseFloat(tAltura.getText());
-            float pesoActual = Float.parseFloat(tPeso.getText());
-            boolean baja;
-            if (jcActivo.isSelected()) {
-                baja = false;
-            } else {
-                baja = true;
-            }
-
-            Paciente newPaciente = new Paciente(nombre, dni, edad, altura, pesoActual, baja);
-            pacData.agregarPaciente(newPaciente);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingreso un valor invalido en un campo!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        vaciarCampos(jpDatos);
-    }
-
     private void cambiarModificar(MouseEvent event) { //Ver, tratar de abrir una tabla nueva y pasarle esos datos
         if (event.getClickCount() == 2 && event.getButton() == MouseEvent.BUTTON1) { //Doble click izquierdo
-            int rowSelected = tPaciente.getSelectedRow();
 
-            if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
-
-                int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
-                String nombre = (String) tablas.getValueAt(rowSelected, 1);
-                int dni = (Integer) tablas.getValueAt(rowSelected, 2);
-                int edad = (Integer) tablas.getValueAt(rowSelected, 3);
-                float altura = (Float) tablas.getValueAt(rowSelected, 4);
-                float pesoActual = (Float) tablas.getValueAt(rowSelected, 5);
-                String estado = (String) tablas.getValueAt(rowSelected, 6);
-                boolean estadoPaciente;
-                if(estado.equalsIgnoreCase("activo")){
-                    estadoPaciente = false;
-                }else{
-                    estadoPaciente = true;
-                }
-
-                Paciente pac = new Paciente(idPaciente, nombre, dni, edad, altura, pesoActual, estadoPaciente);
-                ActualizarPaciente actPaciente = new ActualizarPaciente(pac);
-
-                JFrame nuevaVista = new JFrame("Actualizar Paciente");
-                nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                nuevaVista.getContentPane().add(actPaciente);
-                nuevaVista.pack();
-                nuevaVista.setVisible(true);
-                nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
-
-            }
         }
     }
 
-    // El metodo retorna TRUE si todos los campos están llenos. Y en caso contrario retornara FALSE
-    private boolean validarCamposVacios(JPanel jPanel) {
-        for (Component c : jPanel.getComponents()) { //Se fija en los TextField
-            if (c instanceof JTextField) {
-                JTextField caja = (JTextField) c;
-                if (caja.getText().trim().isEmpty()) {
-                    return false;
-                }
-            } else if (c instanceof JSpinner) { //Se fija en los Spinner
-                JSpinner spinner = (JSpinner) c;
-                Number value = (Number) spinner.getValue();
-                if (value.floatValue() <= 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public JRadioButton getJrActivo() {
+        return jrActivo;
     }
 
-    private void vaciarCampos(JPanel jPanel) {
-        JComboBox combo = null;
+    public void setJrActivo(JRadioButton jrActivo) {
+        this.jrActivo = jrActivo;
+    }
 
-        //Nos sirve para vaciar los textAField
-        for (Component c : jPanel.getComponents()) {
-            if (c instanceof JTextField) {
-                JTextField caja = (JTextField) c;
-                caja.setText("");
-            }
-        }
-        //nos sirve para vaciar los ComboBox
-        for (int i = 0; i < jPanel.getComponents().length; i++) {
-            if (jPanel.getComponents()[i] instanceof JTextField) {
-                JTextField caja = (JTextField) jPanel.getComponents()[i];
-                caja.setText("");
-            }
+    public JRadioButton getJrNoActivo() {
+        return jrNoActivo;
+    }
 
-            if (jPanel.getComponents()[i] instanceof JComboBox) {
-                combo = (JComboBox) jPanel.getComponents()[i];
-                combo.setSelectedIndex(-1);
-            }
-        }
-        //Vaciamos el Spinner
-        jsEdad.setValue(0);
+    public void setJrNoActivo(JRadioButton jrNoActivo) {
+        this.jrNoActivo = jrNoActivo;
     }
 
 }

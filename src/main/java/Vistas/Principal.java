@@ -23,7 +23,6 @@ public class Principal extends javax.swing.JFrame {
         bConsultas = new javax.swing.JToggleButton();
         Tablero = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,14 +63,6 @@ public class Principal extends javax.swing.JFrame {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        buttonGroup3.add(jToggleButton1);
-        jToggleButton1.setText("Dieta");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -79,7 +70,6 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bAlimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bConsultas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                     .addComponent(bPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -97,11 +87,9 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(bPaciente)
-                        .addGap(12, 12, 12)
-                        .addComponent(jToggleButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(bAlimento)
-                        .addGap(32, 32, 32)
+                        .addGap(62, 62, 62)
                         .addComponent(bConsultas))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
@@ -113,7 +101,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPacienteActionPerformed
-        DetallesPaciente detPaciente = new DetallesPaciente();
+        DetallesPaciente detPaciente = DetallesPaciente.getRepo();
         ShowPanel(detPaciente);
     }//GEN-LAST:event_bPacienteActionPerformed
 
@@ -125,11 +113,6 @@ public class Principal extends javax.swing.JFrame {
     private void bConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bConsultasActionPerformed
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        VistaDieta detDieta = new VistaDieta();
-        ShowPanel(detDieta);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,7 +156,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JToggleButton bPaciente;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
     private void ShowPanel(JPanel p){

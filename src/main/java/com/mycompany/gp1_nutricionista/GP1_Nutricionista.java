@@ -77,7 +77,7 @@ public class GP1_Nutricionista {
     }
 
     public static void testPaciente() throws SQLException {
-        PacienteData pacData = new PacienteData();
+       PacienteData pacData = PacienteData.getRepo();
 
         //
         /*Estan todos los metodos hechos, Solo tiene que borrar el comentario para probar*/
@@ -85,9 +85,9 @@ public class GP1_Nutricionista {
         // Creamos un paciente y lo agregamos
         Paciente nuevoPaciente1 = new Paciente("Pepito", 41563259, 21, 180, 65,true);
         Paciente nuevoPaciente2 = new Paciente("Jepeto", 42562222, 19, 160, 70,false);
-        pacData.agregarPaciente(nuevoPaciente1);
+       // pacData.agregarPaciente(nuevoPaciente1);
         /* Borrar el comentario para probar el agregar Paciente */
-        pacData.agregarPaciente(nuevoPaciente2);
+        //pacData.agregarPaciente(nuevoPaciente2);
         /* Borrar el comentario para probar el agregar Paciente */
 
         // Modificamos los datos del paciente

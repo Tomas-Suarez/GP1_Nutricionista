@@ -15,7 +15,7 @@ public class PacienteData {
     private Connection con;
     private static PacienteData obj = null;
 
-    public PacienteData() {
+    private PacienteData() {
         con = Conexion.getConexion();
     }
 
@@ -26,7 +26,7 @@ public class PacienteData {
         return obj;
     }
 
-    public void agregarPaciente(Paciente paciente) throws SQLException {
+    public void agregarPaciente(Paciente paciente){
         String sql = "INSERT INTO paciente(nombre, dni, edad, altura, baja, pesoActual) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
@@ -94,12 +94,12 @@ public class PacienteData {
         return paciente;
     }
 
-    public void actualizarPaciente(Paciente paciente) throws SQLException {
+    public void actualizarPaciente(Paciente paciente){
         String sql = "UPDATE paciente SET nombre = ?, dni = ?, edad = ?, altura = ?, baja = ?, pesoActual = ? WHERE idPaciente = ?;";
 
-        PreparedStatement ps = con.prepareStatement(sql);
 
         try {
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, paciente.getNombre());
             ps.setInt(2, paciente.getDni());
             ps.setInt(3, paciente.getEdad());
