@@ -122,8 +122,8 @@ public class ActualizarPaciente extends javax.swing.JPanel {
                             .addComponent(jsEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jlID, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(67, 67, 67))
+                            .addComponent(jlID, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jbExit)
                         .addContainerGap())))
@@ -221,12 +221,23 @@ public class ActualizarPaciente extends javax.swing.JPanel {
             
             pacienteData.actualizarPaciente(paciente);
             JOptionPane.showMessageDialog(this, "Paciente actualizado correctamente!");
+            if(detPaciente.getJrActivo().isSelected()){
+                detPaciente.TablaPaciente(false); //Carga activos?
+            }else{
+                detPaciente.TablaPaciente(true); //Carga no activos?
+            }
             Window window = SwingUtilities.getWindowAncestor(this);
             window.dispose(); //Cerrar la ventana
         } else {
             crearPaciente();
+            if(detPaciente.getJrActivo().isSelected()){
+                detPaciente.TablaPaciente(false); //Carga activos?
+            }else{
+                detPaciente.TablaPaciente(true); //Carga no activos?
+            }
+                Window window = SwingUtilities.getWindowAncestor(this);
+                window.dispose(); //Cerrar la ventana
         }
-        detPaciente.TablaPaciente(false);
     }//GEN-LAST:event_jbActualizarActionPerformed
 
 
@@ -270,7 +281,6 @@ public class ActualizarPaciente extends javax.swing.JPanel {
             pacienteData.agregarPaciente(newPaciente);
             
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Ingreso un valor invalido en un campo!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

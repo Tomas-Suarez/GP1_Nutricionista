@@ -208,6 +208,7 @@ public class PacienteData {
 
             if (fila == 1) {
                 JOptionPane.showMessageDialog(null, "El paciente fue eliminado de forma permanente correctamente!");
+                                
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró ningún paciente con el ID: " + id);
             }

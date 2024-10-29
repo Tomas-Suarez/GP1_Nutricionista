@@ -59,9 +59,9 @@
                               <Component id="jsEdad" min="-2" pref="112" max="-2" attributes="0"/>
                               <Component id="tPeso" min="-2" pref="100" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jlID" min="-2" pref="12" max="-2" attributes="0"/>
+                              <Component id="jlID" min="-2" pref="135" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jbExit" min="-2" max="-2" attributes="0"/>

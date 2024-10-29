@@ -9,6 +9,7 @@ import Persistencia.PacienteData;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,11 +63,11 @@ public class DetallesPaciente extends javax.swing.JPanel {
         tPaciente = new javax.swing.JTable();
         jrActivo = new javax.swing.JRadioButton();
         jrNoActivo = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
+        jtBuscar = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbNuevo = new javax.swing.JButton();
+        jbBorrar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
 
         tPaciente.setModel(new javax.swing.table.DefaultTableModel(
@@ -99,18 +100,29 @@ public class DetallesPaciente extends javax.swing.JPanel {
             }
         });
 
+        jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBuscarKeyReleased(evt);
+            }
+        });
+
         jLabel8.setText("BUSCAR");
 
         jLabel9.setText("Doble click para modificar un paciente");
 
-        jButton1.setText("Nuevo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbNuevoActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Borrar");
+        jbBorrar.setText("Borrar");
+        jbBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBorrarActionPerformed(evt);
+            }
+        });
 
         jbEditar.setText("Editar");
         jbEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +144,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jrActivo)
                         .addGap(34, 34, 34)
@@ -144,9 +156,9 @@ public class DetallesPaciente extends javax.swing.JPanel {
                 .addGap(115, 115, 115)
                 .addComponent(jbEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jbNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jbBorrar)
                 .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
@@ -154,7 +166,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jrActivo)
                     .addComponent(jrNoActivo)
                     .addComponent(jLabel8))
@@ -162,9 +174,9 @@ public class DetallesPaciente extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jbNuevo)
                     .addComponent(jbEditar)
-                    .addComponent(jButton2)
+                    .addComponent(jbBorrar)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -178,7 +190,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
         TablaPaciente(true);
     }//GEN-LAST:event_jrNoActivoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         ActualizarPaciente actPaciente = new ActualizarPaciente(this);
 
         JFrame nuevaVista = new JFrame("Nuevo Paciente");
@@ -187,7 +199,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
         nuevaVista.pack();
         nuevaVista.setVisible(true);
         nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         int rowSelected = tPaciente.getSelectedRow();
@@ -221,19 +233,45 @@ public class DetallesPaciente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jbEditarActionPerformed
 
+    private void jbBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarActionPerformed
+        int rowSelected = tPaciente.getSelectedRow();
+        if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
+            if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de borrar al paciente de forma permanente?") == 0) {
+
+                int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
+                pacData.eliminarPaciente(idPaciente);
+                TablaPaciente(!jrActivo.isSelected());
+
+            }
+        }
+
+
+    }//GEN-LAST:event_jbBorrarActionPerformed
+
+    private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
+        String nombre = jtBuscar.getText().toLowerCase().trim();
+        List<Paciente> pacientesActivos = pacData.listarPacientesBaja(!jrActivo.isSelected());
+        List<Paciente> listaFiltrada = pacientesActivos.stream().filter(paciente -> {
+            String x = paciente.getNombre() +" " + paciente.getDni();
+            x = x.toLowerCase();
+            return x.contains(nombre);
+        }).toList();
+        TablaFiltrada(listaFiltrada);
+    }//GEN-LAST:event_jtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup groupBaja;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbBorrar;
     private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbNuevo;
     private javax.swing.JRadioButton jrActivo;
     private javax.swing.JRadioButton jrNoActivo;
+    private javax.swing.JTextField jtBuscar;
     private javax.swing.JTable tPaciente;
     // End of variables declaration//GEN-END:variables
 
@@ -247,6 +285,27 @@ public class DetallesPaciente extends javax.swing.JPanel {
 
         List<Paciente> pacientesActivos = pacData.listarPacientesBaja(estado); //Llenamos con los pacientes activos(Va a venir por defecto)
         for (Paciente paciente : pacientesActivos) {
+            tablas.addRow(new Object[]{
+                paciente.getNroPaciente(),
+                paciente.getNombre(),
+                paciente.getDni(),
+                paciente.getEdad(),
+                paciente.getAltura(),
+                paciente.getPesoActual(),
+                paciente.isBaja() ? "No activo" : "Activo" //Si es TRUE, lo coloca en "No activo", y si es FALSE lo coloca en "Activo"
+            });
+        }
+    }
+
+    public void TablaFiltrada(List<Paciente> nuevaLista) {
+        String tablaHeader[] = {"ID", "Nombre", "DNI", "Edad", "Altura", "Peso", "Estado"};
+        tablas.setColumnIdentifiers(tablaHeader);
+        tPaciente.setModel(tablas); //Le asiganamos el modelo a la tabla
+        tPaciente.setDefaultEditor(Object.class, null); // Deshabilita la edicion de celdas
+
+        tablas.setRowCount(0); //Es para que cada vez q llamemos la tabla, no se duplique
+
+        for (Paciente paciente : nuevaLista) {
             tablas.addRow(new Object[]{
                 paciente.getNroPaciente(),
                 paciente.getNombre(),
