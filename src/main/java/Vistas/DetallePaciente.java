@@ -38,7 +38,7 @@ public class DetallePaciente extends javax.swing.JPanel {
     }
 
     public void llenarTablaDietas(List<Dieta> dietas) {
-        var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio"};
+        var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio", "Baja"};
         DefaultTableModel model = new DefaultTableModel(header, 0);
         tablaDietas.setModel(model);
 
@@ -55,7 +55,8 @@ public class DetallePaciente extends javax.swing.JPanel {
                 dieta,
                 dieta.getTotalCalorias(),
                 dieta.getPesoObjetivo(),
-                dieta.getFechaInicio()
+                dieta.getFechaInicio(),
+                dieta.getBaja()
             });
         }
         llenarTablaMenu();
@@ -159,6 +160,11 @@ public class DetallePaciente extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tablaDietas);
 
         jButton6.setText("Historial");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Lista dietas");
 
@@ -290,15 +296,16 @@ public class DetallePaciente extends javax.swing.JPanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        var dieta = (Dieta) getDietaSeleccionada();
+        if (dieta == null || dieta.getBaja() == true) {
+            return;
+        }
+
         var res = JOptionPane.showConfirmDialog(null, "¿Realmente desea dar de baja la dieta seleccionada?");
         if (res != 0) {
             return;
         }
 
-        var dieta = (Dieta) getDietaSeleccionada();
-        if (dieta == null) {
-            return;
-        }
         repoDieta.disable(dieta);
         llenarTablaDietas(null);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -307,6 +314,11 @@ public class DetallePaciente extends javax.swing.JPanel {
         // TODO add your handling code here:
         llenarTablaMenu();
     }//GEN-LAST:event_tablaDietasMouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        llenarTablaDietas(repoDieta.getAll());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
