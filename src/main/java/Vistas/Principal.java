@@ -101,7 +101,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPacienteActionPerformed
-        DetallesPaciente detPaciente = DetallesPaciente.getRepo();
+        DetallesPaciente detPaciente = new DetallesPaciente();
         ShowPanel(detPaciente);
     }//GEN-LAST:event_bPacienteActionPerformed
 

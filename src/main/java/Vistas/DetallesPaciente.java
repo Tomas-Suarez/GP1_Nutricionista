@@ -23,17 +23,12 @@ public class DetallesPaciente extends javax.swing.JPanel {
     private PacienteData pacData;
     private static DetallesPaciente obj = null;
 
-    public static DetallesPaciente getRepo() {
-        if (obj == null) {
-            obj = new DetallesPaciente();
-        }
-        return obj;
-    }
+
 
     /**
      * Creates new form DetallesPaciente
      */
-    private DetallesPaciente() {
+    public DetallesPaciente() {
         initComponents();
         pacData = PacienteData.getRepo();
         if (jrActivo.isSelected()) {
@@ -100,6 +95,11 @@ public class DetallesPaciente extends javax.swing.JPanel {
             }
         });
 
+        jtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtBuscarActionPerformed(evt);
+            }
+        });
         jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtBuscarKeyReleased(evt);
@@ -230,6 +230,8 @@ public class DetallesPaciente extends javax.swing.JPanel {
             nuevaVista.setVisible(true);
             nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
 
+        }else{
+            JOptionPane.showMessageDialog(null, "probando");
         }
     }//GEN-LAST:event_jbEditarActionPerformed
 
@@ -249,15 +251,12 @@ public class DetallesPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_jbBorrarActionPerformed
 
     private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
-        String nombre = jtBuscar.getText().toLowerCase().trim();
-        List<Paciente> pacientesActivos = pacData.listarPacientesBaja(!jrActivo.isSelected());
-        List<Paciente> listaFiltrada = pacientesActivos.stream().filter(paciente -> {
-            String x = paciente.getNombre() +" " + paciente.getDni();
-            x = x.toLowerCase();
-            return x.contains(nombre);
-        }).toList();
-        TablaFiltrada(listaFiltrada);
+        TablaPaciente(!jrActivo.isSelected());
     }//GEN-LAST:event_jtBuscarKeyReleased
+
+    private void jtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBuscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -283,8 +282,15 @@ public class DetallesPaciente extends javax.swing.JPanel {
 
         tablas.setRowCount(0); //Es para que cada vez q llamemos la tabla, no se duplique
 
-        List<Paciente> pacientesActivos = pacData.listarPacientesBaja(estado); //Llenamos con los pacientes activos(Va a venir por defecto)
-        for (Paciente paciente : pacientesActivos) {
+        String nombre = jtBuscar.getText().toLowerCase().trim();
+        List<Paciente> pacientesActivos = pacData.listarPacientesBaja(!jrActivo.isSelected());
+        List<Paciente> listaFiltrada = pacientesActivos.stream().filter(paciente -> {
+            String x = paciente.getNombre() + " " + paciente.getDni();
+            x = x.toLowerCase();
+            return x.contains(nombre);
+        }).toList();
+
+        for (Paciente paciente : listaFiltrada) {
             tablas.addRow(new Object[]{
                 paciente.getNroPaciente(),
                 paciente.getNombre(),
@@ -297,26 +303,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
         }
     }
 
-    public void TablaFiltrada(List<Paciente> nuevaLista) {
-        String tablaHeader[] = {"ID", "Nombre", "DNI", "Edad", "Altura", "Peso", "Estado"};
-        tablas.setColumnIdentifiers(tablaHeader);
-        tPaciente.setModel(tablas); //Le asiganamos el modelo a la tabla
-        tPaciente.setDefaultEditor(Object.class, null); // Deshabilita la edicion de celdas
 
-        tablas.setRowCount(0); //Es para que cada vez q llamemos la tabla, no se duplique
-
-        for (Paciente paciente : nuevaLista) {
-            tablas.addRow(new Object[]{
-                paciente.getNroPaciente(),
-                paciente.getNombre(),
-                paciente.getDni(),
-                paciente.getEdad(),
-                paciente.getAltura(),
-                paciente.getPesoActual(),
-                paciente.isBaja() ? "No activo" : "Activo" //Si es TRUE, lo coloca en "No activo", y si es FALSE lo coloca en "Activo"
-            });
-        }
-    }
 
     private void cambiarModificar(MouseEvent event) { //Ver, tratar de abrir una tabla nueva y pasarle esos datos
         if (event.getClickCount() == 2 && event.getButton() == MouseEvent.BUTTON1) { //Doble click izquierdo
