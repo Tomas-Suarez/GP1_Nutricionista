@@ -38,11 +38,18 @@ public class DetallePaciente extends javax.swing.JPanel {
     }
 
     public void llenarTablaDietas(List<Dieta> dietas) {
-        if (dietas == null) {
-            dietas = repoDieta.getByStatus(false);
-        }
         var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio"};
         DefaultTableModel model = new DefaultTableModel(header, 0);
+        tablaDietas.setModel(model);
+
+        if (dietas == null) {
+            dietas = repoDieta.getByStatus(false);
+            if (dietas.isEmpty()) {
+                llenarTablaMenu();
+                return;
+            }
+        }
+
         for (var dieta : dietas) {
             model.addRow(new Object[]{
                 dieta,
@@ -51,17 +58,19 @@ public class DetallePaciente extends javax.swing.JPanel {
                 dieta.getFechaInicio()
             });
         }
-        tablaDietas.setModel(model);
         llenarTablaMenu();
     }
 
     public void llenarTablaMenu() {
-        Dieta dieta = getDietaSeleccionada();
-        if (dieta == null) {
-            return;
-        }
         var header = new String[]{"Nombre", "Calorias", "Día"};
         DefaultTableModel model = new DefaultTableModel(header, 0);
+        tablaMenu.setModel(model);
+
+        Dieta dieta = getDietaSeleccionada();
+        if (dieta == null || dieta.getMenus().isEmpty()) {
+            return;
+        }
+
         for (var menu : dieta.getMenu()) {
             model.addRow(new Object[]{
                 menu,
@@ -69,15 +78,16 @@ public class DetallePaciente extends javax.swing.JPanel {
                 menu.getDia()
             });
         }
-        tablaMenu.setModel(model);
     }
 
     public Dieta getDietaSeleccionada() {
         Dieta dieta = null;
-        var y = tablaDietas.getSelectedRow();
-        y = y < 0 ? 0 : y;
-        dieta = (Dieta) tablaDietas.getValueAt(y, 0);
-
+        try {
+            var y = tablaDietas.getSelectedRow();
+            y = y < 0 ? 0 : y;
+            dieta = (Dieta) tablaDietas.getValueAt(y, 0);
+        } catch (Exception ex) {
+        }
         return dieta;
     }
 
@@ -281,8 +291,10 @@ public class DetallePaciente extends javax.swing.JPanel {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         var res = JOptionPane.showConfirmDialog(null, "¿Realmente desea dar de baja la dieta seleccionada?");
-        if (res != 0) return;
-        
+        if (res != 0) {
+            return;
+        }
+
         var dieta = (Dieta) getDietaSeleccionada();
         if (dieta == null) {
             return;
