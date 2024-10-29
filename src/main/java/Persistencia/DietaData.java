@@ -34,14 +34,14 @@ public class DietaData {
 
     public void save(Dieta dieta) {
         try {
-            var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, idPaciente, baja)"
+            var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoObjetivo, totalCalorias, idPaciente, baja)"
                     + "values (?,?,?,?,?,?,?);";
             var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, dieta.getNombre());
             ps.setDate(2, Date.valueOf(dieta.getFechaInicio()));
             ps.setFloat(3, dieta.getPesoInicial());
-            ps.setFloat(4, dieta.getPesoFinal());
+            ps.setFloat(4, dieta.getPesoObjetivo());
             ps.setInt(5, dieta.getTotalCalorias());
             ps.setInt(6, dieta.getPaciente().getNroPaciente());
             ps.setBoolean(7, dieta.getBaja());
@@ -69,7 +69,11 @@ public class DietaData {
             dieta.setCodDieta(rs.getInt("codDieta"));
             dieta.setNombre(rs.getString("nombre"));
             dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-            dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
+            try {
+                dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
             dieta.setTotalCalorias(rs.getInt("totalCalorias"));
             dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
             dieta.setBaja(rs.getBoolean("baja"));
@@ -95,7 +99,11 @@ public class DietaData {
                 dieta.setCodDieta(rs.getInt("idDieta"));
                 dieta.setNombre(rs.getString("nombre"));
                 dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-                dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
+                try {
+                    dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
+                } catch (Exception ex) {
+
+                }
                 dieta.setTotalCalorias(rs.getInt("totalCalorias"));
                 dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
                 dieta.setBaja(rs.getBoolean("baja"));
@@ -107,6 +115,37 @@ public class DietaData {
             System.out.println(ex.getMessage());
         }
 
+        return dietas;
+    }
+
+    public List<Dieta> getByStatus(boolean status) {
+        List<Dieta> dietas = new ArrayList();
+        var sql = "select * from dieta where baja = ?";
+        try {
+            var ps = connection.prepareStatement(sql);
+            ps.setBoolean(1, status);
+            var rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Dieta dieta = new Dieta();
+                dieta.setCodDieta(rs.getInt("idDieta"));
+                dieta.setNombre(rs.getString("nombre"));
+                dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                try {
+                    dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
+                } catch (Exception ex) {
+
+                }
+                dieta.setTotalCalorias(rs.getInt("totalCalorias"));
+                dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
+                dieta.setBaja(rs.getBoolean("baja"));
+                dieta.setMenu(repoMenu.obtenerMenusPorDieta(dieta.getCodDieta()));
+
+                dietas.add(dieta);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         return dietas;
     }
 
@@ -125,6 +164,7 @@ public class DietaData {
         var sql = "update dieta set baja = 1 where idDieta = ?";
         try {
             var ps = connection.prepareStatement(sql);
+            ps.setInt(1, dieta.getCodDieta());
             ps.execute();
             ps.close();
         } catch (Exception ex) {
@@ -136,6 +176,7 @@ public class DietaData {
         var sql = "update dieta set baja = 0 where idDieta = ?";
         try {
             var ps = connection.prepareStatement(sql);
+            ps.setInt(1, dieta.getCodDieta());
             ps.execute();
             ps.close();
         } catch (Exception ex) {

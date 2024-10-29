@@ -63,6 +63,11 @@ public class Dieta {
     public Dieta() {
     }
 
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
+
     public int getCodDieta() {
         return codDieta;
     }
