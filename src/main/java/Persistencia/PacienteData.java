@@ -84,7 +84,7 @@ public class PacienteData {
             ps.close();
 
             if (paciente != null) {
-                JOptionPane.showMessageDialog(null, "Paciente encontrado!");
+                //JOptionPane.showMessageDialog(null, "Paciente encontrado!");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro ningun paciente con el ID proporcionado!");
             }

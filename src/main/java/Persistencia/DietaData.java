@@ -2,7 +2,6 @@ package Persistencia;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
@@ -10,6 +9,7 @@ import java.sql.Statement;
 import Modelo.Dieta;
 
 public class DietaData {
+
     private static DietaData obj = null;
     private Connection connection;
     private String[] header;
@@ -17,13 +17,12 @@ public class DietaData {
     private MenuDiarioData repoMenu;
 
     private DietaData() {
-        obj = new DietaData();
         connection = Conexion.getConexion();
         repoPaciente = PacienteData.getRepo();
         repoMenu = new MenuDiarioData();
 
-        header = new String[] { "codDieta", "nombre", "fechaInicio", "fechaFin",
-                "pesoInicial", "pesoFinal", "totalCalorias", "nroPaciente", "baja" };
+        header = new String[]{"idDieta", "nombre", "fechaInicio", "fechaFin",
+            "pesoInicial", "pesoFinal", "totalCalorias", "idPaciente", "baja"};
     }
 
     public static DietaData getRepo() {
@@ -35,7 +34,7 @@ public class DietaData {
 
     public void save(Dieta dieta) {
         try {
-            var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, nroPaciente, baja)"
+            var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, idPaciente, baja)"
                     + "values (?,?,?,?,?,?,?);";
             var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -54,9 +53,6 @@ public class DietaData {
                 dieta.setCodDieta(rs.getInt(1));
             }
 
-            dieta.getMenu().forEach(menu -> {
-                repoMenu.agregarMenuDiario(menu);
-            });
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -75,8 +71,10 @@ public class DietaData {
             dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
             dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
             dieta.setTotalCalorias(rs.getInt("totalCalorias"));
-            dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("nroPaciente")));
+            dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
             dieta.setBaja(rs.getBoolean("baja"));
+
+            dieta.setMenu(repoMenu.obtenerMenusPorDieta(dieta.getCodDieta()));
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -84,33 +82,91 @@ public class DietaData {
         return dieta;
     }
 
-    public List<Dieta> getAll() throws SQLException {
+    public List<Dieta> getAll() {
         List<Dieta> dietas = new ArrayList<>();
 
         var sql = "select * from dieta";
-        var ps = connection.prepareStatement(sql, this.header);
-        var rs = ps.executeQuery();
+        try {
+            var ps = connection.prepareStatement(sql, this.header);
+            var rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Dieta dieta = new Dieta();
-            dieta.setCodDieta(rs.getInt("codDieta"));
-            dieta.setNombre(rs.getString("nombre"));
-            dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
-            dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
-            dieta.setTotalCalorias(rs.getInt("totalCalorias"));
-            dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("nroPaciente")));
-            dieta.setBaja(rs.getBoolean("baja"));
-            dietas.add(dieta);
+            while (rs.next()) {
+                Dieta dieta = new Dieta();
+                dieta.setCodDieta(rs.getInt("idDieta"));
+                dieta.setNombre(rs.getString("nombre"));
+                dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
+                dieta.setTotalCalorias(rs.getInt("totalCalorias"));
+                dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
+                dieta.setBaja(rs.getBoolean("baja"));
+                dieta.setMenu(repoMenu.obtenerMenusPorDieta(dieta.getCodDieta()));
+
+                dietas.add(dieta);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
 
         return dietas;
     }
 
-    public void remove(int id) throws SQLException {
+    public void remove(Dieta dieta) {
         var sql = "delete from dieta where id = ?";
-        var ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ps.executeUpdate();
+        try {
+            var ps = connection.prepareStatement(sql);
+            ps.setInt(1, dieta.getCodDieta());
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-    
+
+    public void disable(Dieta dieta) {
+        var sql = "update dieta set baja = 1 where idDieta = ?";
+        try {
+            var ps = connection.prepareStatement(sql);
+            ps.execute();
+            ps.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void enable(Dieta dieta) {
+        var sql = "update dieta set baja = 0 where idDieta = ?";
+        try {
+            var ps = connection.prepareStatement(sql);
+            ps.execute();
+            ps.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    public void update(Dieta dieta) {
+        try {
+            var sql = "update dieta set (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, idPaciente, baja)"
+                    + "values (?,?,?,?,?,?,?);";
+            var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            ps.setString(1, dieta.getNombre());
+            ps.setDate(2, Date.valueOf(dieta.getFechaInicio()));
+            ps.setFloat(3, dieta.getPesoInicial());
+            ps.setFloat(4, dieta.getPesoFinal());
+            ps.setInt(5, dieta.getTotalCalorias());
+            ps.setInt(6, dieta.getPaciente().getNroPaciente());
+            ps.setBoolean(7, dieta.getBaja());
+
+            ps.executeQuery();
+
+            var rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                dieta.setCodDieta(rs.getInt(1));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 }

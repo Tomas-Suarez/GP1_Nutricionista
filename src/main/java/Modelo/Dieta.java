@@ -31,6 +31,22 @@ public class Dieta {
         this.paciente = paciente;
     }
 
+    public List<MenuDiario> getMenus() {
+        return Menus;
+    }
+
+    public void setMenus(List<MenuDiario> Menus) {
+        this.Menus = Menus;
+    }
+
+    public float getPesoObjetivo() {
+        return pesoObjetivo;
+    }
+
+    public void setPesoObjetivo(float pesoObjetivo) {
+        this.pesoObjetivo = pesoObjetivo;
+    }
+
     public Dieta(String nombre, LocalDate fechaInicio, LocalDate fechaFinal, float pesoInicial, float pesoFinal, float pesoObjetivo, Boolean baja, int TotalCalorias, Paciente paciente) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
