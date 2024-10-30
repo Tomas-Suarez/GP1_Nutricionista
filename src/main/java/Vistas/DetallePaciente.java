@@ -47,12 +47,13 @@ public class DetallePaciente extends javax.swing.JPanel {
         tablaDietas.setModel(model);
 
         if (dietas == null) {
-            dietas = repoDieta.getByStatus(false);
+            dietas = repoDieta.getByStatus(checkboxActivas.isSelected());
             if (dietas.isEmpty()) {
                 llenarTablaMenu();
                 return;
             }
         }
+        btnBaja.setVisible(!checkboxActivas.isSelected());
 
         for (var dieta : dietas) {
             model.addRow(new Object[]{
@@ -60,7 +61,7 @@ public class DetallePaciente extends javax.swing.JPanel {
                 dieta.getTotalCalorias(),
                 dieta.getPesoObjetivo(),
                 dieta.getFechaInicio(),
-                dieta.getBaja() ? "No activa" : "Activa"
+                dieta.getBaja() ? "Finalizada" : "En curso"
             });
         }
         llenarTablaMenu();
@@ -111,10 +112,9 @@ public class DetallePaciente extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnBaja = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDietas = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -124,6 +124,7 @@ public class DetallePaciente extends javax.swing.JPanel {
         labelEdad = new javax.swing.JLabel();
         labelTalla = new javax.swing.JLabel();
         labelIMC = new javax.swing.JLabel();
+        checkboxActivas = new javax.swing.JCheckBox();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -142,10 +143,10 @@ public class DetallePaciente extends javax.swing.JPanel {
 
         jButton4.setText("Remover entrada");
 
-        jButton5.setText("Cerrar dieta");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnBaja.setText("Dar de baja");
+        btnBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnBajaActionPerformed(evt);
             }
         });
 
@@ -166,13 +167,6 @@ public class DetallePaciente extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tablaDietas);
-
-        jButton6.setText("Historial");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
 
         jLabel9.setText("Lista dietas");
 
@@ -199,6 +193,13 @@ public class DetallePaciente extends javax.swing.JPanel {
 
         labelIMC.setText("IMC: ");
 
+        checkboxActivas.setText("Finalizadas");
+        checkboxActivas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkboxActivasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -210,17 +211,6 @@ public class DetallePaciente extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelPaciente)
@@ -235,7 +225,18 @@ public class DetallePaciente extends javax.swing.JPanel {
                                         .addGap(6, 6, 6)
                                         .addComponent(labelIMC))
                                     .addComponent(labelPesoActual))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(checkboxActivas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnBaja)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -266,8 +267,8 @@ public class DetallePaciente extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(btnBaja)
+                    .addComponent(checkboxActivas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -326,7 +327,7 @@ public class DetallePaciente extends javax.swing.JPanel {
         llenarTablaDietas(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBajaActionPerformed
         // TODO add your handling code here:
         var dieta = (Dieta) getDietaSeleccionada();
         if (dieta == null || dieta.getBaja() == true) {
@@ -343,25 +344,25 @@ public class DetallePaciente extends javax.swing.JPanel {
         dieta.setPesoFinal(paciente.getPesoActual());
         repoDieta.update(dieta);
         llenarTablaDietas(null);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnBajaActionPerformed
 
     private void tablaDietasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDietasMouseClicked
         // TODO add your handling code here:
         llenarTablaMenu();
     }//GEN-LAST:event_tablaDietasMouseClicked
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void checkboxActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxActivasActionPerformed
         // TODO add your handling code here:
-        llenarTablaDietas(repoDieta.getAll());
-    }//GEN-LAST:event_jButton6ActionPerformed
+        llenarTablaDietas(null);
+    }//GEN-LAST:event_checkboxActivasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBaja;
+    private javax.swing.JCheckBox checkboxActivas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
