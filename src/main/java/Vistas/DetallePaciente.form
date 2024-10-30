@@ -71,6 +71,19 @@
                                       <Component id="labelPaciente" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="labelDNI" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="labelEdad" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelTalla" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                          <Component id="labelIMC" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="labelPesoActual" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -94,9 +107,17 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelPaciente" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelPaciente" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelPesoActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelEdad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelDNI" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelDNI" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelTalla" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelIMC" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -252,6 +273,26 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="labelPesoActual">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Peso actual: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelEdad">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edad: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelTalla">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Talla: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelIMC">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="IMC: "/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

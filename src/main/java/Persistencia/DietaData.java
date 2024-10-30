@@ -69,6 +69,8 @@ public class DietaData {
             dieta.setCodDieta(rs.getInt("codDieta"));
             dieta.setNombre(rs.getString("nombre"));
             dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+            dieta.setPesoObjetivo(rs.getFloat("pesoObjetivo"));
+
             try {
                 dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
             } catch (Exception ex) {
@@ -98,6 +100,8 @@ public class DietaData {
                 Dieta dieta = new Dieta();
                 dieta.setCodDieta(rs.getInt("idDieta"));
                 dieta.setNombre(rs.getString("nombre"));
+                dieta.setPesoObjetivo(rs.getFloat("pesoObjetivo"));
+
                 dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
                 try {
                     dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
@@ -131,6 +135,7 @@ public class DietaData {
                 dieta.setCodDieta(rs.getInt("idDieta"));
                 dieta.setNombre(rs.getString("nombre"));
                 dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
+                dieta.setPesoObjetivo(rs.getFloat("pesoObjetivo"));
                 try {
                     dieta.setFechaFinal(rs.getDate("fechaFin").toLocalDate());
                 } catch (Exception ex) {
@@ -160,50 +165,19 @@ public class DietaData {
         }
     }
 
-    public void disable(Dieta dieta) {
-        var sql = "update dieta set baja = 1 where idDieta = ?";
-        try {
-            var ps = connection.prepareStatement(sql);
-            ps.setInt(1, dieta.getCodDieta());
-            ps.execute();
-            ps.close();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public void enable(Dieta dieta) {
-        var sql = "update dieta set baja = 0 where idDieta = ?";
-        try {
-            var ps = connection.prepareStatement(sql);
-            ps.setInt(1, dieta.getCodDieta());
-            ps.execute();
-            ps.close();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
     public void update(Dieta dieta) {
         try {
-            var sql = "update dieta set (nombre, fechaInicio, pesoInicial, pesoFinal, totalCalorias, idPaciente, baja)"
-                    + "values (?,?,?,?,?,?,?);";
+            var sql = "update dieta set nombre = ?, pesoFinal = ?, totalCalorias = ?, baja = ?, fechaFin = ? where idDieta = ?";
             var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+            
             ps.setString(1, dieta.getNombre());
-            ps.setDate(2, Date.valueOf(dieta.getFechaInicio()));
-            ps.setFloat(3, dieta.getPesoInicial());
-            ps.setFloat(4, dieta.getPesoFinal());
-            ps.setInt(5, dieta.getTotalCalorias());
-            ps.setInt(6, dieta.getPaciente().getNroPaciente());
-            ps.setBoolean(7, dieta.getBaja());
+            ps.setFloat(2, dieta.getPesoFinal());
+            ps.setFloat(3, dieta.getTotalCalorias());
+            ps.setBoolean(4, dieta.getBaja());
+            ps.setDate(5, Date.valueOf(dieta.getFechaFinal()));
+            ps.setInt(6, dieta.getCodDieta());
 
             ps.executeQuery();
-
-            var rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                dieta.setCodDieta(rs.getInt(1));
-            }
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -28,8 +28,12 @@ public class DetallePaciente extends javax.swing.JPanel {
         this.paciente = paciente;
         this.repoDieta = DietaData.getRepo();
         initComponents();
-        labelPaciente.setText(labelPaciente.getText() + paciente.getNombre());
-        labelDNI.setText(labelDNI.getText() + paciente.getDni());
+        labelPaciente.setText("Nombre: " + paciente.getNombre());
+        labelDNI.setText("DNI: " + paciente.getDni());
+        labelPesoActual.setText("Peso actual: " + paciente.getPesoActual() + "kg");
+        labelTalla.setText("Talla: " + paciente.getAltura() + "cm");
+        labelEdad.setText("Edad: " + paciente.getEdad());
+        labelIMC.setText("IMC: %.2f".formatted(paciente.getPesoActual() / Math.pow((paciente.getAltura() / 100), 2)));
         llenarTablaDietas(null);
         tablaDietas.setDefaultEditor(Object.class, null);
         tablaDietas.setSelectionMode(0);
@@ -38,7 +42,7 @@ public class DetallePaciente extends javax.swing.JPanel {
     }
 
     public void llenarTablaDietas(List<Dieta> dietas) {
-        var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio", "Baja"};
+        var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio", "Estado"};
         DefaultTableModel model = new DefaultTableModel(header, 0);
         tablaDietas.setModel(model);
 
@@ -56,7 +60,7 @@ public class DetallePaciente extends javax.swing.JPanel {
                 dieta.getTotalCalorias(),
                 dieta.getPesoObjetivo(),
                 dieta.getFechaInicio(),
-                dieta.getBaja()
+                dieta.getBaja() ? "No activa" : "Activa"
             });
         }
         llenarTablaMenu();
@@ -116,6 +120,10 @@ public class DetallePaciente extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaMenu = new javax.swing.JTable();
+        labelPesoActual = new javax.swing.JLabel();
+        labelEdad = new javax.swing.JLabel();
+        labelTalla = new javax.swing.JLabel();
+        labelIMC = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -183,6 +191,14 @@ public class DetallePaciente extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(tablaMenu);
 
+        labelPesoActual.setText("Peso actual: ");
+
+        labelEdad.setText("Edad: ");
+
+        labelTalla.setText("Talla: ");
+
+        labelIMC.setText("IMC: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -209,6 +225,16 @@ public class DetallePaciente extends javax.swing.JPanel {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelPaciente)
                                     .addComponent(labelDNI))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelEdad)
+                                    .addComponent(labelTalla))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(labelIMC))
+                                    .addComponent(labelPesoActual))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -224,9 +250,15 @@ public class DetallePaciente extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelPaciente)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPaciente)
+                    .addComponent(labelPesoActual)
+                    .addComponent(labelEdad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDNI)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDNI)
+                    .addComponent(labelTalla)
+                    .addComponent(labelIMC))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -270,12 +302,13 @@ public class DetallePaciente extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String inputNombre = null;
+        Float pesoObjetivo = null;
+
         try {
             inputNombre = JOptionPane.showInputDialog("Ingrese nombre para la nueva dieta").trim();
         } catch (Exception ex) {
             return;
         }
-        Float pesoObjetivo = null;
         if (inputNombre.isEmpty()) {
             return;
         }
@@ -288,7 +321,6 @@ public class DetallePaciente extends javax.swing.JPanel {
             }
         }
         Dieta dieta = new Dieta(inputNombre, LocalDate.now(), null, paciente.getPesoActual(), 0, pesoObjetivo, false, 0, paciente);
-        System.out.println(dieta);
         dieta.setPesoObjetivo(pesoObjetivo);
         repoDieta.save(dieta);
         llenarTablaDietas(null);
@@ -306,7 +338,10 @@ public class DetallePaciente extends javax.swing.JPanel {
             return;
         }
 
-        repoDieta.disable(dieta);
+        dieta.setFechaFinal(LocalDate.now());
+        dieta.setBaja(true);
+        dieta.setPesoFinal(paciente.getPesoActual());
+        repoDieta.update(dieta);
         llenarTablaDietas(null);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -334,7 +369,11 @@ public class DetallePaciente extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel labelDNI;
+    private javax.swing.JLabel labelEdad;
+    private javax.swing.JLabel labelIMC;
     private javax.swing.JLabel labelPaciente;
+    private javax.swing.JLabel labelPesoActual;
+    private javax.swing.JLabel labelTalla;
     private javax.swing.JTable tablaDietas;
     private javax.swing.JTable tablaMenu;
     // End of variables declaration//GEN-END:variables
