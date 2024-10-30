@@ -1,9 +1,10 @@
-
 package Vistas;
 
 import Vistas.Alimento.ListaAlimento;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -12,8 +13,10 @@ public class Principal extends javax.swing.JFrame {
      */
     private Principal() {
         initComponents();
+
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -85,8 +88,8 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -147,7 +150,11 @@ public class Principal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        try{
+            UIManager.setLookAndFeel(new  FlatAtomOneDarkIJTheme()); //Esta dudoso este, falta decidir cual usar
+        }catch(Exception e){
+            System.out.println(e);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -155,6 +162,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Tablero;
@@ -165,14 +173,16 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 
-    public void ShowPanel(JPanel p){
+    public void ShowPanel(JPanel p) {
         p.setSize(850, 550);
         p.setLocation(0, 0);
-        
+
         Tablero.removeAll();
         Tablero.add(p, BorderLayout.CENTER);
         Tablero.revalidate();
         Tablero.repaint();
     }
-    
-} 
+
+
+
+}
