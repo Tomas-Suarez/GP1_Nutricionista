@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-10-2024 a las 00:29:09
+-- Tiempo de generación: 31-10-2024 a las 07:13:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,6 +38,19 @@ CREATE TABLE `alimento` (
   `baja` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `alimento`
+--
+
+INSERT INTO `alimento` (`idAlimento`, `nombre`, `tipoComida`, `caloriasPor100g`, `detalle`, `baja`) VALUES
+(1, 'Manzana', 'Fruta', 52, 'Fruta fresca rica en fibra y vitamina C', 0),
+(2, 'Pollo', 'Carne', 165, 'Pechuga de pollo sin piel, fuente de proteínas', 0),
+(3, 'Arroz', 'Cereal', 130, 'Arroz blanco cocido, carbohidrato', 0),
+(4, 'Brócolii', 'cosa7', 34, 'Vegetal verde rico en vitaminas y fibra', 0),
+(5, 'Salmón', 'Pescado', 208, 'Pescado rico en omega-3 y proteínas', 0),
+(6, 'Huevo', 'leche y derivado', 155, 'Huevo de gallina, fuente de proteínas y grasas saludables', 1),
+(7, 'Leche', 'Lácteo', 42, 'Leche entera de vaca, rica en calcio', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -47,15 +60,23 @@ CREATE TABLE `alimento` (
 CREATE TABLE `dieta` (
   `idDieta` int(11) NOT NULL,
   `nombre` varchar(75) NOT NULL,
-  `fechaInicio` date NOT NULL,
-  `fechaFin` date NOT NULL,
+  `fechaInicio` date DEFAULT NULL,
+  `fechaFin` date DEFAULT NULL,
   `idPaciente` int(11) NOT NULL,
   `totalCalorias` int(11) NOT NULL,
   `baja` tinyint(4) NOT NULL,
   `pesoInicial` int(11) NOT NULL,
   `pesoObjetivo` int(11) NOT NULL,
-  `pesoFinal` int(11) NOT NULL
+  `pesoFinal` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `dieta`
+--
+
+INSERT INTO `dieta` (`idDieta`, `nombre`, `fechaInicio`, `fechaFin`, `idPaciente`, `totalCalorias`, `baja`, `pesoInicial`, `pesoObjetivo`, `pesoFinal`) VALUES
+(1, 'Dieta Balanceada', '2024-10-24', '2024-10-30', 1, 1500, 0, 80, 75, 60),
+(2, 'probando', '2024-10-30', NULL, 28, 0, 0, 60, 120, NULL);
 
 -- --------------------------------------------------------
 
@@ -70,6 +91,14 @@ CREATE TABLE `menudiario` (
   `idDieta` int(11) NOT NULL,
   `baja` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `menudiario`
+--
+
+INSERT INTO `menudiario` (`idMenu`, `dia`, `calorias`, `idDieta`, `baja`) VALUES
+(1, 1, 503, 1, 0),
+(2, 2, 432, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -87,6 +116,45 @@ CREATE TABLE `paciente` (
   `pesoActual` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `paciente`
+--
+
+INSERT INTO `paciente` (`idPaciente`, `nombre`, `dni`, `edad`, `altura`, `baja`, `pesoActual`) VALUES
+(1, 'Juan Pérez', 12345678, 30, 175, 0, 80),
+(5, 'asdasd', 222, 20, 1111, 1, 20),
+(14, 'Jose Antonio', 44223312, 25, 170, 1, 90),
+(15, 'ASDASDSA', 1212312, 20, 111, 1, 222),
+(28, 'Ismael', 2223312, 19, 180, 0, 60);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registro`
+--
+
+CREATE TABLE `registro` (
+  `idRegistro` int(11) NOT NULL,
+  `idDieta` int(11) NOT NULL,
+  `peso` float NOT NULL,
+  `FechaRegistro` date NOT NULL,
+  `detalle` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `registro`
+--
+
+INSERT INTO `registro` (`idRegistro`, `idDieta`, `peso`, `FechaRegistro`, `detalle`) VALUES
+(5, 1, 80, '2024-10-24', 'Inicio de la dieta'),
+(6, 1, 79.3, '2024-10-25', 'DIA 2'),
+(7, 1, 78.8, '2024-10-26', 'DIA 3'),
+(8, 1, 78, '2024-10-27', 'DIA 4'),
+(9, 1, 77.5, '2024-10-28', 'DIA 5'),
+(10, 1, 76.5, '2024-10-29', 'DIA 6'),
+(11, 1, 76, '2024-10-30', 'DIA 7'),
+(12, 1, 75, '2024-10-31', 'DIA 8');
+
 -- --------------------------------------------------------
 
 --
@@ -101,6 +169,18 @@ CREATE TABLE `renglondemenu` (
   `idAlimento` int(11) NOT NULL,
   `horario` varchar(75) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `renglondemenu`
+--
+
+INSERT INTO `renglondemenu` (`idRenglon`, `cantidadGrs`, `subtotalCalorias`, `idMenu`, `idAlimento`, `horario`) VALUES
+(1, 150, 78, 1, 1, 'Desayuno'),
+(2, 200, 260, 1, 3, 'Almuerzo'),
+(3, 100, 165, 1, 2, 'Cena'),
+(4, 100, 42, 2, 7, 'Desayuno'),
+(5, 150, 312, 2, 5, 'Almuerzo'),
+(6, 50, 78, 2, 4, 'Cena');
 
 --
 -- Índices para tablas volcadas
@@ -134,6 +214,14 @@ ALTER TABLE `paciente`
   ADD UNIQUE KEY `dni` (`dni`);
 
 --
+-- Indices de la tabla `registro`
+--
+ALTER TABLE `registro`
+  ADD PRIMARY KEY (`idRegistro`),
+  ADD KEY `idPaciente` (`idDieta`),
+  ADD KEY `idDieta` (`idDieta`);
+
+--
 -- Indices de la tabla `renglondemenu`
 --
 ALTER TABLE `renglondemenu`
@@ -149,31 +237,37 @@ ALTER TABLE `renglondemenu`
 -- AUTO_INCREMENT de la tabla `alimento`
 --
 ALTER TABLE `alimento`
-  MODIFY `idAlimento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAlimento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `dieta`
 --
 ALTER TABLE `dieta`
-  MODIFY `idDieta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idDieta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `menudiario`
 --
 ALTER TABLE `menudiario`
-  MODIFY `idMenu` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMenu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `registro`
+--
+ALTER TABLE `registro`
+  MODIFY `idRegistro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `renglondemenu`
 --
 ALTER TABLE `renglondemenu`
-  MODIFY `idRenglon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idRenglon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -190,6 +284,12 @@ ALTER TABLE `dieta`
 --
 ALTER TABLE `menudiario`
   ADD CONSTRAINT `menudiario_ibfk_1` FOREIGN KEY (`idDieta`) REFERENCES `dieta` (`idDieta`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `registro`
+--
+ALTER TABLE `registro`
+  ADD CONSTRAINT `registro_ibfk_1` FOREIGN KEY (`idDieta`) REFERENCES `dieta` (`idDieta`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `renglondemenu`
