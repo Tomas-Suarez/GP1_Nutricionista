@@ -8,7 +8,6 @@ import Modelo.Paciente;
 import Persistencia.PacienteData;
 import java.awt.Component;
 import java.awt.Window;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -20,7 +19,7 @@ import javax.swing.SwingUtilities;
  * @author Tomi
  */
 public class ActualizarPaciente extends javax.swing.JPanel {
-    
+
     private PacienteData pacienteData = PacienteData.getRepo();
     private Paciente paciente;
     private VistaPaciente detPaciente;
@@ -30,15 +29,15 @@ public class ActualizarPaciente extends javax.swing.JPanel {
      */
     public ActualizarPaciente(VistaPaciente detPaciente) {
         initComponents();
+
         jLabel1.setText("Nuevo paciente");
         jbActualizar.setText("Crear");
         this.detPaciente = detPaciente;
-        
+
     }
-    
+
     public ActualizarPaciente(Paciente paciente, VistaPaciente detPaciente) {
         initComponents();
-        
         jlID.setText(String.valueOf("ID: " + paciente.getNroPaciente()));
         tNombre.setText(paciente.getNombre());
         tDni.setText(String.valueOf(paciente.getDni()));
@@ -48,7 +47,7 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         jcActivo.setSelected(!paciente.isBaja());
         this.paciente = paciente;
         this.detPaciente = detPaciente;
-        
+
     }
 
     /**
@@ -130,9 +129,6 @@ public class ActualizarPaciente extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(jbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -140,7 +136,10 @@ public class ActualizarPaciente extends javax.swing.JPanel {
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3)))
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -206,37 +205,11 @@ public class ActualizarPaciente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbActualizarActionPerformed
+
         if (jbActualizar.getText().equals("ACTUALIZAR")) {
-            
-            int id = paciente.getNroPaciente();
-            String nombre = tNombre.getText();
-            int Dni = Integer.parseInt(tDni.getText());
-            int edad = (int) jsEdad.getValue();
-            float altura = Float.parseFloat(tAltura.getText());
-            float peso = Float.parseFloat(tPeso.getText());
-            boolean Activo;
-            Activo = !jcActivo.isSelected();
-            
-            Paciente paciente = new Paciente(id, nombre, Dni, edad, altura, peso, Activo);
-            
-            pacienteData.actualizarPaciente(paciente);
-            JOptionPane.showMessageDialog(this, "Paciente actualizado correctamente!");
-            if(detPaciente.getJrActivo().isSelected()){
-                detPaciente.TablaPaciente(false); //Carga activos?
-            }else{
-                detPaciente.TablaPaciente(true); //Carga no activos?
-            }
-            Window window = SwingUtilities.getWindowAncestor(this);
-            window.dispose(); //Cerrar la ventana
+            actualizarPaciente();
         } else {
             crearPaciente();
-            if(detPaciente.getJrActivo().isSelected()){
-                detPaciente.TablaPaciente(false); //Carga activos?
-            }else{
-                detPaciente.TablaPaciente(true); //Carga no activos?
-            }
-                Window window = SwingUtilities.getWindowAncestor(this);
-                window.dispose(); //Cerrar la ventana
         }
     }//GEN-LAST:event_jbActualizarActionPerformed
 
@@ -261,45 +234,94 @@ public class ActualizarPaciente extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void crearPaciente() {
-        if (!validarCamposVacios(jPanel1)) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        try {
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (validarFormulario()) {
+
             String nombre = tNombre.getText();
             int dni = Integer.parseInt(tDni.getText());
             int edad = (int) jsEdad.getValue();
             float altura = Float.parseFloat(tAltura.getText());
             float pesoActual = Float.parseFloat(tPeso.getText());
-            boolean baja;
-            if (jcActivo.isSelected()) {
-                baja = false;
-            } else {
-                baja = true;
-            }
-            
+            boolean baja = !jcActivo.isSelected();
+
             Paciente newPaciente = new Paciente(nombre, dni, edad, altura, pesoActual, baja);
+            JOptionPane.showMessageDialog(this, "Paciente creado correctamente!");
             pacienteData.agregarPaciente(newPaciente);
-            
-        } catch (NumberFormatException e) {
+            window.dispose(); //Cerrar la ventana
+
+        }
+
+    }
+
+    private void actualizarPaciente() {
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (validarFormulario()) {
+
+            int id = paciente.getNroPaciente();
+            String nombre = tNombre.getText();
+            int Dni = Integer.parseInt(tDni.getText());
+            int edad = (int) jsEdad.getValue();
+            float altura = Float.parseFloat(tAltura.getText());
+            float peso = Float.parseFloat(tPeso.getText());
+            boolean Activo = !jcActivo.isSelected();
+
+            Paciente paciente = new Paciente(id, nombre, Dni, edad, altura, peso, Activo);
+
+            pacienteData.actualizarPaciente(paciente);
+            window.dispose(); //Cerrar la ventana
+            JOptionPane.showMessageDialog(this, "Paciente actualizado correctamente!");
+            detPaciente.TablaPaciente(Activo);
         }
     }
 
-    // El metodo retorna TRUE si todos los campos están llenos. Y en caso contrario retornara FALSE
-    private boolean validarCamposVacios(JPanel jPanel) {
-        for (Component c : jPanel.getComponents()) { //Se fija en los TextField
-            if (c instanceof JTextField) {
-                JTextField caja = (JTextField) c;
-                if (caja.getText().trim().isEmpty()) {
-                    return false;
-                }
-            } else if (c instanceof JSpinner) { //Se fija en los Spinner
-                JSpinner spinner = (JSpinner) c;
-                Number value = (Number) spinner.getValue();
-                if (value.floatValue() <= 0) {
-                    return false;
-                }
-            }
+    private boolean validarFormulario() {
+
+        if (tNombre.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo de nombre no debe estar vacio!");
+            return false;
         }
+        // Validar edad
+        try {
+
+            if ((int) jsEdad.getValue() <= 0) {
+                JOptionPane.showMessageDialog(this, "El campo de edad debe ser mayor a 0!");
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+        }
+
+        //Validar dni
+        try {
+            if (tDni.getText().equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(this, "El campo de DNI no debe estar vacio!");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+        }
+        //validar peso
+        try {
+            if (tPeso.getText().equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(this, "El campo de peso no debe estar vacio!");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+        }
+        //validar altura
+        try {
+            if (tAltura.getText().equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(this, "El campo de altura no debe estar vacio!");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+        }
+
         return true;
     }
+
+    // El metodo retorna TRUE si todos los campos están llenos. Y en caso contrario retornara FALSE
 }

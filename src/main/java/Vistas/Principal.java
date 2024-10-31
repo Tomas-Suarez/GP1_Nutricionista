@@ -2,8 +2,11 @@ package Vistas;
 
 import Vistas.Alimento.ListaAlimento;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -203,5 +206,25 @@ public class Principal extends javax.swing.JFrame {
         Tablero.add(p, BorderLayout.CENTER);
         Tablero.revalidate();
         Tablero.repaint();
-    }    
+    }
+
+        // El metodo retorna TRUE si todos los campos están llenos. Y en caso contrario retornara FALSE
+    public boolean validarCamposVacios(JPanel jPanel) {
+        for (Component c : jPanel.getComponents()) { //Se fija en los TextField
+            System.out.println(c.getName() + c.getClass());
+            if (c instanceof JTextField) {
+                JTextField caja = (JTextField) c;
+                if (caja.getText().trim().isEmpty()) {
+                    return false;
+                }
+            } else if (c instanceof JSpinner) { //Se fija en los Spinner
+                JSpinner spinner = (JSpinner) c;
+                Number value = (Number) spinner.getValue();
+                if (value.floatValue() <= 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

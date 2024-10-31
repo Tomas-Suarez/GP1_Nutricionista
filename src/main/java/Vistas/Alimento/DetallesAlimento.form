@@ -63,7 +63,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="253" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -130,13 +130,13 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="7">
-            <StringItem index="0" value="leche y derivado"/>
-            <StringItem index="1" value="carnes,pescados y huevos"/>
-            <StringItem index="2" value="cosa3"/>
-            <StringItem index="3" value="cosa4"/>
-            <StringItem index="4" value="cosa5"/>
-            <StringItem index="5" value="cosa6"/>
-            <StringItem index="6" value="cosa7"/>
+            <StringItem index="0" value="L&#xe1;cteos"/>
+            <StringItem index="1" value="Carnes"/>
+            <StringItem index="2" value="Legumbres"/>
+            <StringItem index="3" value="Verduras"/>
+            <StringItem index="4" value="Frutas"/>
+            <StringItem index="5" value="Cereales"/>
+            <StringItem index="6" value="Grasas &#xa0;y&#xa0;dulces"/>
           </StringArray>
         </Property>
       </Properties>

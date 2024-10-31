@@ -2,8 +2,8 @@ package Modelo;
 
 import java.util.Objects;
 
-
 public class Paciente {
+
     private int nroPaciente;
     private String nombre;
     private int dni;
@@ -103,8 +103,6 @@ public class Paciente {
         return hash;
     }
 
-
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -142,22 +140,21 @@ public class Paciente {
     public String toString() {
         return "Paciente{" + "nroPaciente=" + nroPaciente + ", nombre=" + nombre + ", dni=" + dni + ", edad=" + edad + ", altura=" + altura + ", pesoActual=" + pesoActual + ", baja=" + baja + '}';
     }
-    
-    public void cambiarPeso(){
-        
+
+    public void cambiarPeso() {
+
     }
-    
-    public void actualizarPesoAct(){
-        
+
+    public void actualizarPesoAct() {
+
     }
-    
+
+    public float calcularIMC() {
+        return (getPesoActual() / (float) Math.pow(getAltura() / 100, 2));
+    }
+
     //public boolean seAcercaAlPeso(Dieta dieta){
-        
-        
     //}
-    
     //public List<Paciente> listarLosQueLlegaron(){
-        
     //}
-    
 }

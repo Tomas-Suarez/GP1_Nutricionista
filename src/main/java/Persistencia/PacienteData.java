@@ -50,8 +50,6 @@ public class PacienteData {
             rs.close();
             ps.close();
 
-            JOptionPane.showMessageDialog(null, "Paciente agregado exitosamente!");
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar al paciente: " + e.getMessage());
         }
