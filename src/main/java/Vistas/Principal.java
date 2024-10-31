@@ -1,13 +1,9 @@
 package Vistas;
 
-import Modelo.Temas;
 import Vistas.Alimento.ListaAlimento;
-import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 public class Principal extends javax.swing.JFrame {
 

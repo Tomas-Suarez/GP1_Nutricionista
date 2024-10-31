@@ -7,13 +7,19 @@ package Modelo;
 import Vistas.Principal;
 import com.formdev.flatlaf.intellijthemes.FlatLightFlatIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Temas {
 
     public static void main(String[] args) {//el indice deberia cambiar con el valor del "archivo", falta eso
-        setPrincipal(0);
+        int temaGuardado = cargarTemaGuardado();
+        setPrincipal(temaGuardado);
     }
 
     public static void setPrincipal(int x) {
@@ -26,6 +32,7 @@ public class Temas {
 
         comboBox.addActionListener((e) -> {
             principal.dispose();
+            guardar_tema(comboBox.getSelectedIndex());
             cambiarTema(comboBox.getSelectedIndex());
             setPrincipal(comboBox.getSelectedIndex());
         });
@@ -43,6 +50,27 @@ public class Temas {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al cambiar el tema!");
         }
 
+    }
+
+    public static void guardar_tema(int indiceTema) {
+        try {
+            BufferedWriter archivo = new BufferedWriter(new FileWriter("./config.txt", false));
+            archivo.write(String.valueOf(indiceTema));
+            archivo.close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar el tema: " + e.getMessage());
+        }
+    }
+
+    public static int cargarTemaGuardado() {
+        try {
+            BufferedReader archivo = new BufferedReader(new FileReader("./config.txt"));
+            String linea = archivo.readLine();
+            return (linea != null) ? Integer.parseInt(linea) : 0; // Nos devuelve el valor leído o 0 si es null
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al cargar el tema: " + e.getMessage());
+        }
+        return 0;
     }
 
 }
