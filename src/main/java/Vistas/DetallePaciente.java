@@ -5,10 +5,14 @@
 package Vistas;
 
 import Modelo.Dieta;
+import Modelo.MenuDiario;
 import Modelo.Paciente;
 import Persistencia.DietaData;
+import Persistencia.MenuDiarioData;
+import Vistas.Renglon.RenglonLista;
 import java.time.LocalDate;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +27,8 @@ public class DetallePaciente extends javax.swing.JPanel {
      */
     Paciente paciente;
     DietaData repoDieta;
-
+    MenuDiarioData repoMenu;
+    
     public DetallePaciente(Paciente paciente) {
         this.paciente = paciente;
         this.repoDieta = DietaData.getRepo();
@@ -47,11 +52,11 @@ public class DetallePaciente extends javax.swing.JPanel {
         tablaDietas.setModel(model);
 
         if (dietas == null) {
-            dietas = repoDieta.getByStatus(checkboxActivas.isSelected());
+            dietas = repoDieta.getByPacienteanddieta(paciente.getNroPaciente(),checkboxActivas.isSelected());
             if (dietas.isEmpty()) {
                 llenarTablaMenu();
                 return;
-            }
+            }else {jButton1.setVisible(false);}
         }
         btnBaja.setVisible(!checkboxActivas.isSelected());
 
@@ -97,6 +102,13 @@ public class DetallePaciente extends javax.swing.JPanel {
         return dieta;
     }
 
+     public void CargarMenus (){
+   
+        
+        
+        
+    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,12 +118,12 @@ public class DetallePaciente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         labelPaciente = new javax.swing.JLabel();
         labelDNI = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         btnBaja = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDietas = new javax.swing.JTable();
@@ -126,6 +138,20 @@ public class DetallePaciente extends javax.swing.JPanel {
         labelIMC = new javax.swing.JLabel();
         checkboxActivas = new javax.swing.JCheckBox();
 
+        jButton4.setText("Remover entrada");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Agregar entrada");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelPaciente.setText("Paciente: ");
@@ -138,10 +164,6 @@ public class DetallePaciente extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jButton3.setText("Agregar entrada");
-
-        jButton4.setText("Remover entrada");
 
         btnBaja.setText("Dar de baja");
         btnBaja.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +205,11 @@ public class DetallePaciente extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMenuMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaMenu);
 
         labelPesoActual.setText("Peso actual: ");
@@ -227,11 +254,6 @@ public class DetallePaciente extends javax.swing.JPanel {
                                     .addComponent(labelPesoActual))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(checkboxActivas)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnBaja)
@@ -240,12 +262,12 @@ public class DetallePaciente extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(232, 232, 232))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(225, 225, 225)
-                        .addComponent(jLabel10)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(232, 232, 232))))
             .addComponent(jScrollPane2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(232, 232, 232))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,12 +296,8 @@ public class DetallePaciente extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -324,6 +342,7 @@ public class DetallePaciente extends javax.swing.JPanel {
         Dieta dieta = new Dieta(inputNombre, LocalDate.now(), null, paciente.getPesoActual(), 0, pesoObjetivo, false, 0, paciente);
         dieta.setPesoObjetivo(pesoObjetivo);
         repoDieta.save(dieta);
+       
         llenarTablaDietas(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -344,8 +363,13 @@ public class DetallePaciente extends javax.swing.JPanel {
         dieta.setPesoFinal(paciente.getPesoActual());
         repoDieta.update(dieta);
         llenarTablaDietas(null);
+      if ( tablaDietas.getRowCount()==0){
+          jButton1.setVisible(true);
+      }
     }//GEN-LAST:event_btnBajaActionPerformed
 
+   
+    
     private void tablaDietasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDietasMouseClicked
         // TODO add your handling code here:
         llenarTablaMenu();
@@ -356,7 +380,39 @@ public class DetallePaciente extends javax.swing.JPanel {
         llenarTablaDietas(null);
     }//GEN-LAST:event_checkboxActivasActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tablaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMenuMouseClicked
+        // TODO add your handling code here:1
+        if (evt.getClickCount() == 2 ) {
+             MenuDiario Menu = getMenuSeleccionado();
+            
+             RenglonLista detalleMenu = new RenglonLista(Menu);
+         
+                          
+        JFrame nuevaVista = new JFrame("Nuevo Paciente");
+        nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nuevaVista.getContentPane().add(detalleMenu);
+        nuevaVista.pack();
+        nuevaVista.setVisible(true);
+        nuevaVista.setLocation(585, 60);
+        }
+    }//GEN-LAST:event_tablaMenuMouseClicked
+
+
+   /* 
+    MenuDiario Menu = getMenuSeleccionado();
+            RenglonLista detalleMenu = new RenglonLista();
+            var principal = Principal.getPrincipal();
+            principal.ShowPanel(detalleMenu)
+    
+    */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaja;
     private javax.swing.JCheckBox checkboxActivas;
@@ -378,4 +434,18 @@ public class DetallePaciente extends javax.swing.JPanel {
     private javax.swing.JTable tablaDietas;
     private javax.swing.JTable tablaMenu;
     // End of variables declaration//GEN-END:variables
+
+ public MenuDiario getMenuSeleccionado() {
+        int rowSelected =tablaMenu.getSelectedRow();
+        MenuDiario men = null;
+        if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
+
+            men = (MenuDiario)tablaMenu.getValueAt(rowSelected, 0);       
+        }
+        return men;
+    }
+
+
+
+
 }

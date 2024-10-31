@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class RenglonDeMenuData {
 
+    private static RenglonDeMenuData obj = null;
     private Connection con = null;
     private Alimento ali;
     private MenuDiario men;
@@ -33,13 +34,21 @@ public class RenglonDeMenuData {
 
     }
 
+     public static RenglonDeMenuData getRepo() {
+        if (obj == null) {
+            obj = new RenglonDeMenuData();
+        }
+        return obj;
+    }
+    
+    
     public RenglonDeMenuData(Connection conexion, Alimento ali, MenuDiario men) {
         this.ali = ali;
         this.con = conexion;
         this.men = men;
     }
 
-    public void agregarRen(RenglonDeMenu dato) throws SQLException {
+    public void agregarRen(RenglonDeMenu dato)  {
 
         String sql = "INSERT INTO renglondemenu (cantidadGrs,subtotalCalorias,codMenu,codComida VALUES (?,?,?,?);";
 
@@ -167,4 +176,79 @@ public class RenglonDeMenuData {
         return listarrenglon;
     }
 
+    
+     public List<RenglonDeMenu> buscarporalimento(int id) {
+
+        ArrayList<RenglonDeMenu> listarrenglon = new ArrayList<>();
+
+        String sql = "SELECT * FROM renglondemenu where idalimento = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                RenglonDeMenu ren = new RenglonDeMenu();
+                ali = new Alimento();
+                men = new MenuDiario();
+
+                ren.setCodRenglon(rs.getInt("codRenglon"));
+                ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
+                ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
+                ali.setCodComida(rs.getInt("codComida"));
+                ren.setAlimento(ali);
+                men.setCodMenu(rs.getInt("codMenu"));
+                
+
+                listarrenglon.add(ren);
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista");
+        }
+
+        return listarrenglon;
+    }
+     
+     public List<RenglonDeMenu> buscarpormenu(int id) {
+
+        ArrayList<RenglonDeMenu> listarrenglon = new ArrayList<>();
+
+        String sql = "SELECT * FROM renglondemenu where IdMenu = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                RenglonDeMenu ren = new RenglonDeMenu();
+                ali = new Alimento();
+                men = new MenuDiario();
+
+                ren.setCodRenglon(rs.getInt("codRenglon"));              
+                ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
+                ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));               
+                ali.setCodComida(rs.getInt("codComida"));
+                ren.setAlimento(ali);
+                men.setCodMenu(rs.getInt("codMenu"));
+                ren.setMenu(men);
+                
+
+                listarrenglon.add(ren);
+            }
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista");
+        }
+
+        return listarrenglon;
+    }
 }
