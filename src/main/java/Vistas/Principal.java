@@ -195,26 +195,5 @@ public class Principal extends javax.swing.JFrame {
         Tablero.add(p, BorderLayout.CENTER);
         Tablero.revalidate();
         Tablero.repaint();
-    }
-
-    public static void cambiarTema(int objSelect) {
-        try {
-            if (objSelect == 0) {
-                UIManager.setLookAndFeel(new FlatLightFlatIJTheme());
-                System.out.println("blanco");
-            } else {
-                UIManager.setLookAndFeel(new FlatAtomOneDarkIJTheme());
-                System.out.println("negro");
-
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        System.out.println("meow");
-        Temas.setPrincipal(0);
-
-    }
-
-    
-    
+    }    
 }
