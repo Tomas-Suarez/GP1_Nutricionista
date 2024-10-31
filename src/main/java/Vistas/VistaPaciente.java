@@ -34,13 +34,6 @@ public class VistaPaciente extends javax.swing.JPanel {
         } else {
             TablaPaciente(true);
         }
-
-        tPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                cambiarModificar(event);
-            }
-        });
     }
 
     /**
@@ -88,6 +81,11 @@ public class VistaPaciente extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tPacienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tPaciente);
 
         groupBaja.add(jrActivo);
@@ -271,6 +269,16 @@ public class VistaPaciente extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtBuscarActionPerformed
 
+    private void tPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPacienteMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2 ) {
+            Paciente paciente = getPacienteSeleccionado();
+            DetallePaciente detallePaciente = new DetallePaciente(paciente);
+            var principal = Principal.getPrincipal();
+            principal.ShowPanel(detallePaciente);
+        }
+    }//GEN-LAST:event_tPacienteMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup groupBaja;
@@ -317,14 +325,6 @@ public class VistaPaciente extends javax.swing.JPanel {
         }
     }
 
-    private void cambiarModificar(MouseEvent event) { //Ver, tratar de abrir una tabla nueva y pasarle esos datos
-        if (event.getClickCount() == 2 && event.getButton() == MouseEvent.BUTTON1) { //Doble click izquierdo
-            Paciente paciente = getPacienteSeleccionado();
-            DetallePaciente detallePaciente = new DetallePaciente(paciente);
-            var principal = (Principal) Principal.getFrames()[0];
-            principal.ShowPanel(detallePaciente);
-        }
-    }
 
     public Paciente getPacienteSeleccionado() {
         int rowSelected = tPaciente.getSelectedRow();

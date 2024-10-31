@@ -14,10 +14,22 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    public Principal() {
-
+    private static Principal principal;
+    
+    private Principal() {
         initComponents();
-
+    }
+    
+    public static Principal getPrincipal() {
+        if (principal == null) {
+            principal = new Principal();
+        }
+        return principal;
+    }
+    
+    public static Principal New() {
+        principal = null;
+        return getPrincipal();
     }
 
     @SuppressWarnings("unchecked")

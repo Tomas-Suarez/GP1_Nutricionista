@@ -12,15 +12,14 @@ import javax.swing.UIManager;
 
 public class Temas {
 
-    private static Principal principal;
-
     public static void main(String[] args) {//el indice deberia cambiar con el valor del "archivo", falta eso
-        setPrincipal(0); 
+        setPrincipal(0);
     }
 
     public static void setPrincipal(int x) {
-                cambiarTema(x);
-        principal = new Principal();
+        cambiarTema(x);
+
+        var principal = Principal.New();
 
         var comboBox = principal.getJcSeleccionarTema();
         comboBox.setSelectedIndex(x);
