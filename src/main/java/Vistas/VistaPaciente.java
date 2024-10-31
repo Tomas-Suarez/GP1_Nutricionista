@@ -17,16 +17,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author cisco
  */
-public class DetallesPaciente extends javax.swing.JPanel {
+public class VistaPaciente extends javax.swing.JPanel {
 
     private DefaultTableModel tablas = new DefaultTableModel();
     private PacienteData pacData;
-    private static DetallesPaciente obj = null;
+    private static VistaPaciente obj = null;
 
     /**
      * Creates new form DetallesPaciente
      */
-    public DetallesPaciente() {
+    public VistaPaciente() {
         initComponents();
         pacData = PacienteData.getRepo();
         if (jrActivo.isSelected()) {
@@ -120,7 +120,7 @@ public class DetallesPaciente extends javax.swing.JPanel {
 
         jLabel8.setText("BUSCAR");
 
-        jLabel9.setText("Doble click para modificar un paciente");
+        jLabel9.setText("Doble click para acceder a las dietas del paciente");
 
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {

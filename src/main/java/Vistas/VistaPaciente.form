@@ -153,7 +153,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Doble click para modificar un paciente"/>
+        <Property name="text" type="java.lang.String" value="Doble click para acceder a las dietas del paciente"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbNuevo">

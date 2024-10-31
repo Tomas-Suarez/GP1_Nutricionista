@@ -23,12 +23,12 @@ public class ActualizarPaciente extends javax.swing.JPanel {
     
     private PacienteData pacienteData = PacienteData.getRepo();
     private Paciente paciente;
-    private DetallesPaciente detPaciente;
+    private VistaPaciente detPaciente;
 
     /**
      * Creates new form ActualizarPaciente
      */
-    public ActualizarPaciente(DetallesPaciente detPaciente) {
+    public ActualizarPaciente(VistaPaciente detPaciente) {
         initComponents();
         jLabel1.setText("Nuevo paciente");
         jbActualizar.setText("Crear");
@@ -36,7 +36,7 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         
     }
     
-    public ActualizarPaciente(Paciente paciente, DetallesPaciente detPaciente) {
+    public ActualizarPaciente(Paciente paciente, VistaPaciente detPaciente) {
         initComponents();
         
         jlID.setText(String.valueOf("ID: " + paciente.getNroPaciente()));
