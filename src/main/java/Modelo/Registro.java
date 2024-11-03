@@ -26,6 +26,11 @@ public class Registro {
         this.detalle = detalle;
     }
 
+    public Registro() {
+    }
+    
+    
+
     public int getIdRegistro() {
         return idRegistro;
     }

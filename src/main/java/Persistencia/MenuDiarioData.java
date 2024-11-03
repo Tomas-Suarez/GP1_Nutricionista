@@ -56,7 +56,7 @@ public class MenuDiarioData {
 
     }
 
-    public void modificarMenuDiario(MenuDiario menu) throws SQLException {
+    public void modificarMenuDiario(MenuDiario menu) {
         String sql = "UPDATE menudiario SET dia = ?, calorias = ?, baja = ?, idDieta = ? WHERE idMenu = ?;";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -138,11 +138,10 @@ public class MenuDiarioData {
                 menu.setDieta(dieta);
             }
 
-            if (menu != null) {
-                JOptionPane.showMessageDialog(null, "Menu diario encontrado!");
-            } else {
+            if (menu == null) {
                 JOptionPane.showMessageDialog(null, "No se encontro ningun menu diario.");
             }
+            
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el Menu Comida: " + e.getMessage());
