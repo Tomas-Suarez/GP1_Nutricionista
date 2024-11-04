@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Conexion {
-    private static String url = "jdbc:mariadb://localhost:8086/nutricionistagp1"; //Nombre de la BD
+    private static String url = "jdbc:mariadb://localhost/nutricionistagp1"; //Nombre de la BD
     private static String usuario = "root";
-    private static String password = "superTrouper";
+    private static String password = "";
     private static Connection conn = null;
 
     private Conexion() { // única conexión - Singleton
