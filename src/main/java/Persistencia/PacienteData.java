@@ -1,7 +1,6 @@
 package Persistencia;
 
 import Modelo.Paciente;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,11 +11,10 @@ import javax.swing.JOptionPane;
 
 public class PacienteData {
 
-    private Connection con;
     private static PacienteData obj = null;
 
     private PacienteData() {
-        con = Conexion.getConexion();
+
     }
 
     public static PacienteData getRepo() {
@@ -30,7 +28,7 @@ public class PacienteData {
         String sql = "INSERT INTO paciente(nombre, dni, edad, altura, baja, pesoActual) VALUES (?, ?, ?, ?, ?, ?);";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, paciente.getNombre());
             ps.setInt(2, paciente.getDni());
             ps.setInt(3, paciente.getEdad());
@@ -61,7 +59,7 @@ public class PacienteData {
         Paciente paciente = null;
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ps.setInt(1, id);
 
             ResultSet rs = ps.executeQuery();
@@ -97,7 +95,7 @@ public class PacienteData {
 
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ps.setString(1, paciente.getNombre());
             ps.setInt(2, paciente.getDni());
             ps.setInt(3, paciente.getEdad());
@@ -125,7 +123,7 @@ public class PacienteData {
         }
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -155,7 +153,7 @@ public class PacienteData {
         String sql = "UPDATE paciente SET baja = ? WHERE idPaciente = ?";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ps.setBoolean(1, false);
             ps.setInt(2, id);
 
@@ -177,7 +175,7 @@ public class PacienteData {
         String sql = "UPDATE paciente SET baja = ? WHERE idPaciente = ?";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ps.setBoolean(1, true);
             ps.setInt(2, id);
 
@@ -199,7 +197,7 @@ public class PacienteData {
     public void eliminarPaciente(int id) {
         String sql = "DELETE FROM paciente WHERE idPaciente = ?";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ps.setInt(1, id);
 
             int fila = ps.executeUpdate();

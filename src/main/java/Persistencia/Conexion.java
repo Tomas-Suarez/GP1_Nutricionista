@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Conexion {
-    private static String url = "jdbc:mariadb://localhost/nutricionistagp1"; //Nombre de la BD
+    private static String url = "jdbc:mariadb://localhost:8086/nutricionistagp1"; //Nombre de la BD
     private static String usuario = "root";
-    private static String password = "";
-    private static Conexion conexion = null;
+    private static String password = "superTrouper";
+    private static Connection conn = null;
 
     private Conexion() { // única conexión - Singleton
         try {
@@ -21,17 +21,13 @@ public class Conexion {
     }
 
     public static Connection getConexion() { // establecer la conexión a la base de datos
-        Connection conn = null;
-        if (conexion == null) {
-            conexion = new Conexion();
+        if (conn == null) {
+            try {
+                conn = DriverManager.getConnection(url + "?useLegacyDatetimeCode=false&serverTimezone=UTC" + "&user=" + usuario + "&password=" + password);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Clase Conexion: Error de Conexion: " + ex.getMessage());
+            }
         }
-
-        try {
-            conn = DriverManager.getConnection(url + "?useLegacyDatetimeCode=false&serverTimezone=UTC" + "&user=" + usuario + "&password=" + password);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Clase Conexion: Error de Conexion: " + ex.getMessage());
-        }
-
         return conn;
     }
 }
