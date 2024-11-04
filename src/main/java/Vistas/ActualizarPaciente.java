@@ -6,12 +6,8 @@ package Vistas;
 
 import Modelo.Paciente;
 import Persistencia.PacienteData;
-import java.awt.Component;
 import java.awt.Window;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 /**
@@ -211,6 +207,7 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         } else {
             crearPaciente();
         }
+        
     }//GEN-LAST:event_jbActualizarActionPerformed
 
 
@@ -242,11 +239,12 @@ public class ActualizarPaciente extends javax.swing.JPanel {
             int edad = (int) jsEdad.getValue();
             float altura = Float.parseFloat(tAltura.getText());
             float pesoActual = Float.parseFloat(tPeso.getText());
-            boolean baja = !jcActivo.isSelected();
+            boolean Activo = !jcActivo.isSelected();
 
-            Paciente newPaciente = new Paciente(nombre, dni, edad, altura, pesoActual, baja);
+            Paciente newPaciente = new Paciente(nombre, dni, edad, altura, pesoActual, Activo);
             JOptionPane.showMessageDialog(this, "Paciente creado correctamente!");
             pacienteData.agregarPaciente(newPaciente);
+            detPaciente.TablaPaciente(Activo);
             window.dispose(); //Cerrar la ventana
 
         }
@@ -323,5 +321,4 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         return true;
     }
 
-    // El metodo retorna TRUE si todos los campos están llenos. Y en caso contrario retornara FALSE
 }

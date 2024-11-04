@@ -5,8 +5,8 @@
 package Vistas;
 
 import Modelo.Paciente;
+import Persistencia.DietaData;
 import Persistencia.PacienteData;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,7 +20,8 @@ import javax.swing.table.DefaultTableModel;
 public class VistaPaciente extends javax.swing.JPanel {
 
     private DefaultTableModel tablas = new DefaultTableModel();
-    private PacienteData pacData;
+    private PacienteData pacData = PacienteData.getRepo();
+    private DietaData dietaData = DietaData.getRepo();
     private static VistaPaciente obj = null;
 
     /**
@@ -28,7 +29,6 @@ public class VistaPaciente extends javax.swing.JPanel {
      */
     public VistaPaciente() {
         initComponents();
-        pacData = PacienteData.getRepo();
         if (jrActivo.isSelected()) {
             TablaPaciente(false);
         } else {
@@ -56,6 +56,7 @@ public class VistaPaciente extends javax.swing.JPanel {
         jbNuevo = new javax.swing.JButton();
         jbBorrar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
+        jbRegistrarPeso = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -141,14 +142,23 @@ public class VistaPaciente extends javax.swing.JPanel {
             }
         });
 
+        jbRegistrarPeso.setText("Registrar peso");
+        jbRegistrarPeso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRegistrarPesoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
+                .addGap(16, 16, 16)
+                .addComponent(jbRegistrarPeso)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(87, 87, 87)
                 .addComponent(jbEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbNuevo)
@@ -164,7 +174,7 @@ public class VistaPaciente extends javax.swing.JPanel {
                 .addComponent(jrActivo)
                 .addGap(34, 34, 34)
                 .addComponent(jrNoActivo)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -180,23 +190,26 @@ public class VistaPaciente extends javax.swing.JPanel {
                     .addComponent(jrNoActivo)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbEditar)
                     .addComponent(jbNuevo)
                     .addComponent(jbBorrar)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbRegistrarPeso))
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrActivoActionPerformed
         TablaPaciente(false);
+        jbRegistrarPeso.setVisible(true);
     }//GEN-LAST:event_jrActivoActionPerformed
 
     private void jrNoActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrNoActivoActionPerformed
         TablaPaciente(true);
+        jbRegistrarPeso.setVisible(false);
     }//GEN-LAST:event_jrNoActivoActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
@@ -271,13 +284,44 @@ public class VistaPaciente extends javax.swing.JPanel {
 
     private void tPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPacienteMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2 ) {
+        if (evt.getClickCount() == 2) {
             Paciente paciente = getPacienteSeleccionado();
             DetallePaciente detallePaciente = new DetallePaciente(paciente);
             var principal = Principal.getPrincipal();
             principal.ShowPanel(detallePaciente);
         }
     }//GEN-LAST:event_tPacienteMouseClicked
+
+    private void jbRegistrarPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarPesoActionPerformed
+        int rowSelected = tPaciente.getSelectedRow();
+
+        if (rowSelected != -1) {
+            int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
+
+            if (dietaData.getDietaPaciente(idPaciente) != -1) { // Verificamos que el paciente tenga dieta
+                String nombre = (String) tablas.getValueAt(rowSelected, 1);
+                int dni = (Integer) tablas.getValueAt(rowSelected, 2);
+                int edad = (Integer) tablas.getValueAt(rowSelected, 3);
+                float altura = (Float) tablas.getValueAt(rowSelected, 4);
+                float pesoActual = (Float) tablas.getValueAt(rowSelected, 5);
+                String estado = (String) tablas.getValueAt(rowSelected, 6);
+
+                Paciente pac = new Paciente(idPaciente, nombre, dni, edad, altura, pesoActual, true);
+                RegistrarPeso actPaciente = new RegistrarPeso(this, pac);
+                JFrame nuevaVista = new JFrame("Registrar Peso");
+                nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                nuevaVista.getContentPane().add(actPaciente);
+                nuevaVista.pack();
+                nuevaVista.setVisible(true);
+                nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
+            } else {
+                JOptionPane.showMessageDialog(null, "El paciente seleccionado no posee una dieta");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar un paciente.");
+        }
+
+    }//GEN-LAST:event_jbRegistrarPesoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -290,6 +334,7 @@ public class VistaPaciente extends javax.swing.JPanel {
     private javax.swing.JButton jbBorrar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbNuevo;
+    private javax.swing.JButton jbRegistrarPeso;
     private javax.swing.JRadioButton jrActivo;
     private javax.swing.JRadioButton jrNoActivo;
     private javax.swing.JTextField jtBuscar;
@@ -324,7 +369,6 @@ public class VistaPaciente extends javax.swing.JPanel {
             });
         }
     }
-
 
     public Paciente getPacienteSeleccionado() {
         int rowSelected = tPaciente.getSelectedRow();

@@ -4,6 +4,7 @@ import Modelo.Alimento;
 import Modelo.Dieta;
 import Modelo.MenuDiario;
 import Modelo.Paciente;
+import Modelo.Registro;
 import Persistencia.AlimentoData;
 import Persistencia.MenuDiarioData;
 import Persistencia.PacienteData;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import Modelo.RenglonDeMenu;
+import Persistencia.RegistroData;
 import Persistencia.RenglonDeMenuData;
 
 /**
@@ -24,6 +26,7 @@ public class GP1_Nutricionista {
         //testMenuDiario(); FUNCIONA
         //testPaciente(); 
         //testReglon();
+        //testRegistro();
     }
 
     private static void testAlimentoData() {
@@ -166,4 +169,15 @@ public class GP1_Nutricionista {
             System.out.println("No se encontró el renglón con el codigo: " + codRenglon);
         }
     }*/
+    
+    public static void testRegistro(){ //Funciona
+        int id = 28;
+        RegistroData regisData = RegistroData.getRepo();
+        
+        List<Registro> regisPaciente = regisData.RegistroPaciente(id);
+        System.out.println("Pacientes activos");
+        for (Registro regis : regisPaciente) {
+            System.out.println(regis);
+        }
+    }
 }

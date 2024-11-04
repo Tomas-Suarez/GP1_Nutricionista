@@ -112,71 +112,15 @@ public class RegistroData {
         return listaRegistro;
     }
 
-    /*public Registro buscarRegistro(int id){ no tiene sentido el metodo este xd
-        String sql = "SELECT * FROM registro WHERE idRegistro = ?";
-        Registro registroP = null;
-        
-        try{
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            
-            ResultSet rs = ps.executeQuery();
-
-            if(rs.next()){
-                Registro registro = new Registro();
-                Dieta dieta = new Dieta();
-                
-                registro.setIdRegistro(rs.getInt("idRegistro"));
-                dieta.setCodDieta(rs.getInt("idDieta"));
-                registro.setDieta(dieta);
-                registro.setPeso(rs.getFloat("peso"));
-                registro.setFechaRegistro(rs.getDate("FechaRegistro").toLocalDate());
-                registro.setDetalle(rs.getString("detalle"));
-            }
-            
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el registro: "+e.getMessage());
-        }
-        return registroP;
-    }*/
-    /*public List<Registro> RegistrosDieta(int idDieta) {
-        ArrayList<Registro> registroDieta = new ArrayList<>();
-        String sql = "SELECT idRegistro, idDieta, FechaRegistro, peso, detalle FROM registro WHERE idDieta = ?;";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, idDieta); // Establece el parámetro idDieta
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Registro registro = new Registro();
-                Dieta dieta = new Dieta();
-
-                registro.setIdRegistro(rs.getInt("idRegistro"));
-                dieta.setCodDieta(rs.getInt("idDieta"));
-                registro.setDieta(dieta);
-                registro.setPeso(rs.getFloat("peso"));
-                registro.setFechaRegistro(rs.getDate("FechaRegistro").toLocalDate());
-                registro.setDetalle(rs.getString("detalle"));
-
-                registroDieta.add(registro);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error al obtener los registros: " + e.getMessage());
-        }
-
-        return registroDieta;
-    }*/
-
     public List<Registro> RegistroPaciente(int idPaciente) {
         ArrayList<Registro> registroPaciente = new ArrayList<>();
         String sql = """ 
-        SELECT r.idRegistro, r.FechaRegistro, r.peso, r.idDieta, p.idPaciente 
+        SELECT r.idRegistro, r.FechaRegistro, r.peso, r.detalle, r.idDieta, p.idPaciente
         FROM registro r
         JOIN dieta d ON r.idDieta = d.idDieta
         JOIN paciente p ON p.idPaciente = d.idPaciente
-        WHERE p.idPaciente = ?;
+        WHERE p.idPaciente = ?
+        AND p.baja = false;
         """;
 
         try {
@@ -192,6 +136,7 @@ public class RegistroData {
                 registro.setIdRegistro(rs.getInt("idRegistro"));
                 registro.setFechaRegistro(rs.getDate("FechaRegistro").toLocalDate());
                 registro.setPeso(rs.getFloat("peso"));
+                registro.setDetalle(rs.getString("detalle"));
 
                 dieta.setCodDieta(rs.getInt("idDieta"));
                 registro.setDieta(dieta);
@@ -209,4 +154,6 @@ public class RegistroData {
         return registroPaciente;
     }
 
+    //Estaria faltando el borrar registro o algo similar
+    
 }

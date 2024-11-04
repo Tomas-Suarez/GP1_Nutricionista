@@ -7,6 +7,8 @@ import java.util.List;
 import java.sql.Statement;
 
 import Modelo.Dieta;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class DietaData {
 
@@ -32,7 +34,7 @@ public class DietaData {
         return obj;
     }
 
-    public void save(Dieta dieta) {        
+    public void save(Dieta dieta) {
         try {
             var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoObjetivo, totalCalorias, idPaciente, baja)"
                     + "values (?,?,?,?,?,?,?);";
@@ -55,7 +57,7 @@ public class DietaData {
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
-        }        
+        }
     }
 
     public Dieta getById(int id) {
@@ -169,7 +171,7 @@ public class DietaData {
         try {
             var sql = "update dieta set nombre = ?, pesoFinal = ?, totalCalorias = ?, baja = ?, fechaFin = ? where idDieta = ?";
             var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            
+
             ps.setString(1, dieta.getNombre());
             ps.setFloat(2, dieta.getPesoFinal());
             ps.setFloat(3, dieta.getTotalCalorias());
@@ -184,9 +186,7 @@ public class DietaData {
         }
     }
 
-
-
- public List<Dieta> getByPaciente(int id) {
+    public List<Dieta> getByPaciente(int id) {
         List<Dieta> dietas = new ArrayList();
         var sql = "select * from dieta where IdPaciente = ?";
         try {
@@ -218,8 +218,7 @@ public class DietaData {
         return dietas;
     }
 
-
- public List<Dieta> getByPacienteanddieta(int id,boolean estado) {
+    public List<Dieta> getByPacienteanddieta(int id, boolean estado) {
         List<Dieta> dietas = new ArrayList();
         var sql = "select * from dieta where IdPaciente = ? and baja = ?";
         try {
@@ -240,7 +239,7 @@ public class DietaData {
 
                 }
                 dieta.setTotalCalorias(rs.getInt("totalCalorias"));
-                
+
                 dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
                 dieta.setBaja(rs.getBoolean("baja"));
                 dieta.setMenu(repoMenu.obtenerMenusPorDieta(dieta.getCodDieta()));
@@ -252,4 +251,30 @@ public class DietaData {
         }
         return dietas;
     }
+
+    public int getDietaPaciente(int idPaciente) {
+        int idDieta = -1;
+        String sql = """
+                     SELECT d.idDieta
+                     FROM dieta d
+                     JOIN paciente p ON p.idPaciente = d.idPaciente
+                     WHERE p.baja = false
+                     AND p.idPaciente = ?;
+                     """;
+        try {
+            var ps = connection.prepareStatement(sql);
+            ps.setInt(1, idPaciente);
+            var rs = ps.executeQuery();
+
+            if (rs.next()) {
+                idDieta = rs.getInt("idDieta");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener la dieta del paciente: " + e.getMessage());
+        }
+
+        return idDieta; //Si no se encuentra una dieta, nos dara -1
+    }
+
 }
