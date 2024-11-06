@@ -39,7 +39,7 @@ public final class Config {
             config.put("theme", "0");
             config.put("dbURL", "localhost/nutricionistagp1");
             config.put("dbUser", "root");
-            config.put("dbPasswd", "");
+            config.put("dbPasswd", "null");
         }
 
     }
@@ -72,7 +72,8 @@ public final class Config {
 
     public static String getDbPasswd() {
         Load();
-        return config.get("dbPasswd");
+        var passwd = config.get("dbPasswd");
+        return passwd == "null" ? "" : passwd;
     }
     
     public static Integer getTheme() {
