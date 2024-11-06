@@ -14,12 +14,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import utils.Config;
 
 public class Temas {
 
     public static void main(String[] args) {//el indice deberia cambiar con el valor del "archivo", falta eso
         int temaGuardado = cargarTemaGuardado();
-        setPrincipal(temaGuardado);
+        setPrincipal(Config.getTheme());
     }
 
     public static void setPrincipal(int x) {
@@ -32,7 +33,7 @@ public class Temas {
 
         comboBox.addActionListener((e) -> {
             principal.dispose();
-            guardar_tema(comboBox.getSelectedIndex());
+            Config.setTheme(comboBox.getSelectedIndex());
             cambiarTema(comboBox.getSelectedIndex());
             setPrincipal(comboBox.getSelectedIndex());
         });
