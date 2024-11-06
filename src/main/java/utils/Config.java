@@ -40,6 +40,7 @@ public final class Config {
             config.put("dbURL", "localhost/nutricionistagp1");
             config.put("dbUser", "root");
             config.put("dbPasswd", "null");
+            Save();
         }
 
     }
