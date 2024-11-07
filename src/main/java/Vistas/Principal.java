@@ -150,7 +150,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bAlimentoActionPerformed
 
     private void bConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultasActionPerformed
-        // TODO add your handling code here:
+        GraficoEstadistica grafEstad = new GraficoEstadistica();
+        ShowPanel(grafEstad);
+        
     }//GEN-LAST:event_bConsultasActionPerformed
 
     private void jcSeleccionarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcSeleccionarTemaActionPerformed
