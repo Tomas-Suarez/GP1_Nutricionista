@@ -81,7 +81,7 @@ public final class Config {
 
     public String getDbPasswd() {
         var passwd = config.get("dbPasswd");
-        return passwd == "null" ? "" : passwd;
+        return passwd.equals("null") ? "" : passwd;
     }
 
     public Integer getTheme() {
