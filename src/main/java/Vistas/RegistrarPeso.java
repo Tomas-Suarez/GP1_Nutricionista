@@ -25,12 +25,12 @@ public class RegistrarPeso extends javax.swing.JPanel {
 
     private DefaultTableModel tablas = new DefaultTableModel();
     private Registro registro;
-    private VistaPaciente detPaciente;
+    private Vista_lista_Paciente detPaciente;
     private Paciente paciente;
     private RegistroData registroData = RegistroData.getRepo();
     private DietaData dietaData = DietaData.getRepo();
 
-    public RegistrarPeso(VistaPaciente detPaciente, Paciente paciente) {
+    public RegistrarPeso(Vista_lista_Paciente detPaciente, Paciente paciente) {
         initComponents();
         jlNombre.setText("Nombre: " + paciente.getNombre());
         jlEdad.setText("Edad: " + paciente.getEdad());

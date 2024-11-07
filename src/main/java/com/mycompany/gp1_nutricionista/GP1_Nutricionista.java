@@ -21,14 +21,6 @@ import Persistencia.RenglonDeMenuData;
  */
 public class GP1_Nutricionista {
 
-    public static void main(String[] args) throws SQLException {
-        //testAlimentoData();
-        //testMenuDiario(); FUNCIONA
-        //testPaciente(); 
-        //testReglon();
-        //testRegistro();
-    }
-
     private static void testAlimentoData() {
         AlimentoData repoAlimentos = AlimentoData.getRepo();
         Alimento alimento = new Alimento("nombre", "tipoComida", 0, "detalle", Boolean.TRUE);
