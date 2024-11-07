@@ -34,10 +34,11 @@ public class LineChart extends javax.swing.JPanel {
     private String showLabel;
     private Point labelLocation = new Point();
     
-
+    
     public LineChart() {
         initComponents();
         setOpaque(false);
+        
 
         TimingTarget target = new TimingTargetAdapter() {
             @Override
@@ -150,6 +151,10 @@ public class LineChart extends javax.swing.JPanel {
         showLabel = null;
         blankPlotChart.setLabelCount(0);
         model.clear();
+        legends.clear();
+        panelLegend.removeAll(); //Agregado, limpia el legend tambien, Porque esta largando error
+        panelLegend.repaint();
+        panelLegend.revalidate();
         repaint();
     }
 

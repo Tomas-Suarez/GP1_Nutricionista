@@ -26,8 +26,8 @@ public class Chart extends javax.swing.JPanel {
     DecimalFormat df = new DecimalFormat("#,##0.##");
     private List<ModelLegend> legends = new ArrayList<>();
     private List<ModelChart> model = new ArrayList<>();
-    private final int seriesSize = 72;
-    private final int seriesSpace = 32;
+    private final int seriesSize = 86;
+    private final int seriesSpace = 46;
     private final Animator animator;
     private float animate;
     private String showLabel;

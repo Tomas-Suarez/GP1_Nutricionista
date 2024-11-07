@@ -4,25 +4,33 @@
  */
 package Vistas;
 
+import Modelo.Paciente;
+import Modelo.Registro;
+import Persistencia.PacienteData;
 import Persistencia.RegistroData;
 import chart.ModelChart;
 import java.awt.Color;
-import java.text.DecimalFormat;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Tomi
  */
 public class GraficoEstadistica extends javax.swing.JPanel {
+
     private RegistroData regisData = RegistroData.getRepo();
-    
+    private PacienteData pacData = PacienteData.getRepo();
+    private DefaultTableModel tablas = new DefaultTableModel();
+
     /**
      * Creates new form GraficoEstadistica
      */
     public GraficoEstadistica() {
         initComponents();
         graficoBarra();
-        graficoLinea();   
+        graficoLinea();
+        tablaGrafico();
     }
 
     /**
@@ -35,10 +43,9 @@ public class GraficoEstadistica extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPaciente = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        jtBuscar = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         graficoProgreso = new chart.Chart();
         jLabel3 = new javax.swing.JLabel();
         graficoLinea = new chart.LineChart();
@@ -58,9 +65,20 @@ public class GraficoEstadistica extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaPacienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaPaciente);
 
-        jLabel1.setText("BUSCADOR");
+        jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBuscarKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("BUSCAR");
 
         jLabel2.setText("Doble click para obtener los datos");
 
@@ -72,16 +90,16 @@ public class GraficoEstadistica extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 86, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(191, 191, 191)
+                .addGap(204, 204, 204)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -90,58 +108,67 @@ public class GraficoEstadistica extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
-        jSeparator1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        graficoProgreso.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel3.setText("DATOS GENERALES");
+
+        graficoLinea.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(graficoProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(jLabel3)))
-                .addContainerGap(775, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(graficoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 2077, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(143, 143, 143)
-                .addComponent(jSeparator1)
-                .addGap(14, 14, 14))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(graficoProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addGap(384, 384, 384))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(graficoLinea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(graficoProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(graficoProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(graficoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(graficoLinea, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
+        tablaGrafico();
+    }//GEN-LAST:event_jtBuscarKeyReleased
+
+    private void tablaPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaPacienteMouseClicked
+        if (evt.getClickCount() == 2) {
+            graficoLinea();
+        }
+    }//GEN-LAST:event_tablaPacienteMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -152,30 +179,60 @@ public class GraficoEstadistica extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jtBuscar;
     private javax.swing.JTable tablaPaciente;
     // End of variables declaration//GEN-END:variables
-    
-    public void graficoBarra(){
+
+    public void graficoBarra() {
         int estadoRegis[] = regisData.EstadoPaciente();
-        graficoProgreso.addLegend("Alcanzo el peso", new Color(12, 84, 175), new Color(0, 108, 247));
-        graficoProgreso.addLegend("No alcanzo el peso", new Color(54, 4, 143), new Color(104, 49, 200));
-        graficoProgreso.addLegend("En progreso", new Color(5, 125, 0), new Color(95, 209, 69));
+        graficoProgreso.addLegend("Alcanzo el peso", new Color(5, 125, 0), new Color(95, 209, 69));
+        graficoProgreso.addLegend("No alcanzo el peso", new Color(186, 37, 37), new Color(241, 100, 120));
+        graficoProgreso.addLegend("En progreso", new Color(12, 84, 175), new Color(0, 108, 247));
+
         graficoProgreso.addData(new ModelChart("", new double[]{estadoRegis[0], estadoRegis[1], estadoRegis[2]}));
 
         graficoProgreso.start();
     }
-    
-    public void graficoLinea(){
-        
-        graficoLinea.addLegend("Juan perez", new Color(12, 84, 175), new Color(0, 108, 247));
-        graficoLinea.addData(new ModelChart("Semana 1", new double[]{80}));
-        graficoLinea.addData(new ModelChart("Semana 2", new double[]{81}));
-        graficoLinea.addData(new ModelChart("Semana 3", new double[]{82}));
-        graficoLinea.addData(new ModelChart("Semana 4", new double[]{83}));
-        graficoLinea.addData(new ModelChart("Semana 5", new double[]{82}));
-        graficoLinea.addData(new ModelChart("Semana 6", new double[]{81}));
-        graficoLinea.start();
+
+    public void graficoLinea() {    
+        graficoLinea.clear(); //La clase anterior fue modificada para limpiar el legend tmb. Si no limpiamos tira error
+
+        int rowSelected = tablaPaciente.getSelectedRow();
+        if (rowSelected != -1) {
+            Paciente pacienteSelect = (Paciente) tablaPaciente.getValueAt(rowSelected, 0);
+            List<Registro> datosRegistro = regisData.RegistroPaciente(pacienteSelect.getNroPaciente());
+
+            graficoLinea.addLegend(pacienteSelect.getNombre(), new Color(54, 4, 143), new Color(104, 49, 200));
+
+            for (Registro regist : datosRegistro) {
+                graficoLinea.addData(new ModelChart(regist.getFechaRegistro().toString(), new double[]{regist.getPeso()}));
+            }
+            graficoLinea.start();
+        }
+
+    }
+
+    public void tablaGrafico() {
+        String tablaHeader[] = {"Nombre", "DNI", "Edad"};
+        tablas.setColumnIdentifiers(tablaHeader);
+        tablaPaciente.setModel(tablas); //Le asiganamos el modelo a la tabla
+        tablaPaciente.setDefaultEditor(Object.class, null); // Deshabilita la edicion de celdas
+
+        tablas.setRowCount(0); //Es para que cada vez q llamemos la tabla, no se duplique
+
+        String nombre = jtBuscar.getText().toLowerCase().trim();
+        List<Paciente> pacientesActivos = pacData.listarPacientesBaja(false);
+        List<Paciente> listaFiltrada = pacientesActivos.stream().filter(paciente -> {
+            String x = paciente.getNombre() + " " + paciente.getDni();
+            x = x.toLowerCase();
+            return x.contains(nombre);
+        }).toList();
+
+        for (Paciente paciente : listaFiltrada) {
+            tablas.addRow(new Object[]{
+                paciente,
+                paciente.getDni(),
+                paciente.getEdad(),});
+        }
     }
 }

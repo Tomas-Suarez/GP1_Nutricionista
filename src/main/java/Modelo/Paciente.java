@@ -138,7 +138,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Paciente{" + "nroPaciente=" + nroPaciente + ", nombre=" + nombre + ", dni=" + dni + ", edad=" + edad + ", altura=" + altura + ", pesoActual=" + pesoActual + ", baja=" + baja + '}';
+        return getNombre();
     }
 
     public void cambiarPeso() {
