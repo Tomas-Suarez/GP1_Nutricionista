@@ -44,7 +44,7 @@ public class Principal extends javax.swing.JFrame {
         jcSeleccionarTema = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1100, 600));
+        setPreferredSize(new java.awt.Dimension(1850, 800));
 
         buttonGroup3.add(bPaciente);
         bPaciente.setText("Paciente");
@@ -86,6 +86,11 @@ public class Principal extends javax.swing.JFrame {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jcSeleccionarTema.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Claro", "Oscuro" }));
+        jcSeleccionarTema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcSeleccionarTemaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,7 +140,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPacienteActionPerformed
-        VistaPaciente detPaciente = new VistaPaciente();
+        Vista_lista_Paciente detPaciente = new Vista_lista_Paciente();
         ShowPanel(detPaciente);
     }//GEN-LAST:event_bPacienteActionPerformed
 
@@ -147,6 +152,10 @@ public class Principal extends javax.swing.JFrame {
     private void bConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bConsultasActionPerformed
+
+    private void jcSeleccionarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcSeleccionarTemaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcSeleccionarTemaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -164,7 +173,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void ShowPanel(JPanel p) {
-        p.setSize(850, 550);
+        p.setSize(1600, 735);
         p.setLocation(0, 0);
 
         Tablero.removeAll();

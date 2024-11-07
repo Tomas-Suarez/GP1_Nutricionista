@@ -17,17 +17,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author cisco
  */
-public class VistaPaciente extends javax.swing.JPanel {
+public class Vista_lista_Paciente extends javax.swing.JPanel {
 
     private DefaultTableModel tablas = new DefaultTableModel();
     private PacienteData pacData = PacienteData.getRepo();
     private DietaData dietaData = DietaData.getRepo();
-    private static VistaPaciente obj = null;
+    private static Vista_lista_Paciente obj = null;
 
     /**
      * Creates new form DetallesPaciente
      */
-    public VistaPaciente() {
+    public Vista_lista_Paciente() {
         initComponents();
         if (jrActivo.isSelected()) {
             TablaPaciente(false);
