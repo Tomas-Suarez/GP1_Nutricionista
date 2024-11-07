@@ -21,38 +21,48 @@ import java.util.logging.Logger;
 public final class Config {
 
     private static Map<String, String> config;
-    
-    private Config() {
-    }
+    private static Config instance = new Config();
 
-    public static void Load() {
+    private Config() {
         config = new HashMap();
+        File file = new File("./nutricionista.cfg");
+        Scanner scanner;
         try {
-            File file = new File("./nutricionista.cfg");
-            Scanner scanner = new Scanner(file);
+            scanner = new Scanner(file);
+
             while (scanner.hasNext()) {
                 String[] line = scanner.nextLine().split("=");
                 config.put(line[0], line[1]);
             }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            config.put("theme", "0");
-            config.put("dbURL", "localhost/nutricionistagp1");
-            config.put("dbUser", "root");
-            config.put("dbPasswd", "null");
-            Save();
+        } catch (FileNotFoundException ex) {
+            loadDefaults();
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-    public static void Save() {
+    private void loadDefaults() {
+        config.put("theme", "0");
+        config.put("dbURL", "localhost/nutricionistagp1");
+        config.put("dbUser", "root");
+        config.put("dbPasswd", "null");
+    }
+
+    public static Config getInstance() {
+        if (instance == null) {
+            instance = new Config();
+        }
+        return instance;
+    }
+
+    public void save() {
+        FileWriter writer;
         try {
-            FileWriter writer = new FileWriter(("./nutricionista.cfg"), false);
+            writer = new FileWriter(("./nutricionista.cfg"), false);
             config.forEach((k, v) -> {
                 try {
                     writer.write(String.join("=", k, v + "\n"));
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                } catch (IOException ex) {
+                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
                 }
             });
             writer.close();
@@ -61,29 +71,25 @@ public final class Config {
         }
     }
 
-    public static String getDbURL() {
-        Load();
+    public String getDbURL() {
         return config.get("dbURL");
     }
 
-    public static String getDbUser() {
-        Load();
+    public String getDbUser() {
         return config.get("dbUser");
     }
 
-    public static String getDbPasswd() {
-        Load();
+    public String getDbPasswd() {
         var passwd = config.get("dbPasswd");
         return passwd == "null" ? "" : passwd;
     }
-    
-    public static Integer getTheme() {
-        Load();
+
+    public Integer getTheme() {
         return Integer.valueOf(config.get("theme"));
     }
-    
-    public static void setTheme(int theme) {
+
+    public void setTheme(int theme) {
         config.put("theme", String.valueOf(theme));
-        Save();
+        save();
     }
 }

@@ -22,9 +22,6 @@ public class DietaData {
         connection = Conexion.getConexion();
         repoPaciente = PacienteData.getRepo();
         repoMenu = new MenuDiarioData();
-
-        header = new String[]{"idDieta", "nombre", "fechaInicio", "fechaFin",
-            "pesoInicial", "pesoFinal", "totalCalorias", "idPaciente", "baja"};
     }
 
     public static DietaData getRepo() {
@@ -36,8 +33,11 @@ public class DietaData {
 
     public void save(Dieta dieta) {
         try {
-            var sql = "insert into dieta (nombre, fechaInicio, pesoInicial, pesoObjetivo, totalCalorias, idPaciente, baja)"
-                    + "values (?,?,?,?,?,?,?);";
+            var sql = """
+                      insert into dieta (nombre, fechaInicio, pesoInicial, pesoObjetivo, totalCalorias, idPaciente, baja)
+                      values (?,?,?,?,?,?,?);
+                      """;
+
             var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, dieta.getNombre());
@@ -61,13 +61,15 @@ public class DietaData {
     }
 
     public Dieta getById(int id) {
-        Dieta dieta = new Dieta();
+        Dieta dieta = null;
 
         try {
             var sql = "select * from dieta where id = ?";
-            var ps = connection.prepareStatement(sql, this.header);
+            var ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
+
             var rs = ps.executeQuery();
+            dieta = new Dieta();
             dieta.setCodDieta(rs.getInt("codDieta"));
             dieta.setNombre(rs.getString("nombre"));
             dieta.setFechaInicio(rs.getDate("fechaInicio").toLocalDate());
@@ -78,6 +80,7 @@ public class DietaData {
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
+            
             dieta.setTotalCalorias(rs.getInt("totalCalorias"));
             dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
             dieta.setBaja(rs.getBoolean("baja"));
