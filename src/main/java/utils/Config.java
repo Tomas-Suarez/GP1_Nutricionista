@@ -53,6 +53,10 @@ public final class Config {
         }
         return instance;
     }
+    
+    public void reload() {
+        instance = new Config();
+    }
 
     public void save() {
         FileWriter writer;
@@ -69,6 +73,7 @@ public final class Config {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+        reload();
     }
 
     public String getDbURL() {

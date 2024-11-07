@@ -16,6 +16,7 @@ public final class Conexion {
 
     public static Connection getConexion() {
         Config config = Config.getInstance();
+        
         try {
             if (conn == null || !conn.isValid(1)) {
                 url = "jdbc:mariadb://" + config.getDbURL();
@@ -36,6 +37,7 @@ public final class Conexion {
             var msg = "Ocurrió un error al conectar con la base de datos.\n¿Volver a intentar?";
             var res = JOptionPane.showConfirmDialog(null, msg, title, JOptionPane.YES_NO_OPTION);
             if (res == 0) {
+                config.reload();
                 return getConexion();
             } else {
                 System.exit(0);
