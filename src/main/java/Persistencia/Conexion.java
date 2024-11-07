@@ -37,7 +37,7 @@ public final class Conexion {
             var msg = "Ocurrió un error al conectar con la base de datos.\n¿Volver a intentar?";
             var res = JOptionPane.showConfirmDialog(null, msg, title, JOptionPane.YES_NO_OPTION);
             if (res == 0) {
-                config.reload();
+                config.loadCfg();
                 return getConexion();
             } else {
                 System.exit(0);

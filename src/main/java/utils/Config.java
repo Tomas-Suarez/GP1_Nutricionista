@@ -20,24 +20,11 @@ import java.util.logging.Logger;
  */
 public final class Config {
 
-    private static Map<String, String> config;
+    private Map<String, String> config;
     private static Config instance = new Config();
 
     private Config() {
-        config = new HashMap();
-        File file = new File("./nutricionista.cfg");
-        Scanner scanner;
-        try {
-            scanner = new Scanner(file);
-
-            while (scanner.hasNext()) {
-                String[] line = scanner.nextLine().split("=");
-                config.put(line[0], line[1]);
-            }
-        } catch (FileNotFoundException ex) {
-            loadDefaults();
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        loadCfg();
     }
 
     private void loadDefaults() {
@@ -53,9 +40,22 @@ public final class Config {
         }
         return instance;
     }
-    
-    public void reload() {
-        instance = new Config();
+
+    public void loadCfg() {
+        config = new HashMap();
+        File file = new File("./nutricionista.cfg");
+        Scanner scanner;
+        try {
+            scanner = new Scanner(file);
+
+            while (scanner.hasNext()) {
+                String[] line = scanner.nextLine().split("=");
+                config.put(line[0], line[1]);
+            }
+        } catch (FileNotFoundException ex) {
+            loadDefaults();
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void save() {
@@ -73,7 +73,7 @@ public final class Config {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        reload();
+        loadCfg();
     }
 
     public String getDbURL() {
@@ -96,5 +96,14 @@ public final class Config {
     public void setTheme(int theme) {
         config.put("theme", String.valueOf(theme));
         save();
+    }
+    
+    public void setProp(String key, String value) {
+        config.put(key, value);
+        save();
+    }
+    
+    public String getProp(String prop) {
+        return config.get(prop);
     }
 }

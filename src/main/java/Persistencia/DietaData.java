@@ -98,7 +98,7 @@ public class DietaData {
 
         var sql = "select * from dieta";
         try {
-            var ps = connection.prepareStatement(sql, this.header);
+            var ps = connection.prepareStatement(sql);
             var rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -173,7 +173,7 @@ public class DietaData {
     public void update(Dieta dieta) {
         try {
             var sql = "update dieta set nombre = ?, pesoFinal = ?, totalCalorias = ?, baja = ?, fechaFin = ? where idDieta = ?";
-            var ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            var ps = connection.prepareStatement(sql);
 
             ps.setString(1, dieta.getNombre());
             ps.setFloat(2, dieta.getPesoFinal());
@@ -181,9 +181,8 @@ public class DietaData {
             ps.setBoolean(4, dieta.getBaja());
             ps.setDate(5, Date.valueOf(dieta.getFechaFinal()));
             ps.setInt(6, dieta.getCodDieta());
-
-            ps.executeQuery();
-
+            
+            ps.execute();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -211,8 +210,9 @@ public class DietaData {
                 dieta.setTotalCalorias(rs.getInt("totalCalorias"));
                 dieta.setPaciente(repoPaciente.buscarPaciente(rs.getInt("idPaciente")));
                 dieta.setBaja(rs.getBoolean("baja"));
+             
                 dieta.setMenu(repoMenu.obtenerMenusPorDieta(dieta.getCodDieta()));
-
+             
                 dietas.add(dieta);
             }
         } catch (Exception ex) {
