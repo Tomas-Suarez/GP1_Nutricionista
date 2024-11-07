@@ -33,7 +33,7 @@ public class RegistroData {
         String sql = "INSERT INTO registro(idDieta, peso, FechaRegistro, detalle) VALUES (?, ?, ?, ?);";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, registro.getDieta().getCodDieta());
             ps.setFloat(2, registro.getPeso());
@@ -61,7 +61,7 @@ public class RegistroData {
         String sql = "UPDATE registro SET idDieta = ?, peso = ?, FechaRegistro = ?, detalle = ? WHERE idRegistro = ?;";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
 
             ps.setInt(1, registro.getDieta().getCodDieta());
             ps.setFloat(2, registro.getPeso());
@@ -88,7 +88,7 @@ public class RegistroData {
         String sql = "SELECT * FROM registro";
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -124,7 +124,7 @@ public class RegistroData {
         """;
 
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ps.setInt(1, idPaciente); // Establece el parámetro idPaciente
             ResultSet rs = ps.executeQuery();
 
@@ -152,6 +152,37 @@ public class RegistroData {
         }
 
         return registroPaciente;
+    }
+    
+    public int[] EstadoPaciente(){
+        int[] estadoPaciente = new int[3]; //En la posicion 0 - llegaron al objetivo, pos 1-No llegaron al objetivo, pos3- en_proceso
+        String sql = """
+                     SELECT
+                         COUNT(CASE WHEN r.peso <= d.pesoObjetivo AND d.pesoFinal IS NOT NULL THEN 1 END) AS llego_al_objetivo,
+                         COUNT(CASE WHEN r.peso > d.pesoObjetivo AND d.pesoFinal IS NOT NULL THEN 1 END) AS no_llego_al_objetivo,
+                         COUNT(CASE WHEN d.pesoFinal IS NULL THEN 1 END) AS en_proceso
+                     FROM dieta d
+                     JOIN registro r ON d.idDieta = r.idDieta
+                     WHERE r.FechaRegistro = (
+                         SELECT MAX(FechaRegistro)
+                         FROM registro
+                         WHERE idDieta = d.idDieta
+                     );
+                     """;
+        
+        try{
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()){
+                estadoPaciente[0] = rs.getInt("llego_al_objetivo");
+                estadoPaciente[1] = rs.getInt("no_llego_al_objetivo");
+                estadoPaciente[2] = rs.getInt("en_proceso");
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al obtener los estados de los pacientes: "+e.getMessage());
+        }
+        return estadoPaciente;
     }
 
     //Estaria faltando el borrar registro o algo similar
