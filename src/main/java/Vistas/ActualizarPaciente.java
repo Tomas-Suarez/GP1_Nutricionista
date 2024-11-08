@@ -207,7 +207,7 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         } else {
             crearPaciente();
         }
-        
+
     }//GEN-LAST:event_jbActualizarActionPerformed
 
 
@@ -273,49 +273,55 @@ public class ActualizarPaciente extends javax.swing.JPanel {
     }
 
     private boolean validarFormulario() {
-
-        if (tNombre.getText().equalsIgnoreCase("")) {
-            JOptionPane.showMessageDialog(this, "El campo de nombre no debe estar vacio!");
+        // Validar nombre
+        if (tNombre.getText().trim().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo de nombre no debe estar vacío!");
             return false;
         }
+
         // Validar edad
-        try {
-
-            if ((int) jsEdad.getValue() <= 0) {
-                JOptionPane.showMessageDialog(this, "El campo de edad debe ser mayor a 0!");
-                return false;
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+        if ((int) jsEdad.getValue() <= 0) {
+            JOptionPane.showMessageDialog(this, "El campo de edad debe ser mayor a 0!");
+            return false;
         }
 
-        //Validar dni
-        try {
-            if (tDni.getText().equalsIgnoreCase("")) {
-                JOptionPane.showMessageDialog(this, "El campo de DNI no debe estar vacio!");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+        // Validar DNI
+        String dni = tDni.getText().trim();
+        if (dni.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo de DNI no debe estar vacío!");
+            return false;
         }
-        //validar peso
         try {
-            if (tPeso.getText().equalsIgnoreCase("")) {
-                JOptionPane.showMessageDialog(this, "El campo de peso no debe estar vacio!");
-                return false;
-            }
+            Long.parseLong(dni); 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+            JOptionPane.showMessageDialog(this, "El campo de DNI debe contener solo números.");
+            return false;
         }
-        //validar altura
+
+        // Validar peso
+        String peso = tPeso.getText().trim();
+        if (peso.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo de peso no debe estar vacío!");
+            return false;
+        }
         try {
-            if (tAltura.getText().equalsIgnoreCase("")) {
-                JOptionPane.showMessageDialog(this, "El campo de altura no debe estar vacio!");
-                return false;
-            }
+            Double.parseDouble(peso);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Solo se permiten numeros en este campo: " + e);
+            JOptionPane.showMessageDialog(this, "El campo de peso debe contener solo números.");
+            return false;
+        }
+
+        // Validar altura
+        String altura = tAltura.getText().trim();
+        if (altura.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo de altura no debe estar vacío!");
+            return false;
+        }
+        try {
+            Double.parseDouble(altura);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El campo de altura debe contener solo números.");
+            return false;
         }
 
         return true;

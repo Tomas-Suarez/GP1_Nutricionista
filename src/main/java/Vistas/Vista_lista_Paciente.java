@@ -228,22 +228,9 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
 
         if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
 
-            int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
-            String nombre = (String) tablas.getValueAt(rowSelected, 1);
-            int dni = (Integer) tablas.getValueAt(rowSelected, 2);
-            int edad = (Integer) tablas.getValueAt(rowSelected, 3);
-            float altura = (Float) tablas.getValueAt(rowSelected, 4);
-            float pesoActual = (Float) tablas.getValueAt(rowSelected, 5);
-            String estado = (String) tablas.getValueAt(rowSelected, 6);
-            boolean estadoPaciente;
-            if (estado.equalsIgnoreCase("activo")) {
-                estadoPaciente = false;
-            } else {
-                estadoPaciente = true;
-            }
+            Paciente pacienteSelect = (Paciente) tPaciente.getValueAt(rowSelected, 0);
 
-            Paciente pac = new Paciente(idPaciente, nombre, dni, edad, altura, pesoActual, estadoPaciente);
-            ActualizarPaciente actPaciente = new ActualizarPaciente(pac, this);
+            ActualizarPaciente actPaciente = new ActualizarPaciente(pacienteSelect, this);
 
             JFrame nuevaVista = new JFrame("Actualizar Paciente");
             nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -262,8 +249,8 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
         if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
             if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de borrar al paciente de forma permanente?") == 0) {
 
-                int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
-                pacData.eliminarPaciente(idPaciente);
+                Paciente pacienteSelect = (Paciente) tPaciente.getValueAt(rowSelected, 0);
+                pacData.eliminarPaciente(pacienteSelect.getNroPaciente());
                 TablaPaciente(!jrActivo.isSelected());
             }
         } else {
@@ -285,8 +272,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     private void tPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPacienteMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            Paciente paciente = getPacienteSeleccionado();
-            DetallePaciente detallePaciente = new DetallePaciente(paciente);
+            DetallePaciente detallePaciente = new DetallePaciente(getPacienteSeleccionado());
             var principal = Principal.getPrincipal();
             principal.ShowPanel(detallePaciente);
         }
@@ -296,18 +282,10 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
         int rowSelected = tPaciente.getSelectedRow();
 
         if (rowSelected != -1) {
-            int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
+            Paciente pacienteSelect = (Paciente) tPaciente.getValueAt(rowSelected, 0);
+            if (dietaData.getDietaPaciente(pacienteSelect.getNroPaciente()) != -1) { // Verificamos que el paciente tenga dieta
 
-            if (dietaData.getDietaPaciente(idPaciente) != -1) { // Verificamos que el paciente tenga dieta
-                String nombre = (String) tablas.getValueAt(rowSelected, 1);
-                int dni = (Integer) tablas.getValueAt(rowSelected, 2);
-                int edad = (Integer) tablas.getValueAt(rowSelected, 3);
-                float altura = (Float) tablas.getValueAt(rowSelected, 4);
-                float pesoActual = (Float) tablas.getValueAt(rowSelected, 5);
-                String estado = (String) tablas.getValueAt(rowSelected, 6);
-
-                Paciente pac = new Paciente(idPaciente, nombre, dni, edad, altura, pesoActual, true);
-                RegistrarPeso actPaciente = new RegistrarPeso(this, pac);
+                RegistrarPeso actPaciente = new RegistrarPeso(this, pacienteSelect);
                 JFrame nuevaVista = new JFrame("Registrar Peso");
                 nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 nuevaVista.getContentPane().add(actPaciente);
@@ -342,7 +320,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void TablaPaciente(boolean estado) {
-        String tablaHeader[] = {"ID", "Nombre", "DNI", "Edad", "Altura", "Peso", "Estado"};
+        String tablaHeader[] = {"Nombre", "DNI", "Edad", "Altura", "Peso", "Estado"};
         tablas.setColumnIdentifiers(tablaHeader);
         tPaciente.setModel(tablas); //Le asiganamos el modelo a la tabla
         tPaciente.setDefaultEditor(Object.class, null); // Deshabilita la edicion de celdas
@@ -359,8 +337,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
 
         for (Paciente paciente : listaFiltrada) {
             tablas.addRow(new Object[]{
-                paciente.getNroPaciente(),
-                paciente.getNombre(),
+                paciente,
                 paciente.getDni(),
                 paciente.getEdad(),
                 paciente.getAltura(),
@@ -373,25 +350,10 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     public Paciente getPacienteSeleccionado() {
         int rowSelected = tPaciente.getSelectedRow();
         Paciente pac = null;
-        if (rowSelected != -1) { // Nos sirve para verificar si la tabla esta seleccionada
-
-            int idPaciente = (Integer) tablas.getValueAt(rowSelected, 0);
-            String nombre = (String) tablas.getValueAt(rowSelected, 1);
-            int dni = (Integer) tablas.getValueAt(rowSelected, 2);
-            int edad = (Integer) tablas.getValueAt(rowSelected, 3);
-            float altura = (Float) tablas.getValueAt(rowSelected, 4);
-            float pesoActual = (Float) tablas.getValueAt(rowSelected, 5);
-            String estado = (String) tablas.getValueAt(rowSelected, 6);
-            boolean estadoPaciente;
-            if (estado.equalsIgnoreCase("activo")) {
-                estadoPaciente = false;
-            } else {
-                estadoPaciente = true;
-            }
-
-            pac = new Paciente(idPaciente, nombre, dni, edad, altura, pesoActual, estadoPaciente);
+        if (rowSelected != -1) { // Verifica si hay una fila seleccionada
+            Paciente pacienteSelect = (Paciente) tPaciente.getValueAt(rowSelected, 0);
+            pac = pacienteSelect;
         }
-
         return pac;
     }
 
