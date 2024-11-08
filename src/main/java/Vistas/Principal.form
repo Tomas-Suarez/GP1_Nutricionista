@@ -79,7 +79,7 @@
               <Component id="jcSeleccionarTema" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="260" max="32767" attributes="0"/>
           </Group>
-          <Component id="Tablero" alignment="0" pref="614" max="32767" attributes="0"/>
+          <Component id="Tablero" alignment="0" pref="618" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

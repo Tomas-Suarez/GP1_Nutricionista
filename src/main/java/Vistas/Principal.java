@@ -137,7 +137,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jcSeleccionarTema, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(260, Short.MAX_VALUE))
-            .addComponent(Tablero, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+            .addComponent(Tablero, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
         );
 
         pack();
@@ -166,7 +166,8 @@ public class Principal extends javax.swing.JFrame {
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
         Tablero.setSize(getWidth()-300, getHeight()-100);
-                
+            
+        if (k != null) {
         k.setSize(Tablero.getWidth(),Tablero.getHeight());
         k.setLocation(0, 0);
         
@@ -174,6 +175,7 @@ public class Principal extends javax.swing.JFrame {
         Tablero.add(k, BorderLayout.CENTER);
         Tablero.revalidate();
         Tablero.repaint();
+        }
     }//GEN-LAST:event_formComponentResized
 
 
