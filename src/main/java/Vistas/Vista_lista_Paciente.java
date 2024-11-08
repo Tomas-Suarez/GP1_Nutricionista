@@ -7,6 +7,7 @@ package Vistas;
 import Modelo.Paciente;
 import Persistencia.DietaData;
 import Persistencia.PacienteData;
+import Vistas.Dieta.DietaVista;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -272,7 +273,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     private void tPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPacienteMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            DetallePaciente detallePaciente = new DetallePaciente(getPacienteSeleccionado());
+            DietaVista detallePaciente = new DietaVista(getPacienteSeleccionado());
             var principal = Principal.getPrincipal();
             principal.ShowPanel(detallePaciente);
         }
