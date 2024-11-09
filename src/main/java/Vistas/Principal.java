@@ -203,24 +203,4 @@ public class Principal extends javax.swing.JFrame {
         Tablero.revalidate();
         Tablero.repaint();
     }
-
-        // El metodo retorna TRUE si todos los campos están llenos. Y en caso contrario retornara FALSE
-    public boolean validarCamposVacios(JPanel jPanel) {
-        for (Component c : jPanel.getComponents()) { //Se fija en los TextField
-            System.out.println(c.getName() + c.getClass());
-            if (c instanceof JTextField) {
-                JTextField caja = (JTextField) c;
-                if (caja.getText().trim().isEmpty()) {
-                    return false;
-                }
-            } else if (c instanceof JSpinner) { //Se fija en los Spinner
-                JSpinner spinner = (JSpinner) c;
-                Number value = (Number) spinner.getValue();
-                if (value.floatValue() <= 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 }
