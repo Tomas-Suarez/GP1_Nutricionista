@@ -165,7 +165,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
-        Tablero.setSize(getWidth()-300, getHeight()-100);
+        Tablero.setSize(getWidth()-230, getHeight()-50);
             
         if (k != null) {
         k.setSize(Tablero.getWidth(),Tablero.getHeight());
