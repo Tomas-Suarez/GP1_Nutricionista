@@ -34,23 +34,22 @@ public class RenglonDeMenuData {
 
     }
 
-     public static RenglonDeMenuData getRepo() {
+    public static RenglonDeMenuData getRepo() {
         if (obj == null) {
             obj = new RenglonDeMenuData();
         }
         return obj;
     }
-    
-    
+
     public RenglonDeMenuData(Connection conexion, Alimento ali, MenuDiario men) {
         this.ali = ali;
         this.con = conexion;
         this.men = men;
     }
 
-    public void agregarRen(RenglonDeMenu dato)  {
+    public void agregarRen(RenglonDeMenu dato) {
 
-        String sql = "INSERT INTO renglondemenu (cantidadGrs,subtotalCalorias,idMenu,idAlimento) VALUES (?,?,?,?);";
+        String sql = "INSERT INTO renglondemenu(cantidadGrs, subtotalCalorias, idMenu, idAlimento, horario) VALUES (?, ?, ?, ?, ?);";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -58,6 +57,7 @@ public class RenglonDeMenuData {
             ps.setInt(2, dato.getSubTotalCalorias());
             ps.setInt(3, dato.getMenu().getCodMenu());
             ps.setInt(4, dato.getAlimento().getCodComida());
+            ps.setString(5, dato.getHorario());
 
             ps.executeUpdate();
 
@@ -72,13 +72,13 @@ public class RenglonDeMenuData {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            
+
         }
 
     }
 
     public RenglonDeMenu BuscarRenglon(int cod) {
-        String sql = "SELECT * FROM renglondemenu WHERE codRenglon = ?;";
+        String sql = "SELECT * FROM renglondemenu where idRenglon = ?;";
 
         RenglonDeMenu ren = null;
 
@@ -94,13 +94,14 @@ public class RenglonDeMenuData {
                 ali = new Alimento();
                 men = new MenuDiario();
 
-                ren.setCodRenglon(rs.getInt("codRenglon"));
+                ren.setCodRenglon(rs.getInt("idRenglon"));
                 ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
                 ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
-                ali.setCodComida(rs.getInt("codComida"));
-                ren.setAlimento(ali);
-                men.setCodMenu(rs.getInt("codMenu"));
+                men.setCodMenu(rs.getInt("idMenu"));
                 ren.setMenu(men);
+                ali.setCodComida(rs.getInt("idAlimento"));
+                ren.setAlimento(ali);
+                ren.setHorario(rs.getString("horario"));
 
                 rs.close();
                 ps.close();
@@ -114,7 +115,7 @@ public class RenglonDeMenuData {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el renglon");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el renglon" + e.getMessage());
         }
 
         return ren;
@@ -123,23 +124,28 @@ public class RenglonDeMenuData {
 
     public void modificarRen(RenglonDeMenu dato) {
 
-        String sql = "UPDATE renglondemenu SET cantidadGrs=?,subtotalCalorias=?,codMenu=?,codComida=? WHERE codRenglon =?";
+        String sql = "UPDATE renglondemenu SET cantidadGrs = ?, subtotalCalorias = ?, idMenu = ?, idAlimento = ?, horario = ? WHERE idRenglon = ?;";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setDouble(1, dato.getCantidadGrs());
+            ps.setFloat(1, dato.getCantidadGrs());
             ps.setInt(2, dato.getSubTotalCalorias());
             ps.setInt(3, dato.getMenu().getCodMenu());
             ps.setInt(4, dato.getAlimento().getCodComida());
-            ps.setInt(5, dato.getCodRenglon());
+            ps.setString(5, dato.getHorario());
+            ps.setInt(6, dato.getCodRenglon());
+
+            ps.executeUpdate();
+            ps.close();
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el renglon!");
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el renglon!" + e.getMessage());
         }
 
     }
 
-    public List<RenglonDeMenu> listarrenglon() throws SQLException {
+    public List<RenglonDeMenu> listarrenglon() {
 
         ArrayList<RenglonDeMenu> listarrenglon = new ArrayList<>();
 
@@ -154,13 +160,14 @@ public class RenglonDeMenuData {
                 ali = new Alimento();
                 men = new MenuDiario();
 
-                ren.setCodRenglon(rs.getInt("codRenglon"));
+                ren.setCodRenglon(rs.getInt("idRenglon"));
                 ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
                 ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
-                ali.setCodComida(rs.getInt("codComida"));
+                men.setCodMenu(rs.getInt("idMenu"));
+                ren.setMenu(men);
+                ali.setCodComida(rs.getInt("idAlimento"));
                 ren.setAlimento(ali);
-                men.setCodMenu(rs.getInt("codMenu"));
-                
+                ren.setHorario(rs.getString("horario"));
 
                 listarrenglon.add(ren);
             }
@@ -169,18 +176,16 @@ public class RenglonDeMenuData {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista");
+            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista" + e.getMessage());
         }
-
         return listarrenglon;
     }
 
-    
-     public List<RenglonDeMenu> buscarporalimento(int id) {
+    public List<RenglonDeMenu> buscarporalimento(int id) {
 
         ArrayList<RenglonDeMenu> listarrenglon = new ArrayList<>();
 
-        String sql = "SELECT * FROM renglondemenu where idalimento = ?";
+        String sql = "SELECT * FROM renglondemenu where idAlimento = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -192,28 +197,30 @@ public class RenglonDeMenuData {
                 ali = new Alimento();
                 men = new MenuDiario();
 
-                ren.setCodRenglon(rs.getInt("codRenglon"));
+                ren.setCodRenglon(rs.getInt("idRenglon"));
                 ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
                 ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
-                ali.setCodComida(rs.getInt("codComida"));
+                men.setCodMenu(rs.getInt("idMenu"));
+                ren.setMenu(men);
+                ali.setCodComida(rs.getInt("idAlimento"));
                 ren.setAlimento(ali);
-                men.setCodMenu(rs.getInt("codMenu"));
-                
+                ren.setHorario(rs.getString("horario"));
 
                 listarrenglon.add(ren);
+
             }
             rs.close();
             ps.close();
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista");
+            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista" + e.getMessage());
         }
 
         return listarrenglon;
     }
-     
-     public List<RenglonDeMenu> buscarpormenu(int id) {
+
+    public List<RenglonDeMenu> buscarpormenu(int id) {
 
         ArrayList<RenglonDeMenu> listarrenglon = new ArrayList<>();
 
@@ -223,20 +230,20 @@ public class RenglonDeMenuData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            
+
             while (rs.next()) {
                 RenglonDeMenu ren = new RenglonDeMenu();
                 ali = new Alimento();
                 men = new MenuDiario();
 
-                ren.setCodRenglon(rs.getInt("codRenglon"));              
+                ren.setCodRenglon(rs.getInt("idRenglon"));
                 ren.setCantidadGrs(rs.getFloat("cantidadGrs"));
-                ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));               
-                ali.setCodComida(rs.getInt("codComida"));
-                ren.setAlimento(ali);
-                men.setCodMenu(rs.getInt("codMenu"));
+                ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
+                men.setCodMenu(rs.getInt("idMenu"));
                 ren.setMenu(men);
-                
+                ali.setCodComida(rs.getInt("idAlimento"));
+                ren.setAlimento(ali);
+                ren.setHorario(rs.getString("horario"));
 
                 listarrenglon.add(ren);
             }
@@ -245,7 +252,7 @@ public class RenglonDeMenuData {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista");
+            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista "+e.getMessage());
         }
 
         return listarrenglon;
