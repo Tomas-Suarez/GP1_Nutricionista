@@ -166,16 +166,6 @@ public class vista_crear_dietas extends javax.swing.JPanel {
             menu.setBaja(false);
             menu.setCaloriasDelMenu(0);
             repoMenu.agregarMenuDiario(menu);
-            for (int j = 0, f = 4; j < f; j++) {
-                //cantidadGrs,subtotalCalorias,codMenu,codComida
-                var renglon = new RenglonDeMenu();
-                renglon.setCantidadGrs(0);
-                renglon.setSubTotalCalorias(0);
-                renglon.setMenu(menu);
-                renglon.setAlimento(repoAlimentos.getAlimentById(1));
-                repoRenglones.agregarRen(renglon);
-                menu.addRenglon(renglon);
-            }
             menus.add(menu);
         }
         dieta.setMenu(menus);

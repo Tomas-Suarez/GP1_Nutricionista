@@ -9,17 +9,13 @@ import Modelo.MenuDiario;
 import Modelo.Paciente;
 import Modelo.RenglonDeMenu;
 import Persistencia.AlimentoData;
-import Persistencia.DietaData;
 import Persistencia.MenuDiarioData;
-import Vistas.Renglon.RenglonLista;
 import java.time.LocalDate;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Persistencia.DietaData;
 import Vistas.Principal;
-import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -429,9 +425,6 @@ public class DietaVista extends javax.swing.JPanel {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         var menu = (MenuDiario) jComboBox1.getSelectedItem();
-        var model = new DefaultComboBoxModel<Object>();
-        model.addAll(menu.getComidas());
-        jComboBox2.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 

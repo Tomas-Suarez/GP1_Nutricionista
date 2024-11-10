@@ -47,7 +47,6 @@ public class DietaData {
             ps.setInt(5, dieta.getTotalCalorias());
             ps.setInt(6, dieta.getPaciente().getNroPaciente());
             ps.setBoolean(7, dieta.getBaja());
-
             ps.executeQuery();
 
             var rs = ps.getGeneratedKeys();
