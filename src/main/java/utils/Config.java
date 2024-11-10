@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,18 +13,13 @@ import java.util.logging.Logger;
  */
 public final class Config {
 
-    private Map<String, String> config;
-    private static Config instance = new Config();
+    private Properties props;
+
+    private static Config instance;
 
     private Config() {
-        loadCfg();
-    }
-
-    private void loadDefaults() {
-        config.put("theme", "0");
-        config.put("dbURL", "localhost/nutricionistagp1");
-        config.put("dbUser", "root");
-        config.put("dbPasswd", "null");
+        this.props = new Properties();
+        load();
     }
 
     public static Config getInstance() {
@@ -41,69 +29,64 @@ public final class Config {
         return instance;
     }
 
-    public void loadCfg() {
-        config = new HashMap();
-        File file = new File("./nutricionista.cfg");
-        Scanner scanner;
+    public void load() {
         try {
-            scanner = new Scanner(file);
-
-            while (scanner.hasNext()) {
-                String[] line = scanner.nextLine().split("=");
-                config.put(line[0], line[1]);
-            }
-        } catch (FileNotFoundException ex) {
-            loadDefaults();
+            var path = Path.of("./nutricionista.cfg");
+            var reader = Files.newInputStream(path);
+            props.load(reader);
+        } catch (IOException ex) {
             Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void save() {
-        FileWriter writer;
         try {
-            writer = new FileWriter(("./nutricionista.cfg"), false);
-            config.forEach((k, v) -> {
-                try {
-                    writer.write(String.join("=", k, v + "\n"));
-                } catch (IOException ex) {
-                    Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            writer.close();
+            var path = Path.of("./nutricionista.cfg");
+            var out = Files.newOutputStream(path);
+            props.store(out, null);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
-        loadCfg();
     }
 
     public String getDbURL() {
-        return config.get("dbURL");
+        if (!props.containsKey("dbURL")) {
+            setProp("dbURL", "localhost/nutricionistagp1");
+        }
+        return props.getProperty("dbURL");
     }
 
     public String getDbUser() {
-        return config.get("dbUser");
+        if (!props.containsKey("dbUser")) {
+            setProp("dbUser", "root");
+        }
+        return props.getProperty("dbUser");
     }
 
     public String getDbPasswd() {
-        var passwd = config.get("dbPasswd");
-        return passwd.equals("null") ? "" : passwd;
+        if (!props.containsKey("dbPasswd")) {
+            setProp("dbPasswd", "");
+        }
+        return props.getProperty("dbPasswd");
     }
 
     public Integer getTheme() {
-        return Integer.valueOf(config.get("theme"));
+        if (!props.containsKey("theme")) {
+            setTheme(0);
+        }
+        return Integer.valueOf(props.getProperty("theme"));
     }
 
     public void setTheme(int theme) {
-        config.put("theme", String.valueOf(theme));
+        props.setProperty("theme", String.valueOf(theme));
         save();
     }
-    
+
     public void setProp(String key, String value) {
-        config.put(key, value);
-        save();
+        props.setProperty(key, value);
     }
-    
+
     public String getProp(String prop) {
-        return config.get(prop);
+        return props.getProperty(prop);
     }
 }
