@@ -35,7 +35,6 @@ public final class Config {
             var reader = Files.newInputStream(path);
             props.load(reader);
         } catch (IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
