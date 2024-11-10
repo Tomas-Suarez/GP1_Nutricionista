@@ -4,16 +4,44 @@
  */
 package Vistas.Dieta;
 
+import Modelo.Dieta;
+import Modelo.MenuDiario;
+import Modelo.Paciente;
+import Modelo.RenglonDeMenu;
+import Persistencia.AlimentoData;
+import Persistencia.DietaData;
+import Persistencia.MenuDiarioData;
+import Persistencia.RenglonDeMenuData;
+import Vistas.Principal;
+import com.toedter.calendar.JCalendar;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author franco
  */
 public class vista_crear_dietas extends javax.swing.JPanel {
+    
+    private DietaData repoDieta;
+    private Paciente paciente;
+    private MenuDiarioData repoMenu;
+    private RenglonDeMenuData repoRenglones;
+    private AlimentoData repoAlimentos;
 
     /**
      * Creates new form vista_dietas
      */
-    public vista_crear_dietas() {
+    public vista_crear_dietas(Paciente paciente) {
+        this.paciente = paciente;
+        this.repoMenu = MenuDiarioData.getRepo();
+        this.repoDieta = DietaData.getRepo();
+        this.repoRenglones = RenglonDeMenuData.getRepo();
+        this.repoAlimentos = AlimentoData.getRepo();
         initComponents();
     }
 
@@ -120,8 +148,79 @@ public class vista_crear_dietas extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        var dieta = new Dieta();
+        dieta.setPesoObjetivo(getPeso());
+        dieta.setPaciente(paciente);
+        dieta.setNombre(getNombre());
+        dieta.setFechaInicio(LocalDate.now());
+        dieta.setTotalCalorias(0);
+        dieta.setPesoInicial(paciente.getPesoActual());
+        dieta.setBaja(false);
+        dieta.setFechaFinal(getDate());
+        repoDieta.save(dieta);
+        List<MenuDiario> menus = new ArrayList();
+        for (int i = 0, e = 7; i < e; i++) {
+            var menu = new MenuDiario();
+            menu.setDia(i);
+            menu.setDieta(dieta);
+            menu.setBaja(false);
+            menu.setCaloriasDelMenu(0);
+            repoMenu.agregarMenuDiario(menu);
+            for (int j = 0, f = 4; j < f; j++) {
+                //cantidadGrs,subtotalCalorias,codMenu,codComida
+                var renglon = new RenglonDeMenu();
+                renglon.setCantidadGrs(0);
+                renglon.setSubTotalCalorias(0);
+                renglon.setMenu(menu);
+                renglon.setAlimento(repoAlimentos.getAlimentById(1));
+                repoRenglones.agregarRen(renglon);
+                menu.addRenglon(renglon);
+            }
+            menus.add(menu);
+        }
+        dieta.setMenu(menus);
+        repoDieta.update(dieta);
+        var vd = DietaVista.getInstance(null);
+        vd.llenarTablaDietas(null);
+        
+        SwingUtilities.getWindowAncestor(this).dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    private LocalDate getDate() {
+        var selectedDate = jDateChooser1.getDate();
+        LocalDate fechaFin = selectedDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        return fechaFin;
+    }
+    
+    private String getNombre() {
+        String nombre = jTextField1.getText();
+        if (nombre.isBlank()) {
+            JOptionPane.showMessageDialog(null, "El campo de nombre no puede estar vacio.");
+            return null;
+        }
+        return nombre;
+    }
+    
+    private float getPeso() {
+        Float peso = null;
+        String errorMsg = null;
+        
+        var inputPeso = jTextField2.getText();
+        if (inputPeso.isBlank()) {
+            errorMsg = "El peso no puede estar vacio.";
+            JOptionPane.showMessageDialog(null, errorMsg);
+        } else {
+            try {
+                peso = Float.parseFloat(inputPeso);
+            } catch (NumberFormatException ex) {
+                errorMsg = "El formato del peso no es valido";
+                JOptionPane.showMessageDialog(null, errorMsg);
+            }
+        }
+        return peso;
+    }
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed

@@ -21,7 +21,7 @@ public class DietaData {
     private DietaData() {
         connection = Conexion.getConexion();
         repoPaciente = PacienteData.getRepo();
-        repoMenu = new MenuDiarioData();
+        repoMenu = MenuDiarioData.getRepo();
     }
 
     public static DietaData getRepo() {
@@ -57,6 +57,7 @@ public class DietaData {
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            System.out.println(ex.getStackTrace());
         }
     }
 

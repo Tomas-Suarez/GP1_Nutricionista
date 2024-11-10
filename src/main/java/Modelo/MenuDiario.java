@@ -31,6 +31,19 @@ public class MenuDiario {
     public MenuDiario() {
     }
 
+    @Override
+    public String toString() {
+        return switch (dia) {
+            case 1 -> "Lunes";
+            case 2 -> "Martes";
+            case 3 -> "Miercoles";
+            case 4 -> "Jueves";
+            case 5 -> "Viernes";
+            case 6 -> "Sábado";
+            default -> "Domingo";
+        };
+    }
+
     
 
     public int getCodMenu() {

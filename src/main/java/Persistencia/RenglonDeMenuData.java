@@ -50,7 +50,7 @@ public class RenglonDeMenuData {
 
     public void agregarRen(RenglonDeMenu dato)  {
 
-        String sql = "INSERT INTO renglondemenu (cantidadGrs,subtotalCalorias,codMenu,codComida VALUES (?,?,?,?);";
+        String sql = "INSERT INTO renglondemenu (cantidadGrs,subtotalCalorias,idMenu,idAlimento) VALUES (?,?,?,?);";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -70,10 +70,9 @@ public class RenglonDeMenuData {
             rs.close();
             ps.close();
 
-            JOptionPane.showMessageDialog(null, "Renglon del menu agregado exitosamente!");
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el renglon!");
+            System.out.println(e.getMessage());
+            
         }
 
     }

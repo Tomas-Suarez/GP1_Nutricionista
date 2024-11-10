@@ -1,9 +1,11 @@
 package Vistas;
 
 import Vistas.Alimento.ListaAlimento;
+import Vistas.Dieta.vista_crear_dietas;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -15,18 +17,18 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     private static Principal principal;
-    
+
     private Principal() {
         initComponents();
     }
-    
+
     public static Principal getPrincipal() {
         if (principal == null) {
             principal = new Principal();
         }
         return principal;
     }
-    
+
     public static Principal New() {
         principal = null;
         return getPrincipal();
@@ -156,7 +158,7 @@ public class Principal extends javax.swing.JFrame {
     private void bConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConsultasActionPerformed
         GraficoEstadistica grafEstad = new GraficoEstadistica();
         ShowPanel(grafEstad);
-        
+
     }//GEN-LAST:event_bConsultasActionPerformed
 
     private void jcSeleccionarTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcSeleccionarTemaActionPerformed
@@ -165,16 +167,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         // TODO add your handling code here:
-        Tablero.setSize(getWidth()-230, getHeight()-50);
-            
+        Tablero.setSize(getWidth() - 230, getHeight() - 50);
+
         if (k != null) {
-        k.setSize(Tablero.getWidth(),Tablero.getHeight());
-        k.setLocation(0, 0);
-        
-        Tablero.removeAll();
-        Tablero.add(k, BorderLayout.CENTER);
-        Tablero.revalidate();
-        Tablero.repaint();
+            k.setSize(Tablero.getWidth(), Tablero.getHeight());
+            k.setLocation(0, 0);
+
+            Tablero.removeAll();
+            Tablero.add(k, BorderLayout.CENTER);
+            Tablero.revalidate();
+            Tablero.repaint();
         }
     }//GEN-LAST:event_formComponentResized
 
@@ -194,8 +196,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public void ShowPanel(JPanel p) {
-        k=p;
-        p.setSize(Tablero.getWidth(),Tablero.getHeight());
+        k = p;
+        p.setSize(Tablero.getWidth(), Tablero.getHeight());
         p.setLocation(0, 0);
 
         Tablero.removeAll();
@@ -203,4 +205,18 @@ public class Principal extends javax.swing.JFrame {
         Tablero.revalidate();
         Tablero.repaint();
     }
+
+    public static void showFrame(JPanel p) {
+        JFrame nuevaVista = new JFrame("Nueva dieta");
+        nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nuevaVista.getContentPane().add(p);
+        nuevaVista.pack();
+        nuevaVista.setVisible(true);
+        nuevaVista.setLocation(585, 60);
+    }
+    
+    public JPanel getTablero() {
+        return Tablero;
+    }
+    
 }

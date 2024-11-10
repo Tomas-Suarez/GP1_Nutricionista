@@ -14,15 +14,16 @@ import javax.swing.JOptionPane;
 public class MenuDiarioData {
 
     private Connection con = null;
-    private static MenuDiario object = null;
+    private static MenuDiarioData object = null;
+    private DietaData repoDieta;
 
-    public MenuDiarioData() {
+    private MenuDiarioData() {
         con = Conexion.getConexion();
     }
 
-    public static MenuDiario getRepo() {
+    public static MenuDiarioData getRepo() {
         if (object == null) {
-            object = new MenuDiario();
+            object = new MenuDiarioData();
         }
         return object;
     }
@@ -47,8 +48,6 @@ public class MenuDiarioData {
 
             rs.close();
             ps.close();
-
-            JOptionPane.showMessageDialog(null, "El Menu diario fue agregado exitosamente!");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el Menu diario");

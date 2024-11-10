@@ -23,7 +23,6 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     private DefaultTableModel tablas = new DefaultTableModel();
     private PacienteData pacData = PacienteData.getRepo();
     private DietaData dietaData = DietaData.getRepo();
-    private static Vista_lista_Paciente obj = null;
 
     /**
      * Creates new form DetallesPaciente
@@ -273,7 +272,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     private void tPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPacienteMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            DietaVista detallePaciente = new DietaVista(getPacienteSeleccionado());
+            DietaVista detallePaciente = DietaVista.getInstance(getPacienteSeleccionado());
             var principal = Principal.getPrincipal();
             principal.ShowPanel(detallePaciente);
         }
