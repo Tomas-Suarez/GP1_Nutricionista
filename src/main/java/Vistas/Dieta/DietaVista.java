@@ -33,7 +33,7 @@ public class DietaVista extends javax.swing.JPanel {
     /**
      * Creates new form Dieta
      */
-    private DietaVista(Paciente paciente) {
+    public DietaVista(Paciente paciente) {
         this.paciente = paciente;
         this.repoDieta = DietaData.getRepo();
         this.repoMenu = MenuDiarioData.getRepo();

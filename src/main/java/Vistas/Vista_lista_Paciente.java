@@ -272,7 +272,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     private void tPacienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tPacienteMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            DietaVista detallePaciente = DietaVista.getInstance(getPacienteSeleccionado());
+            DietaVista detallePaciente = new DietaVista(getPacienteSeleccionado());
             var principal = Principal.getPrincipal();
             principal.ShowPanel(detallePaciente);
         }
