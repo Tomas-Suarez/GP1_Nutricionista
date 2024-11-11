@@ -47,7 +47,6 @@
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -88,7 +87,7 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane4" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="466" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -100,9 +99,11 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField1" min="-2" pref="199" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="466" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -119,16 +120,23 @@
                           <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="1" pref="524" max="32767" attributes="0"/>
-                          <Component id="jScrollPane4" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="agregarA" min="-2" pref="33" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="eliminarA" min="-2" pref="36" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jScrollPane2" alignment="0" pref="518" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane4" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -216,9 +224,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="filtro"/>
-              </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="agregarA">
               <Properties>
@@ -271,6 +279,11 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;MenuDiario&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Filtro"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
