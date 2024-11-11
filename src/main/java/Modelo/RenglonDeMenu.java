@@ -47,7 +47,7 @@ public class RenglonDeMenu {
     }
 
     public int getSubTotalCalorias() {
-        return subTotalCalorias;
+        return Math.round(alimento.getCaloriasPor100g() / 100f * getCantidadGrs());
     }
 
     public void setSubTotalCalorias(int subTotalCalorias) {

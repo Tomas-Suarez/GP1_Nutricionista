@@ -26,6 +26,7 @@ public class RenglonDeMenuData {
     private Connection con = null;
     private Alimento ali;
     private MenuDiario men;
+    private AlimentoData repoAlimento = AlimentoData.getRepo();
 
     public RenglonDeMenuData() {
         con = Conexion.getConexion();
@@ -247,7 +248,6 @@ public class RenglonDeMenuData {
 
             while (rs.next()) {
                 RenglonDeMenu ren = new RenglonDeMenu();
-                ali = new Alimento();
                 men = new MenuDiario();
 
                 ren.setCodRenglon(rs.getInt("idRenglon"));
@@ -255,6 +255,7 @@ public class RenglonDeMenuData {
                 ren.setSubTotalCalorias(rs.getInt("subtotalCalorias"));
                 men.setCodMenu(rs.getInt("idMenu"));
                 ren.setMenu(men);
+                ali = repoAlimento.getAlimentById(rs.getInt("idAlimento"));
                 ali.setCodComida(rs.getInt("idAlimento"));
                 ren.setAlimento(ali);
                 ren.setHorario(rs.getString("horario"));
