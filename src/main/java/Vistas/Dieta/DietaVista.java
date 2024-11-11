@@ -21,6 +21,7 @@ import Vistas.ProgresoPaciente;
 import Vistas.Principal;
 import Vistas.RegistrarPeso;
 import javax.swing.DefaultComboBoxModel;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 /**
  *
@@ -453,7 +454,11 @@ public class DietaVista extends javax.swing.JPanel {
             return;
         }
 
-        var res = JOptionPane.showConfirmDialog(null, "¿Realmente desea dar de baja la dieta seleccionada?");
+        var res = JOptionPane.showConfirmDialog(null,
+                "¿Realmente desea dar de baja la dieta seleccionada?",
+                "Confirmar",
+                YES_NO_OPTION
+        );
         if (res != 0) {
             return;
         }
@@ -466,6 +471,7 @@ public class DietaVista extends javax.swing.JPanel {
         if (tablaDietas.getRowCount() == 0) {
             jButton1.setVisible(true);
         }
+        jComboBox1.removeAllItems();
 
     }//GEN-LAST:event_btnBajaActionPerformed
 
@@ -572,9 +578,10 @@ public class DietaVista extends javax.swing.JPanel {
             });
         }
         if (model.getRowCount() > 0) {
-            jComboBox1.setModel(
-                    new DefaultComboBoxModel(
-                            repoMenu.obtenerMenusPorDieta(getDietaSeleccionada().getCodDieta()).toArray())
+            jComboBox1.setModel(new DefaultComboBoxModel(
+                            repoMenu.obtenerMenusPorDieta(
+                                    getDietaSeleccionada().getCodDieta()).toArray()
+                    )
             );
         }
         cargarRenglones();
