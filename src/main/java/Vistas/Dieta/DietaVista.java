@@ -48,7 +48,7 @@ public class DietaVista extends javax.swing.JPanel {
         this.repoRenglones = RenglonDeMenuData.getRepo();
         initComponents();
 
-        cargarAlimentos();
+        cargarAlimentos(null);
         labelPaciente.setText("Nombre: " + paciente.getNombre());
         labelDNI.setText("DNI: " + paciente.getDni());
         labelPesoActual.setText("Peso actual: " + paciente.getPesoActual() + "kg");
@@ -78,6 +78,10 @@ public class DietaVista extends javax.swing.JPanel {
         try {
             cantidad = Float.valueOf(JOptionPane.showInputDialog("Cantidad de gramos: "));
         } catch (Exception ex) {
+            return;
+        }
+        if (cantidad < 1) {
+            JOptionPane.showMessageDialog(null, "Cantidad no válida.");
             return;
         }
         var ren = new RenglonDeMenu();
@@ -114,6 +118,7 @@ public class DietaVista extends javax.swing.JPanel {
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         labelPesoActual = new javax.swing.JLabel();
         labelIMC = new javax.swing.JLabel();
@@ -166,7 +171,11 @@ public class DietaVista extends javax.swing.JPanel {
 
         jLabel8.setText("Alimentos");
 
-        jTextField1.setText("filtro");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         agregarA.setText("+");
         agregarA.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +208,8 @@ public class DietaVista extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setText("Filtro");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -224,8 +235,10 @@ public class DietaVista extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -238,7 +251,8 @@ public class DietaVista extends javax.swing.JPanel {
                     .addComponent(jLabel10)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -524,6 +538,15 @@ public class DietaVista extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        var pattern = jTextField1.getText().trim().toLowerCase();
+        var alimentos = repoAlimentos.listarAlimentos().stream()
+                .filter(alimento -> alimento.getNombre().toLowerCase().contains(pattern))
+                .toList();
+        cargarAlimentos(alimentos);
+    }//GEN-LAST:event_jTextField1KeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarA;
@@ -533,6 +556,7 @@ public class DietaVista extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<MenuDiario> jComboBox1;
     private javax.swing.JComboBox<Object> jComboBox2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
@@ -582,9 +606,9 @@ public class DietaVista extends javax.swing.JPanel {
         }
         if (model.getRowCount() > 0) {
             jComboBox1.setModel(new DefaultComboBoxModel(
-                            repoMenu.obtenerMenusPorDieta(
-                                    getDietaSeleccionada().getCodDieta()).toArray()
-                    )
+                    repoMenu.obtenerMenusPorDieta(
+                            getDietaSeleccionada().getCodDieta()).toArray()
+            )
             );
         }
         cargarRenglones();
@@ -628,13 +652,17 @@ public class DietaVista extends javax.swing.JPanel {
 
     }
 
-    public void cargarAlimentos() {
+    public void cargarAlimentos(List<Alimento> alimentos) {
         Object header[] = {"Nombre", "Calorias"};
         var model = new DefaultTableModel(header, 0);
-        repoAlimentos.listarAlimentos().forEach(alimento -> {
+        jTable2.setModel(model);
+        if (alimentos == null) {
+            alimentos = repoAlimentos.listarAlimentos();
+        }
+        alimentos.forEach(alimento -> {
             model.addRow(new Object[]{alimento, alimento.getCaloriasPor100g()});
         });
-        jTable2.setModel(model);
+
     }
 
 }
