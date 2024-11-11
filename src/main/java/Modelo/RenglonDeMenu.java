@@ -78,6 +78,11 @@ public class RenglonDeMenu {
         this.horario = horario;
     }
 
+    @Override
+    public String toString() {
+        return alimento.getNombre();
+    }
+
 
 
     public void modificarRenglon() {

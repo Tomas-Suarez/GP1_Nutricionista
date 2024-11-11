@@ -4,6 +4,7 @@
  */
 package Vistas.Dieta;
 
+import Modelo.Alimento;
 import Modelo.Dieta;
 import Modelo.MenuDiario;
 import Modelo.Paciente;
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Persistencia.DietaData;
+import Persistencia.RenglonDeMenuData;
 import Vistas.ProgresoPaciente;
 import Vistas.Principal;
 import Vistas.RegistrarPeso;
@@ -30,17 +32,21 @@ public class DietaVista extends javax.swing.JPanel {
     private DietaData repoDieta;
     private MenuDiarioData repoMenu;
     private AlimentoData repoAlimentos;
+    private RenglonDeMenuData repoRenglones;
     private static DietaVista instance;
 
     /**
      * Creates new form Dieta
      */
     public DietaVista(Paciente paciente) {
+        instance = this;
         this.paciente = paciente;
         this.repoDieta = DietaData.getRepo();
         this.repoMenu = MenuDiarioData.getRepo();
         this.repoAlimentos = AlimentoData.getRepo();
+        this.repoRenglones = RenglonDeMenuData.getRepo();
         initComponents();
+
         cargarAlimentos();
         labelPaciente.setText("Nombre: " + paciente.getNombre());
         labelDNI.setText("DNI: " + paciente.getDni());
@@ -49,15 +55,37 @@ public class DietaVista extends javax.swing.JPanel {
         labelEdad.setText("Edad: " + paciente.getEdad());
         labelIMC.setText(String.format("IMC: %.2f", paciente.calcularIMC()));
         llenarTablaDietas(null);
-        tablaDietas.setDefaultEditor(Object.class, null);
-        tablaDietas.setSelectionMode(0);
+
     }
 
     public static DietaVista getInstance(Paciente paciente) {
-        if (instance == null) {
-            instance = new DietaVista(paciente);
-        }
         return instance;
+    }
+
+    private void crearRenglon() {
+        Float cantidad = null;
+        var r = jTable2.getSelectedRow();
+        if (r < 0) {
+            return;
+        }
+        var menu = (MenuDiario) jComboBox1.getSelectedItem();
+        if (menu == null) {
+            return;
+        }
+        var alimento = (Alimento) jTable2.getValueAt(r, 0);
+        var horario = (String) jComboBox2.getSelectedItem();
+        try {
+            cantidad = Float.valueOf(JOptionPane.showInputDialog("Cantidad de gramos: "));
+        } catch (Exception ex) {
+            return;
+        }
+        var ren = new RenglonDeMenu();
+        ren.setMenu(menu);
+        ren.setAlimento(alimento);
+        ren.setHorario(horario);
+        ren.setCantidadGrs(cantidad);
+        repoRenglones.agregarRen(ren);
+        cargarRenglones();
     }
 
     /**
@@ -73,8 +101,10 @@ public class DietaVista extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jTable4.setDefaultEditor(Object.class, null);
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jTable2.setDefaultEditor(Object.class, null);
         jLabel8 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         agregarA = new javax.swing.JButton();
@@ -97,6 +127,7 @@ public class DietaVista extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDietas = new javax.swing.JTable();
+        tablaDietas.setDefaultEditor(Object.class, null);
         jLabel11 = new javax.swing.JLabel();
         checkboxActivas = new javax.swing.JCheckBox();
 
@@ -104,15 +135,13 @@ public class DietaVista extends javax.swing.JPanel {
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Alimento", "Gramos", "T. Calorias"
             }
         ));
+        jTable4.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(jTable4);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -126,6 +155,12 @@ public class DietaVista extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jLabel8.setText("Alimentos");
@@ -133,6 +168,11 @@ public class DietaVista extends javax.swing.JPanel {
         jTextField1.setText("filtro");
 
         agregarA.setText("+");
+        agregarA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarAActionPerformed(evt);
+            }
+        });
 
         eliminarA.setText("-");
         eliminarA.addActionListener(new java.awt.event.ActionListener() {
@@ -307,6 +347,7 @@ public class DietaVista extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaDietas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tablaDietas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaDietasMouseClicked(evt);
@@ -424,16 +465,23 @@ public class DietaVista extends javax.swing.JPanel {
         llenarTablaDietas(null);
         if (tablaDietas.getRowCount() == 0) {
             jButton1.setVisible(true);
-        }        // TODO add your handling code here:
+        }
 
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
+        cargarRenglones();
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void eliminarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarAActionPerformed
-        // TODO add your handling code here:
+        var x = jTable4.getSelectedRow();
+        var ren = (RenglonDeMenu) jTable4.getValueAt(x, 0);
+        if (ren == null) {
+            return;
+        }
+        repoRenglones.delete(ren);
+        cargarRenglones();
     }//GEN-LAST:event_eliminarAActionPerformed
 
     private void tablaDietasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDietasMouseClicked
@@ -442,18 +490,30 @@ public class DietaVista extends javax.swing.JPanel {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        var menu = (MenuDiario) jComboBox1.getSelectedItem();
+        cargarRenglones();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jbProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProgresoActionPerformed
         ProgresoPaciente vistaEstadisticas = new ProgresoPaciente(this.paciente);
-        Principal.showFrame(vistaEstadisticas, "Progreso del paciente");        
+        Principal.showFrame(vistaEstadisticas, "Progreso del paciente");
     }//GEN-LAST:event_jbProgresoActionPerformed
 
     private void jbRegistrarPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarPesoActionPerformed
         RegistrarPeso actPaciente = new RegistrarPeso(this.paciente);
-        Principal.showFrame(actPaciente, "Registrar peso");        
+        Principal.showFrame(actPaciente, "Registrar peso");
     }//GEN-LAST:event_jbRegistrarPesoActionPerformed
+
+    private void agregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarAActionPerformed
+        // TODO add your handling code here:
+        crearRenglon();
+    }//GEN-LAST:event_agregarAActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2) {
+            crearRenglon();
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -496,9 +556,7 @@ public class DietaVista extends javax.swing.JPanel {
 
         if (dietas == null) {
             dietas = repoDieta.getByPacienteanddieta(paciente.getNroPaciente(), checkboxActivas.isSelected());
-            if (dietas.isEmpty()) {
-                return;
-            } else {
+            if (!dietas.isEmpty()) {
                 jButton1.setVisible(false);
             }
         }
@@ -519,6 +577,7 @@ public class DietaVista extends javax.swing.JPanel {
                             repoMenu.obtenerMenusPorDieta(getDietaSeleccionada().getCodDieta()).toArray())
             );
         }
+        cargarRenglones();
     }
 
     public Dieta getDietaSeleccionada() {
@@ -532,12 +591,31 @@ public class DietaVista extends javax.swing.JPanel {
         return dieta;
     }
 
-    public void cargarRenglones(List<RenglonDeMenu> renglones) {
-        var horario = (String) jComboBox2.getSelectedItem();
-        Object header[] = {"Alimento", "Calorias"};
-        DefaultTableModel model = new DefaultTableModel(header, 0);
+    public void cargarRenglones() {
+        var tb = jTable4;
+        var header = new String[]{"Alimento", "Gramos", "T. Calorias"};
+        var model = new DefaultTableModel(header, 0);
+        tb.setModel(model);
 
-        jTable4.setModel(model);
+        var menu = (MenuDiario) jComboBox1.getSelectedItem();
+        if (menu == null) {
+            return;
+        }
+        var horario = (String) jComboBox2.getSelectedItem();
+        var renglones = repoRenglones.buscarpormenu(menu.getCodMenu());
+
+        for (var ren : renglones) {
+            if (ren.getHorario().equals(horario)) {
+                System.out.println(ren.getAlimento());
+                model.addRow(new Object[]{
+                    ren,
+                    ren.getCantidadGrs(),
+                    ren.getSubTotalCalorias()
+                });
+            }
+
+        }
+
     }
 
     public void cargarAlimentos() {
