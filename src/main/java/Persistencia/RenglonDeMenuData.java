@@ -145,6 +145,20 @@ public class RenglonDeMenuData {
 
     }
 
+    public void delete(int id) {
+        String sql = "DELETE FROM renglondemenu WHERE idRenglon = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al acceder a la tabla renglon!" + ex.getMessage());
+        }
+    }
+
     public List<RenglonDeMenu> listarrenglon() {
 
         ArrayList<RenglonDeMenu> listarrenglon = new ArrayList<>();
@@ -252,7 +266,7 @@ public class RenglonDeMenuData {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "hubo un error al cargar la lista " + e.getMessage());
         }
 
         return listarrenglon;

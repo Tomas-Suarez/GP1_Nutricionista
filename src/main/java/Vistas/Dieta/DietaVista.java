@@ -480,7 +480,7 @@ public class DietaVista extends javax.swing.JPanel {
         if (ren == null) {
             return;
         }
-        repoRenglones.delete(ren);
+        repoRenglones.delete(ren.getCodRenglon());
         cargarRenglones();
     }//GEN-LAST:event_eliminarAActionPerformed
 
