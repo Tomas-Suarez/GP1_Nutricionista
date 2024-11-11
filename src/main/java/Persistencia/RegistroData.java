@@ -54,7 +54,23 @@ public class RegistroData {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al agregar el registro " + e.getMessage());
         }
+    }
 
+    public void eliminarRegistro(int id) {
+        String sql = "DELETE FROM registro WHERE idRegistro = ?";
+        try {
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+            ps.setInt(1, id);
+
+            int fila = ps.executeUpdate();
+
+            if (fila == 1) {
+                JOptionPane.showMessageDialog(null, "El registro fue eliminado de forma permanente correctamente!");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al acceder a la tabla registro!"+ ex.getMessage());
+        }
     }
 
     public void modificarRegistro(Registro registro) {
@@ -153,38 +169,44 @@ public class RegistroData {
 
         return registroPaciente;
     }
-    
-    public int[] EstadoPaciente(){
+
+    public int[] EstadoPaciente() {
         int[] estadoPaciente = new int[3]; //En la posicion 0 - llegaron al objetivo, pos 1-No llegaron al objetivo, pos3- en_proceso
         String sql = """
-                     SELECT
-                         COUNT(CASE WHEN r.peso <= d.pesoObjetivo AND d.pesoFinal IS NOT NULL THEN 1 END) AS llego_al_objetivo,
-                         COUNT(CASE WHEN r.peso > d.pesoObjetivo AND d.pesoFinal IS NOT NULL THEN 1 END) AS no_llego_al_objetivo,
-                         COUNT(CASE WHEN d.pesoFinal IS NULL THEN 1 END) AS en_proceso
-                     FROM dieta d
-                     JOIN registro r ON d.idDieta = r.idDieta
-                     WHERE r.FechaRegistro = (
-                         SELECT MAX(FechaRegistro)
-                         FROM registro
-                         WHERE idDieta = d.idDieta
-                     );
+                    SELECT
+                        SUM(CASE WHEN (d.pesoInicial > d.pesoObjetivo AND r.peso <= d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
+                                  OR (d.pesoInicial < d.pesoObjetivo AND r.peso >= d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
+                                 THEN 1 END) AS llego_al_objetivo,
+                     
+                        SUM(CASE WHEN (d.pesoInicial > d.pesoObjetivo AND r.peso > d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
+                                  OR (d.pesoInicial < d.pesoObjetivo AND r.peso < d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
+                                 THEN 1 END) AS no_llego_al_objetivo,
+                     
+                        COUNT(CASE WHEN d.pesoFinal IS NULL THEN 1 END) AS en_proceso
+                     
+                    FROM dieta d
+                    LEFT JOIN registro r ON d.idDieta = r.idDieta
+                    WHERE r.FechaRegistro = (
+                        SELECT MAX(FechaRegistro)
+                        FROM registro
+                        WHERE idDieta = d.idDieta
+                    ) OR d.pesoFinal IS NULL;
                      """;
-        
-        try{
+
+        try {
             PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 estadoPaciente[0] = rs.getInt("llego_al_objetivo");
                 estadoPaciente[1] = rs.getInt("no_llego_al_objetivo");
                 estadoPaciente[2] = rs.getInt("en_proceso");
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al obtener los estados de los pacientes: "+e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al obtener los estados de los pacientes: " + e.getMessage());
         }
         return estadoPaciente;
     }
 
     //Estaria faltando el borrar registro o algo similar
-    
 }

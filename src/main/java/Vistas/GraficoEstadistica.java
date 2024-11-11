@@ -217,7 +217,7 @@ public class GraficoEstadistica extends javax.swing.JPanel {
         tablas.setColumnIdentifiers(tablaHeader);
         tablaPaciente.setModel(tablas); //Le asiganamos el modelo a la tabla
         tablaPaciente.setDefaultEditor(Object.class, null); // Deshabilita la edicion de celdas
-
+ 
         tablas.setRowCount(0); //Es para que cada vez q llamemos la tabla, no se duplique
 
         String nombre = jtBuscar.getText().toLowerCase().trim();

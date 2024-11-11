@@ -29,11 +29,8 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
      */
     public Vista_lista_Paciente() {
         initComponents();
-        if (jrActivo.isSelected()) {
-            TablaPaciente(false);
-        } else {
-            TablaPaciente(true);
-        }
+        TablaPaciente(!jrActivo.isSelected());
+
     }
 
     /**
@@ -56,7 +53,6 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
         jbNuevo = new javax.swing.JButton();
         jbBorrar = new javax.swing.JButton();
         jbEditar = new javax.swing.JButton();
-        jbRegistrarPeso = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -142,21 +138,12 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
             }
         });
 
-        jbRegistrarPeso.setText("Registrar peso");
-        jbRegistrarPeso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbRegistrarPesoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jbRegistrarPeso)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 257, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addGap(87, 87, 87)
                 .addComponent(jbEditar)
@@ -174,7 +161,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
                 .addComponent(jrActivo)
                 .addGap(34, 34, 34)
                 .addComponent(jrNoActivo)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -196,31 +183,22 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
                     .addComponent(jbEditar)
                     .addComponent(jbNuevo)
                     .addComponent(jbBorrar)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbRegistrarPeso))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrActivoActionPerformed
         TablaPaciente(false);
-        jbRegistrarPeso.setVisible(true);
     }//GEN-LAST:event_jrActivoActionPerformed
 
     private void jrNoActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrNoActivoActionPerformed
         TablaPaciente(true);
-        jbRegistrarPeso.setVisible(false);
     }//GEN-LAST:event_jrNoActivoActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        ActualizarPaciente actPaciente = new ActualizarPaciente(this);
-
-        JFrame nuevaVista = new JFrame("Nuevo Paciente");
-        nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        nuevaVista.getContentPane().add(actPaciente);
-        nuevaVista.pack();
-        nuevaVista.setVisible(true);
-        nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
+        ActualizarPaciente newPaciente = new ActualizarPaciente(this);
+        Principal.showFrame(newPaciente, "Nuevo paciente");        
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
@@ -232,12 +210,8 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
 
             ActualizarPaciente actPaciente = new ActualizarPaciente(pacienteSelect, this);
 
-            JFrame nuevaVista = new JFrame("Actualizar Paciente");
-            nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            nuevaVista.getContentPane().add(actPaciente);
-            nuevaVista.pack();
-            nuevaVista.setVisible(true);
-            nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
+            Principal.showFrame(actPaciente, "Actualizar paciente");        
+
 
         } else {
             JOptionPane.showMessageDialog(null, "Primero debe seleccionar un paciente...");
@@ -278,29 +252,6 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tPacienteMouseClicked
 
-    private void jbRegistrarPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarPesoActionPerformed
-        int rowSelected = tPaciente.getSelectedRow();
-
-        if (rowSelected != -1) {
-            Paciente pacienteSelect = (Paciente) tPaciente.getValueAt(rowSelected, 0);
-            if (dietaData.getDietaPaciente(pacienteSelect.getNroPaciente()) != -1) { // Verificamos que el paciente tenga dieta
-
-                RegistrarPeso actPaciente = new RegistrarPeso(this, pacienteSelect);
-                JFrame nuevaVista = new JFrame("Registrar Peso");
-                nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                nuevaVista.getContentPane().add(actPaciente);
-                nuevaVista.pack();
-                nuevaVista.setVisible(true);
-                nuevaVista.setLocation(585, 60); //Mover el Panel por cordenadas
-            } else {
-                JOptionPane.showMessageDialog(null, "El paciente seleccionado no posee una dieta");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Primero debe seleccionar un paciente.");
-        }
-
-    }//GEN-LAST:event_jbRegistrarPesoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup groupBaja;
@@ -312,7 +263,6 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
     private javax.swing.JButton jbBorrar;
     private javax.swing.JButton jbEditar;
     private javax.swing.JButton jbNuevo;
-    private javax.swing.JButton jbRegistrarPeso;
     private javax.swing.JRadioButton jrActivo;
     private javax.swing.JRadioButton jrNoActivo;
     private javax.swing.JTextField jtBuscar;

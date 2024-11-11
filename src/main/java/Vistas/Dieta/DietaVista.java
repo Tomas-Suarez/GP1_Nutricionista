@@ -15,7 +15,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Persistencia.DietaData;
+import Vistas.ProgresoPaciente;
 import Vistas.Principal;
+import Vistas.RegistrarPeso;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -88,8 +90,8 @@ public class DietaVista extends javax.swing.JPanel {
         labelDNI = new javax.swing.JLabel();
         labelPaciente = new javax.swing.JLabel();
         labelEdad = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jbRegistrarPeso = new javax.swing.JButton();
+        jbProgreso = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnBaja = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -219,12 +221,17 @@ public class DietaVista extends javax.swing.JPanel {
 
         labelEdad.setText("Edad");
 
-        jButton2.setText("Registrar peso");
-
-        jButton3.setText("Estadisticas");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbRegistrarPeso.setText("Registrar peso");
+        jbRegistrarPeso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbRegistrarPesoActionPerformed(evt);
+            }
+        });
+
+        jbProgreso.setText("Progreso");
+        jbProgreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbProgresoActionPerformed(evt);
             }
         });
 
@@ -243,10 +250,10 @@ public class DietaVista extends javax.swing.JPanel {
                             .addComponent(labelDNI)
                             .addComponent(labelTalla)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jbProgreso)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jbRegistrarPeso)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelIMC)
                     .addComponent(labelEdad)
@@ -270,8 +277,8 @@ public class DietaVista extends javax.swing.JPanel {
                     .addComponent(labelIMC))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(jbProgreso)
+                    .addComponent(jbRegistrarPeso))
                 .addContainerGap())
         );
 
@@ -392,7 +399,7 @@ public class DietaVista extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         vista_crear_dietas vd = new vista_crear_dietas(this.paciente);
-        Principal.showFrame(vd);
+        Principal.showFrame(vd, "Nueva dieta");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void checkboxActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxActivasActionPerformed
@@ -438,9 +445,15 @@ public class DietaVista extends javax.swing.JPanel {
         var menu = (MenuDiario) jComboBox1.getSelectedItem();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jbProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProgresoActionPerformed
+        ProgresoPaciente vistaEstadisticas = new ProgresoPaciente(this.paciente);
+        Principal.showFrame(vistaEstadisticas, "Progreso del paciente");        
+    }//GEN-LAST:event_jbProgresoActionPerformed
+
+    private void jbRegistrarPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarPesoActionPerformed
+        RegistrarPeso actPaciente = new RegistrarPeso(this.paciente);
+        Principal.showFrame(actPaciente, "Registrar peso");        
+    }//GEN-LAST:event_jbRegistrarPesoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -449,8 +462,6 @@ public class DietaVista extends javax.swing.JPanel {
     private javax.swing.JCheckBox checkboxActivas;
     private javax.swing.JButton eliminarA;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<MenuDiario> jComboBox1;
     private javax.swing.JComboBox<Object> jComboBox2;
     private javax.swing.JLabel jLabel10;
@@ -467,6 +478,8 @@ public class DietaVista extends javax.swing.JPanel {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbProgreso;
+    private javax.swing.JButton jbRegistrarPeso;
     private javax.swing.JLabel labelDNI;
     private javax.swing.JLabel labelEdad;
     private javax.swing.JLabel labelIMC;

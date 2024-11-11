@@ -207,8 +207,8 @@ public class Principal extends javax.swing.JFrame {
         Tablero.repaint();
     }
 
-    public static void showFrame(JPanel p) {
-        JFrame nuevaVista = new JFrame("Nueva dieta");
+    public static void showFrame(JPanel p, String nameFrame) {
+        JFrame nuevaVista = new JFrame(nameFrame);
         nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuevaVista.getContentPane().add(p);
         nuevaVista.pack();

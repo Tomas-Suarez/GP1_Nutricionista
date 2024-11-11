@@ -112,7 +112,7 @@ public class Registro {
 
     @Override
     public String toString() {
-        return "Registro{" + "idRegistro=" + idRegistro + ", dieta=" + dieta.getCodDieta() + ", peso=" + peso + ", FechaRegistro=" + FechaRegistro + ", detalle=" + detalle + '}';
+        return ""+FechaRegistro;
     }
     
     
