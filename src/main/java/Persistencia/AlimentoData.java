@@ -128,7 +128,36 @@ public class AlimentoData {
         }
         return r == 1;
     }
+    
+     public List<Alimento> getAlimentByEstado(boolean est) {
+        Alimento a = null;
+        List<Alimento> lista = new ArrayList<>();
+        try {
+            var sql = "select * from alimento where  baja = ?;";
+            var ps = connection.prepareStatement(sql, tbHeader);
+             
+            ps.setBoolean(1, est);
+            var rs = ps.executeQuery();
 
+            while (rs.next()) {
+                a = new Alimento(
+                        rs.getInt("idAlimento"),
+                        rs.getString("nombre"),
+                        rs.getString("tipoComida"),
+                        rs.getInt("caloriasPor100g"),
+                        rs.getString("detalle"),
+                        rs.getBoolean("baja")
+                );
+                lista.add(a);
+            }
+            ps.close();
+        } catch (Exception ex) {
+            System.out.println("error obteniendo aliment");
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return lista;
+    }
+             
     public boolean remove(int idAlimento) {
         var r = 0;
         try {
