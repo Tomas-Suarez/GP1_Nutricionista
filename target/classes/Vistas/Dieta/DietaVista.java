@@ -180,6 +180,7 @@ public class DietaVista extends javax.swing.JPanel {
         });
 
         agregarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/mas.png"))); // NOI18N
+        agregarA.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         agregarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarAActionPerformed(evt);
@@ -187,6 +188,7 @@ public class DietaVista extends javax.swing.JPanel {
         });
 
         eliminarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/menos.png"))); // NOI18N
+        eliminarA.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         eliminarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarAActionPerformed(evt);
@@ -282,6 +284,7 @@ public class DietaVista extends javax.swing.JPanel {
 
         labelEdad.setText("Edad");
 
+        jbRegistrarPeso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/editar28x28.png"))); // NOI18N
         jbRegistrarPeso.setText("Registrar peso");
         jbRegistrarPeso.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jbRegistrarPeso.addActionListener(new java.awt.event.ActionListener() {
@@ -290,6 +293,7 @@ public class DietaVista extends javax.swing.JPanel {
             }
         });
 
+        jbProgreso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/lineal.png"))); // NOI18N
         jbProgreso.setText("Progreso");
         jbProgreso.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jbProgreso.addActionListener(new java.awt.event.ActionListener() {
@@ -312,14 +316,14 @@ public class DietaVista extends javax.swing.JPanel {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelDNI)
                             .addComponent(labelTalla)
-                            .addComponent(jbProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)))
+                            .addComponent(jbProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelEdad)
-                    .addComponent(jbRegistrarPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelIMC)
-                    .addComponent(labelPesoActual))
-                .addGap(76, 76, 76))
+                    .addComponent(labelPesoActual)
+                    .addComponent(jbRegistrarPeso))
+                .addGap(61, 61, 61))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,7 +342,7 @@ public class DietaVista extends javax.swing.JPanel {
                     .addComponent(labelPesoActual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(jbProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbRegistrarPeso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
         );
