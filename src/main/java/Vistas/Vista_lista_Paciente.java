@@ -70,6 +70,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
 
         tuto.setText("Doble click para acceder a las dietas del paciente");
 
+        jbNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar16x16.png"))); // NOI18N
         jbNuevo.setText("Nuevo");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +78,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
             }
         });
 
+        jbBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/borrado.png"))); // NOI18N
         jbBorrar.setText("Borrar");
         jbBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +86,7 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
             }
         });
 
+        jbEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/editar.png"))); // NOI18N
         jbEditar.setText("Editar");
         jbEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,9 +150,9 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(45, 45, 45)
                         .addComponent(tuto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                         .addComponent(jbBorrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbEditar)
@@ -176,14 +179,14 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
                     .addComponent(jrNoActivo)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbEditar)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbBorrar)
+                    .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tuto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(15, 15, 15))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

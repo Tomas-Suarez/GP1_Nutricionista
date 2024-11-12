@@ -61,9 +61,9 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="tuto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="102" max="32767" attributes="0"/>
+                          <EmptySpace pref="69" max="32767" attributes="0"/>
                           <Component id="jbBorrar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jbEditar" min="-2" max="-2" attributes="0"/>
@@ -96,15 +96,15 @@
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="293" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="290" max="32767" attributes="0"/>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jbEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbBorrar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbEditar" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="jbNuevo" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="jbBorrar" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="tuto" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -117,6 +117,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbNuevo">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icon/agregar16x16.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
           </Properties>
           <Events>
@@ -125,6 +128,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbBorrar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icon/borrado.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Borrar"/>
           </Properties>
           <Events>
@@ -133,6 +139,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbEditar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icon/editar.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
           <Events>

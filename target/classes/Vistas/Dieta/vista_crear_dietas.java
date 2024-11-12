@@ -92,7 +92,9 @@ public class vista_crear_dietas extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar24x24.png"))); // NOI18N
         jButton1.setText("Cargar");
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

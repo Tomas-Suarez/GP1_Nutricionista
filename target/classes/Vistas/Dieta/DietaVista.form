@@ -71,25 +71,32 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="jPanel2">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="234" max="32767" attributes="0"/>
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane4" pref="466" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" pref="464" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="agregarA" min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="eliminarA" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>
@@ -103,7 +110,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jTextField1" min="-2" pref="199" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane2" pref="466" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="464" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -122,21 +129,21 @@
                           <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="agregarA" min="-2" pref="33" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="eliminarA" min="-2" pref="36" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="176" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jScrollPane2" alignment="0" pref="518" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" pref="510" max="32767" attributes="0"/>
                                   <Component id="jScrollPane4" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
+                              <Component id="agregarA" min="-2" pref="33" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="eliminarA" min="-2" pref="36" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -303,21 +310,18 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="labelDNI" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="labelTalla" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jbProgreso" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jbRegistrarPeso" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jbProgreso" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="12" max="32767" attributes="0"/>
+                              <EmptySpace pref="101" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelIMC" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="labelEdad" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbRegistrarPeso" min="-2" pref="95" max="-2" attributes="0"/>
+                          <Component id="labelIMC" min="-2" max="-2" attributes="0"/>
                           <Component id="labelPesoActual" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -332,19 +336,19 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelTalla" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelPesoActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelIMC" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelDNI" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelIMC" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelPesoActual" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="17" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jbProgreso" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbRegistrarPeso" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jbProgreso" pref="26" max="32767" attributes="0"/>
+                          <Component id="jbRegistrarPeso" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -383,6 +387,11 @@
             <Component class="javax.swing.JButton" name="jbRegistrarPeso">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Registrar peso"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbRegistrarPesoActionPerformed"/>
@@ -391,6 +400,11 @@
             <Component class="javax.swing.JButton" name="jbProgreso">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Progreso"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+                    <BevelBorder/>
+                  </Border>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbProgresoActionPerformed"/>
@@ -399,6 +413,13 @@
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel4">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+          </Properties>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -441,6 +462,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btnBaja">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/borrado.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
               <Events>
@@ -449,7 +473,12 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icon/agregar16x16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Agregar"/>
+                <Property name="horizontalAlignment" type="int" value="2"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
