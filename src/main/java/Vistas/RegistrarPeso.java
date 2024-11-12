@@ -234,14 +234,25 @@ public class RegistrarPeso extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
-        if (dietaData.getDietaPaciente(paciente.getNroPaciente()) != -1) {
+
+        Date selectedDate = JDateFecha.getDate();
+        LocalDate fechaRegistro = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (dietaData.getDietaPaciente(paciente.getNroPaciente()) != -1 && validarFormulario()) {
+            List<Dieta> dietas = dietaData.getByPaciente(paciente.getNroPaciente());
+
             crearRegistro(dietaData.getDietaPaciente(paciente.getNroPaciente()));
             llenarTabla(paciente.getNroPaciente());
+
+            if (dietas.get(0).getFechaFinal().isEqual(fechaRegistro)) {
+                dietas.get(0).setPesoFinal(Float.parseFloat(jtPeso.getText()));
+                dietaData.update(dietas.get(0));
+            }
         }
     }//GEN-LAST:event_jbRegistrarActionPerformed
 
     private void jbBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBorrarActionPerformed
-        int rowSelected = jtRegistro.getSelectedRow();        
+        int rowSelected = jtRegistro.getSelectedRow();
         if (rowSelected != -1) {
             if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de borrar al paciente de forma permanente?") == 0) {
 
@@ -250,7 +261,7 @@ public class RegistrarPeso extends javax.swing.JPanel {
                 llenarTabla(paciente.getNroPaciente());
             }
 
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Para eliminar un registro, primero debe seleccionarlo!");
         }
     }//GEN-LAST:event_jbBorrarActionPerformed
@@ -304,6 +315,23 @@ public class RegistrarPeso extends javax.swing.JPanel {
         Registro registrar = new Registro(idDieta, peso, fechaRegistro, detalle);
         registroData.agregarRegistro(registrar);
 
+    }
+
+    private boolean validarFormulario() {
+        //validar nombre
+        Date selectedDate = JDateFecha.getDate();
+
+        if (selectedDate == null) {
+            JOptionPane.showMessageDialog(this, "El campo de fecha no debe estar vacio!");
+            return false;
+        }
+        //validar detalles
+        if (jtPeso.getText().trim().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "El campo de peso no debe estar vacio!");
+            return false;
+        }
+
+        return true;
     }
 
 }
