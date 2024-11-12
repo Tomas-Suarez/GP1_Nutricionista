@@ -28,12 +28,12 @@ public class App {
         Config conf = Config.getInstance();
         setUpTheme();
         var principal = Principal.New();
-        var comboBox = principal.getJcSeleccionarTema();
+        var botton = principal.getjToggleButton1();
 
         var theme = conf.getTheme();
-        comboBox.setSelectedIndex(theme);
-        comboBox.addActionListener((e) -> {
-            conf.setTheme(comboBox.getSelectedIndex());
+        botton.setSelected(theme==0);
+        botton.addActionListener((e) -> {          
+            conf.setTheme((botton.isSelected()? 0: 1));//si el button esta presionado da 1 si no lo esta da 0//
             principal.dispose();
             init();
         });
