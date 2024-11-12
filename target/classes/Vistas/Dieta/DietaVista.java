@@ -179,14 +179,14 @@ public class DietaVista extends javax.swing.JPanel {
             }
         });
 
-        agregarA.setText("+");
+        agregarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/mas.png"))); // NOI18N
         agregarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agregarAActionPerformed(evt);
             }
         });
 
-        eliminarA.setText("-");
+        eliminarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/menos.png"))); // NOI18N
         eliminarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarAActionPerformed(evt);
