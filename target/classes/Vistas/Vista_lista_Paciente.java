@@ -207,12 +207,14 @@ public class Vista_lista_Paciente extends javax.swing.JPanel {
         TablaPaciente(false);
         jbBorrar.setText("Borrar");
         jbEditar.setEnabled(true);
+        jbNuevo.setEnabled(true);
     }//GEN-LAST:event_jrActivoActionPerformed
 
     private void jrNoActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrNoActivoActionPerformed
         TablaPaciente(true);
         jbBorrar.setText("Restaurar");
         jbEditar.setEnabled(false);
+        jbNuevo.setEnabled(false);
     }//GEN-LAST:event_jrNoActivoActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed

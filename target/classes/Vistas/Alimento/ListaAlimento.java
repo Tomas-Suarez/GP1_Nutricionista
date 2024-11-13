@@ -225,6 +225,7 @@ public class ListaAlimento extends javax.swing.JPanel {
         TablaAlimento();
         jbBorrar.setText("Borrar");
         jbEditar.setEnabled(true);
+        jbNuevo.setEnabled(true);
 
     }//GEN-LAST:event_jrActivoActionPerformed
 
@@ -232,6 +233,7 @@ public class ListaAlimento extends javax.swing.JPanel {
         TablaAlimento();
         jbBorrar.setText("Restaurar");
         jbEditar.setEnabled(false);
+        jbNuevo.setEnabled(false);
     }//GEN-LAST:event_jrNoActivoActionPerformed
 
 
