@@ -8,6 +8,7 @@ import Modelo.Alimento;
 import Persistencia.AlimentoData;
 import java.awt.Window;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -27,6 +28,7 @@ public class DetallesAlimento extends javax.swing.JPanel {
         this.data = AlimentoData.getRepo();
         initComponents();
         this.lalo = lola;
+        ((SpinnerNumberModel) Scalorias.getModel()).setMinimum(0);
 
     }
 
@@ -40,6 +42,7 @@ public class DetallesAlimento extends javax.swing.JPanel {
         jcComida.setSelectedItem(alimento.getTipoComida());
         Scalorias.setValue(alimento.getCaloriasPor100g());
         Tdetalle.setText(alimento.getDetalle());
+        ((SpinnerNumberModel) Scalorias.getModel()).setMinimum(0);
 
     }
 

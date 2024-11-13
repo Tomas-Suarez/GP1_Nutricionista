@@ -67,7 +67,6 @@ public class MenuDiarioData {
 
             int filasAfectadas = ps.executeUpdate();
 
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el menu diario: " + e.getMessage());
         }
@@ -135,7 +134,6 @@ public class MenuDiarioData {
             if (menu == null) {
                 JOptionPane.showMessageDialog(null, "No se encontro ningun menu diario.");
             }
-            
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al buscar el Menu Comida: " + e.getMessage());
@@ -172,6 +170,33 @@ public class MenuDiarioData {
         }
 
         return MenusxDieta;
+    }
+
+    public int obtenerCaloriasTotalDieta(int idDieta) {
+        int total = 0;
+        String sql = """
+                     SELECT SUM(calorias) AS todos_los_dias
+                     FROM (
+                         SELECT m.calorias
+                         FROM menudiario m
+                         JOIN dieta d ON m.idDieta = d.idDieta
+                         WHERE d.idDieta = ?
+                         ORDER BY m.dia DESC
+                         LIMIT 7
+                     )as ultimos7;
+                     """;
+        try {
+            PreparedStatement ps = Conexion.getConexion().prepareStatement(sql);
+            ps.setInt(1, idDieta); // Establece el parámetro idPaciente
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("todos_los_dias");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al obtener los estados de los pacientes: " + e.getMessage());
+        }
+        return total;
     }
 
 }

@@ -188,13 +188,13 @@ public class ListaAlimento extends javax.swing.JPanel {
 
             if (jrActivo.isSelected()) {
                 if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de borrar el alimento?") == 0) {
-                    alimento.setBaja(false);
+                    alimento.setBaja(true);
                     AliData.actualizarAlimento(alimento);
                     TablaAlimento();
                 }
             } else {
                 if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de restaurar el alimento?") == 0) {
-                    alimento.setBaja(true);
+                    alimento.setBaja(false);
                     AliData.actualizarAlimento(alimento);
                     TablaAlimento();
                 }

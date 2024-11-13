@@ -146,13 +146,23 @@ public class vista_crear_dietas extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         var dieta = new Dieta();
+
+        if (getPeso() == null) {
+            return;
+        }
         dieta.setPesoObjetivo(getPeso());
         dieta.setPaciente(paciente);
         dieta.setNombre(getNombre());
+        if (dieta.getNombre() == null) {
+            return;
+        }
         dieta.setFechaInicio(LocalDate.now());
         dieta.setTotalCalorias(0);
         dieta.setPesoInicial(paciente.getPesoActual());
         dieta.setBaja(false);
+        if (getDate() == null) {
+            return;
+        }
         dieta.setFechaFinal(getDate());
         repoDieta.save(dieta);
         List<MenuDiario> menus = new ArrayList();
@@ -175,14 +185,22 @@ public class vista_crear_dietas extends javax.swing.JPanel {
 
     private LocalDate getDate() {
         var selectedDate = jDateChooser1.getDate();
+
         if (selectedDate == null) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.");
             return null;
         }
 
-        return selectedDate.toInstant()
+        LocalDate localSelectedDate = selectedDate.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+
+        if (localSelectedDate.isBefore(LocalDate.now())) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha despues del dia de hoy");
+            return null;
+        }
+
+        return localSelectedDate;
     }
 
     private String getNombre() {
@@ -194,19 +212,19 @@ public class vista_crear_dietas extends javax.swing.JPanel {
         return nombre;
     }
 
-    private float getPeso() {
+    private Float getPeso() {
         Float peso = null;
         String errorMsg = null;
 
-        var inputPeso = jTextField2.getText();
+        var inputPeso = jTextField2.getText().trim();
         if (inputPeso.isEmpty()) {
-            errorMsg = "El peso no puede estar vacio.";
+            errorMsg = "El peso no puede estar vacío.";
             JOptionPane.showMessageDialog(null, errorMsg);
         } else {
             try {
                 peso = Float.parseFloat(inputPeso);
             } catch (NumberFormatException ex) {
-                errorMsg = "El formato del peso no es valido";
+                errorMsg = "El formato del peso no es válido.";
                 JOptionPane.showMessageDialog(null, errorMsg);
             }
         }

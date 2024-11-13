@@ -8,6 +8,7 @@ import Modelo.Paciente;
 import Persistencia.PacienteData;
 import java.awt.Window;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -29,6 +30,7 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         jbActualizar.setIconTextGap(8);
         jbActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/agregar24x24.png")));
         this.detPaciente = detPaciente;
+        ((SpinnerNumberModel) jsEdad.getModel()).setMinimum(0);
 
     }
 
@@ -42,6 +44,7 @@ public class ActualizarPaciente extends javax.swing.JPanel {
         tPeso.setEnabled(false);
         this.paciente = paciente;
         this.detPaciente = detPaciente;
+        ((SpinnerNumberModel) jsEdad.getModel()).setMinimum(0);
     }
 
     /**

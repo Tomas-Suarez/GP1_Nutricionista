@@ -64,6 +64,7 @@ public class DietaVista extends javax.swing.JPanel {
     }
 
     private void crearRenglon() {
+        List<Dieta> dietas = repoDieta.getByPaciente(paciente.getNroPaciente(), false);
         Float cantidad = null;
         var r = jTable2.getSelectedRow();
         if (r < 0) {
@@ -91,6 +92,8 @@ public class DietaVista extends javax.swing.JPanel {
         ren.setCantidadGrs(cantidad);
         repoRenglones.agregarRen(ren);
         cargarRenglones();
+        llenarTablaDietas(dietas);
+
     }
 
     /**
@@ -228,7 +231,7 @@ public class DietaVista extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -424,10 +427,10 @@ public class DietaVista extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(checkboxActivas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -540,12 +543,14 @@ public class DietaVista extends javax.swing.JPanel {
 
     private void eliminarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarAActionPerformed
         var x = jTable4.getSelectedRow();
+        if(x != -1){
         var ren = (RenglonDeMenu) jTable4.getValueAt(x, 0);
         if (ren == null) {
             return;
         }
         repoRenglones.delete(ren.getCodRenglon());
         cargarRenglones();
+        }
     }//GEN-LAST:event_eliminarAActionPerformed
 
     private void tablaDietasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDietasMouseClicked
@@ -578,6 +583,7 @@ public class DietaVista extends javax.swing.JPanel {
     private void agregarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarAActionPerformed
         // TODO add your handling code here:
         crearRenglon();
+
     }//GEN-LAST:event_agregarAActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
@@ -634,7 +640,7 @@ public class DietaVista extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void llenarTablaDietas(List<Dieta> dietas) {
-        var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio", "Estado"};
+        var header = new String[]{"Nombre", "Calorias", "Peso objetivo", "Fecha inicio", "Fecha final", "Estado"};
         DefaultTableModel model = new DefaultTableModel(header, 0);
         tablaDietas.setModel(model);
 
@@ -652,6 +658,7 @@ public class DietaVista extends javax.swing.JPanel {
                 dieta.getTotalCalorias(),
                 dieta.getPesoObjetivo(),
                 dieta.getFechaInicio(),
+                dieta.getFechaFinal(),
                 dieta.getBaja() ? "Finalizada" : "En curso"
             });
         }
@@ -682,7 +689,6 @@ public class DietaVista extends javax.swing.JPanel {
         var model = new DefaultTableModel(header, 0);
         tb.setModel(model);
 
-        // Obtener las dietas del paciente
         List<Dieta> dietas = repoDieta.getByPaciente(paciente.getNroPaciente(), false);
 
         if (dietas.isEmpty()) {
@@ -696,7 +702,6 @@ public class DietaVista extends javax.swing.JPanel {
             eliminarA.setEnabled(true);
         }
 
-        // Obtener el menú seleccionado del ComboBox
         var menu = (MenuDiario) jComboBox1.getSelectedItem();
         if (menu == null) {
             return;
@@ -723,7 +728,8 @@ public class DietaVista extends javax.swing.JPanel {
 
         menu.setCaloriasDelMenu(totalCalorias);
         repoMenu.modificarMenuDiario(menu);
-
+        dietas.get(0).setTotalCalorias(repoMenu.obtenerCaloriasTotalDieta(dietas.get(0).getCodDieta()));
+        repoDieta.update(dietas.get(0));
         jLabel2.setText("Calorias: " + totalCalorias);
         jLabel3.setText("TC del dia: " + totalCaloriasxHorario);
     }
