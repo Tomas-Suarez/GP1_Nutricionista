@@ -67,11 +67,6 @@ public class MenuDiarioData {
 
             int filasAfectadas = ps.executeUpdate();
 
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "El menu diario fue modificado correctamente!");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el menú diario a modificar.");
-            }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al modificar el menu diario: " + e.getMessage());

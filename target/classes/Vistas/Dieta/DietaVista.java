@@ -290,7 +290,7 @@ public class DietaVista extends javax.swing.JPanel {
                         .addContainerGap())))
         );
 
-        labelPesoActual.setText("Peso actual");
+        labelPesoActual.setText("Peso");
 
         labelIMC.setText("IMC");
 
@@ -496,8 +496,11 @@ public class DietaVista extends javax.swing.JPanel {
     private void checkboxActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxActivasActionPerformed
         llenarTablaDietas(null);        // TODO add your handling code here:
         int idDieta = repoDieta.getDietaPaciente(paciente.getNroPaciente()); //Verificamos si el paciente tiene una dieta
-    
+
         jButton1.setVisible(idDieta == -1 && !checkboxActivas.isSelected());
+
+        //agregarA.setEnabled(!checkboxActivas.isSelected());
+        //eliminarA.setEnabled(!checkboxActivas.isSelected());
 
     }//GEN-LAST:event_checkboxActivasActionPerformed
 
@@ -523,8 +526,8 @@ public class DietaVista extends javax.swing.JPanel {
         repoDieta.update(dieta);
         llenarTablaDietas(null);
         jComboBox1.removeAllItems();
-    
-        jButton1.setVisible(idDieta == -1 && !checkboxActivas.isSelected());
+
+        jButton1.setVisible(true);
     }//GEN-LAST:event_btnBajaActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -553,9 +556,9 @@ public class DietaVista extends javax.swing.JPanel {
 
     private void jbProgresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbProgresoActionPerformed
         if (repoDieta.getDietaPaciente(paciente.getNroPaciente()) != -1) {
-        ProgresoPaciente vistaEstadisticas = new ProgresoPaciente(this.paciente);
-        Principal.showFrame(vistaEstadisticas, "Progreso del paciente");
-        }else{
+            ProgresoPaciente vistaEstadisticas = new ProgresoPaciente(this.paciente);
+            Principal.showFrame(vistaEstadisticas, "Progreso del paciente");
+        } else {
             JOptionPane.showMessageDialog(null, "Debe poseer una dieta!");
         }
     }//GEN-LAST:event_jbProgresoActionPerformed
@@ -594,7 +597,7 @@ public class DietaVista extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarA;
     private javax.swing.JButton btnBaja;
-    private javax.swing.JCheckBox checkboxActivas;
+    public javax.swing.JCheckBox checkboxActivas;
     private javax.swing.JButton eliminarA;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<MenuDiario> jComboBox1;
@@ -622,7 +625,7 @@ public class DietaVista extends javax.swing.JPanel {
     private javax.swing.JLabel labelEdad;
     private javax.swing.JLabel labelIMC;
     private javax.swing.JLabel labelPaciente;
-    private javax.swing.JLabel labelPesoActual;
+    public javax.swing.JLabel labelPesoActual;
     private javax.swing.JLabel labelTalla;
     private javax.swing.JTable tablaDietas;
     // End of variables declaration//GEN-END:variables
@@ -676,31 +679,50 @@ public class DietaVista extends javax.swing.JPanel {
         var model = new DefaultTableModel(header, 0);
         tb.setModel(model);
 
+        // Obtener las dietas del paciente
+        List<Dieta> dietas = repoDieta.getByPaciente(paciente.getNroPaciente(), false);
+
+        if (dietas.isEmpty()) {
+            agregarA.setEnabled(false);
+            eliminarA.setEnabled(false);
+            jLabel2.setText("Calorias: 0");
+            jLabel3.setText("TC del dia: 0");
+            return;
+        } else {
+            agregarA.setEnabled(true);
+            eliminarA.setEnabled(true);
+        }
+
+        // Obtener el menú seleccionado del ComboBox
         var menu = (MenuDiario) jComboBox1.getSelectedItem();
         if (menu == null) {
             return;
         }
+
         var horario = (String) jComboBox2.getSelectedItem();
         var renglones = repoRenglones.buscarpormenu(menu.getCodMenu());
-        
-        double totalCaloriasxHorario = 0;
-        double totalCalorias = 0;
-        
+
+        int totalCalorias = 0;
+        int totalCaloriasxHorario = 0;
+
         for (var ren : renglones) {
-            
-            totalCaloriasxHorario += ren.getSubTotalCalorias();//Acumulamos todas las calorias
-            
+            totalCalorias += ren.getSubTotalCalorias();
+
             if (ren.getHorario().equals(horario)) {
-                    model.addRow(new Object[]{
+                model.addRow(new Object[]{
                     ren,
                     ren.getCantidadGrs(),
                     ren.getSubTotalCalorias()
                 });
-                    totalCalorias += ren.getSubTotalCalorias(); //Acumulamos calorias de un horario particular
+                totalCaloriasxHorario += ren.getSubTotalCalorias();
             }
         }
-        jLabel3.setText("TC del dia: "+totalCalorias);
-        jLabel2.setText("Calorias: "+totalCaloriasxHorario);
+
+        menu.setCaloriasDelMenu(totalCalorias);
+        repoMenu.modificarMenuDiario(menu);
+
+        jLabel2.setText("Calorias: " + totalCalorias);
+        jLabel3.setText("TC del dia: " + totalCaloriasxHorario);
     }
 
     public void cargarAlimentos(List<Alimento> alimentos) {

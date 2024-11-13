@@ -401,8 +401,11 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="labelPesoActual">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Peso actual"/>
+                <Property name="text" type="java.lang.String" value="Peso"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelIMC">
               <Properties>
@@ -585,6 +588,9 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkboxActivasActionPerformed"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

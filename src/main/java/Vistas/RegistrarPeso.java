@@ -8,6 +8,7 @@ import Modelo.Dieta;
 import Modelo.Paciente;
 import Modelo.Registro;
 import Persistencia.DietaData;
+import Persistencia.PacienteData;
 import Persistencia.RegistroData;
 import Vistas.Dieta.DietaVista;
 import java.awt.Color;
@@ -27,6 +28,7 @@ public class RegistrarPeso extends javax.swing.JPanel {
 
     private DefaultTableModel tablas = new DefaultTableModel();
     private Paciente paciente;
+    private PacienteData pacienteData = PacienteData.getRepo();
     private RegistroData registroData = RegistroData.getRepo();
     private DietaData dietaData = DietaData.getRepo();
 
@@ -231,7 +233,7 @@ public class RegistrarPeso extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRegistrarActionPerformed
-
+        var vista = DietaVista.getInstance(paciente);
         Date selectedDate = JDateFecha.getDate();
 
         if (selectedDate == null) {
@@ -244,18 +246,22 @@ public class RegistrarPeso extends javax.swing.JPanel {
         if (dietaData.getDietaPaciente(paciente.getNroPaciente()) != -1 && validarFormulario()) {
             List<Dieta> dietas = dietaData.getByPaciente(paciente.getNroPaciente(), false);
 
-            System.out.println(dietas.get(0).getBaja());
-            System.out.println(dietas.get(0).getCodDieta());
-
             crearRegistro(dietaData.getDietaPaciente(paciente.getNroPaciente()));
             llenarTabla(paciente.getNroPaciente());
+            paciente.setPesoActual(Float.parseFloat(jtPeso.getText()));
+            pacienteData.actualizarPaciente(paciente);
+            vista.labelPesoActual.setText("Peso actual: " + jtPeso.getText() + "kg");
 
             if (dietas.get(0).getFechaFinal().isEqual(fechaRegistro)) {
                 dietas.get(0).setPesoFinal(Float.parseFloat(jtPeso.getText()));
                 dietas.get(0).setBaja(true);
                 dietaData.update(dietas.get(0));
-                DietaVista.getInstance(paciente).llenarTablaDietas(dietas);
+                vista.llenarTablaDietas(dietas);
+
                 JOptionPane.showMessageDialog(null, "La dieta fue finalizada, llegaste hasta la fecha final!");
+                vista.checkboxActivas.setSelected(true);
+                SwingUtilities.getWindowAncestor(this).dispose();
+
             }
         }
     }//GEN-LAST:event_jbRegistrarActionPerformed
@@ -327,14 +333,26 @@ public class RegistrarPeso extends javax.swing.JPanel {
     }
 
     private boolean validarFormulario() {
-        //validar nombre
         Date selectedDate = JDateFecha.getDate();
+        LocalDate fechaRegistro = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        List<Dieta> dietas = dietaData.getByPaciente(paciente.getNroPaciente(), false);
 
         if (selectedDate == null) {
             JOptionPane.showMessageDialog(this, "El campo de fecha no debe estar vacio!");
             return false;
         }
-        //validar detalles
+
+        if (fechaRegistro.isAfter(dietas.get(0).getFechaFinal())) {
+            JOptionPane.showMessageDialog(this, "El campo de fecha no puede ser mayor a la fecha final!");
+            return false;
+        }
+        
+        if(fechaRegistro.isBefore(dietas.get(0).getFechaInicio())){
+            JOptionPane.showMessageDialog(this, "El campo de fecha no puede ser menor a la fecha inicio!");
+            return false;
+        }
+
+        //validar peso
         if (jtPeso.getText().trim().equalsIgnoreCase("")) {
             JOptionPane.showMessageDialog(this, "El campo de peso no debe estar vacio!");
             return false;
