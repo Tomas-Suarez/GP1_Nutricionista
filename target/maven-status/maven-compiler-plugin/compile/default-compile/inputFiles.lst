@@ -7,6 +7,7 @@ C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\LegendItem.jav
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Modelo\Paciente.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Alimento\ListaAlimento.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\blankchart\NiceScale.java
+C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\utils\Panelimagen.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Persistencia\RegistroData.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Modelo\Registro.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Persistencia\DietaData.java
@@ -16,16 +17,13 @@ C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Modelo\RenglonDeMenu
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Persistencia\RenglonDeMenuData.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\ModelChart.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\utils\Config.java
-C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Renglon\RenglonLista.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\blankchart\BlankPlotChart.java
-C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Vista_acceso_o_config.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\main\App.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Persistencia\MenuDiarioData.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\ProgresoPaciente.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\blankchart\BlankPlotChatRender.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\ModelLegend.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Modelo\Alimento.java
-C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\DetallePaciente.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Principal.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\Chart.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Modelo\Dieta.java
@@ -34,6 +32,5 @@ C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\LineChart.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\chart\blankchart\SeriesSize.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Modelo\MenuDiario.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Dieta\vista_crear_dietas.java
-C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Panelimagen.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\ActualizarPaciente.java
 C:\Users\franco\Desktop\git\GP1_Nutricionista\src\main\java\Vistas\Vista_lista_Paciente.java
