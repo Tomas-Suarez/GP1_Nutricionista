@@ -138,7 +138,7 @@ public class ListaAlimento extends javax.swing.JPanel {
                         .addComponent(jrNoActivo))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -155,12 +155,13 @@ public class ListaAlimento extends javax.swing.JPanel {
                     .addComponent(jrNoActivo)
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbBorrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -186,13 +187,13 @@ public class ListaAlimento extends javax.swing.JPanel {
             Alimento alimento = (Alimento) tAlimento.getValueAt(rowSelected, 0);
 
             if (jrActivo.isSelected()) {
-                if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de restaurar el alimento?") == 0) {
+                if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de borrar el alimento?") == 0) {
                     alimento.setBaja(false);
                     AliData.actualizarAlimento(alimento);
                     TablaAlimento();
                 }
             } else {
-                if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de borrar el alimento?") == 0) {
+                if (JOptionPane.showConfirmDialog(null, "¿Estás seguro de restaurar el alimento?") == 0) {
                     alimento.setBaja(true);
                     AliData.actualizarAlimento(alimento);
                     TablaAlimento();
@@ -216,7 +217,7 @@ public class ListaAlimento extends javax.swing.JPanel {
             Principal.showFrame(actAlimento, "Actualizar alimento");
 
         } else {
-            JOptionPane.showMessageDialog(null, "seleccione");
+            JOptionPane.showMessageDialog(null, "Primero debe seleccionar un alimento...");
         }
     }//GEN-LAST:event_jbEditarActionPerformed
 

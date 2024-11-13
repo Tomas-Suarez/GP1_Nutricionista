@@ -188,12 +188,13 @@ public class DietaData {
         }
     }
 
-    public List<Dieta> getByPaciente(int id) {
+    public List<Dieta> getByPaciente(int id, boolean baja) {
         List<Dieta> dietas = new ArrayList();
-        var sql = "select * from dieta where IdPaciente = ?";
+        var sql = "select * from dieta where IdPaciente = ? AND baja = ?";
         try {
             var ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
+            ps.setBoolean(2, baja);
             var rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -262,6 +263,7 @@ public class DietaData {
                      FROM dieta d
                      JOIN paciente p ON p.idPaciente = d.idPaciente
                      WHERE p.baja = false
+                     AND d.baja = false
                      AND p.idPaciente = ?;
                      """;
         try {

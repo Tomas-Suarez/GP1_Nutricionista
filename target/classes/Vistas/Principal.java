@@ -1,5 +1,6 @@
 package Vistas;
 
+import utils.Panelimagen;
 import Vistas.Alimento.ListaAlimento;
 import Vistas.Dieta.vista_crear_dietas;
 import java.awt.BorderLayout;

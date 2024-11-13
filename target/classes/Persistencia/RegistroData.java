@@ -69,7 +69,7 @@ public class RegistroData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error al acceder a la tabla registro!"+ ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al acceder a la tabla registro!" + ex.getMessage());
         }
     }
 
@@ -136,6 +136,7 @@ public class RegistroData {
         JOIN dieta d ON r.idDieta = d.idDieta
         JOIN paciente p ON p.idPaciente = d.idPaciente
         WHERE p.idPaciente = ?
+        AND d.baja = false
         AND p.baja = false;
         """;
 
