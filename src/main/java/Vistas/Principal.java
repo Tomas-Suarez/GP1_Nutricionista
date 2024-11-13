@@ -23,14 +23,7 @@ public class Principal extends javax.swing.JFrame {
     private static Principal principal;
 
     private Principal() {
-        initComponents();
-        
-        /*this.setLocationRelativeTo(null);
-        Panelimagen mImagen = new Panelimagen(Tablero, "/icon/alim.png");
-        Tablero.add(mImagen).repaint();
-        Tablero.setOpaque(false);
-        Tablero.setBorder(null);
-        Tablero.setBackground(new Color(0,0,0,0));*/
+        initComponents();               
     }
 
     public static Principal getPrincipal() {
@@ -258,9 +251,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_bConsultasActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        // TODO add your handling code here:
-        Panelimagen mImagen = new Panelimagen(Tablero, "/icon/alim.png");
-        Tablero.setSize(getWidth() - 150, getHeight() - 50);
+// TODO add your handling code here:
+                Tablero.setSize(getWidth() - 165, getHeight() - 45);
         
         if (k != null) {
             logo.setVisible(false);
