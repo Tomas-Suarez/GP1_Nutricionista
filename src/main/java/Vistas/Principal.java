@@ -6,7 +6,9 @@ import Vistas.Dieta.vista_crear_dietas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Frame;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -14,16 +16,16 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 public class Principal extends javax.swing.JFrame {
-    
+
     JPanel k;
-    
+
     /**
      * Creates new form Principal
      */
     private static Principal principal;
 
     private Principal() {
-        initComponents();               
+        initComponents();
     }
 
     public static Principal getPrincipal() {
@@ -252,8 +254,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
 // TODO add your handling code here:
-                Tablero.setSize(getWidth() - 165, getHeight() - 45);
-        
+        Tablero.setSize(getWidth() - 165, getHeight() - 45);
+
         if (k != null) {
             logo.setVisible(false);
             k.setSize(Tablero.getWidth(), Tablero.getHeight());
@@ -263,15 +265,17 @@ public class Principal extends javax.swing.JFrame {
             Tablero.add(k, BorderLayout.CENTER);
             Tablero.revalidate();
             Tablero.repaint();
-        }else {logo.setVisible(true);}
+        } else {
+            logo.setVisible(true);
+        }
     }//GEN-LAST:event_formComponentResized
 
     private void cambiarTemaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cambiarTemaStateChanged
         // TODO add your handling code here:
-        if (cambiarTema.isSelected()){
+        if (cambiarTema.isSelected()) {
             cambiarTema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/luna.png")));
-        }else{
-        cambiarTema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/sol.png")));
+        } else {
+            cambiarTema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/sol.png")));
         }
     }//GEN-LAST:event_cambiarTemaStateChanged
 
@@ -293,13 +297,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 
-   
-
     public JToggleButton getjToggleButton1() {
         return cambiarTema;
     }
 
-    
     public void ShowPanel(JPanel p) {
         k = p;
         p.setSize(Tablero.getWidth(), Tablero.getHeight());
@@ -312,17 +313,18 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public static void showFrame(JPanel p, String nameFrame) {
-        JFrame nuevaVista = new JFrame(nameFrame);
-        nuevaVista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        JDialog nuevaVista = new JDialog((Frame) null, nameFrame, true);
+        nuevaVista.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         nuevaVista.getContentPane().add(p);
         nuevaVista.pack();
         nuevaVista.setVisible(true);
-        
+
         nuevaVista.setLocation(585, 60);
+        nuevaVista.setAlwaysOnTop(true);
     }
-    
+
     public JPanel getTablero() {
         return Tablero;
     }
-    
+
 }
