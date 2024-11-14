@@ -83,18 +83,4 @@ public class RenglonDeMenu {
         return alimento.getNombre();
     }
 
-
-
-    public void modificarRenglon() {
-
-    }
-
-    public void imprimirRenglon() {
-
-    }
-
-    public void addAlimento(Alimento alimento) {
-
-    }
-
 }

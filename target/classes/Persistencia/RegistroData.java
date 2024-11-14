@@ -175,23 +175,31 @@ public class RegistroData {
         int[] estadoPaciente = new int[3]; //En la posicion 0 - llegaron al objetivo, pos 1-No llegaron al objetivo, pos3- en_proceso
         String sql = """
                     SELECT
-                        SUM(CASE WHEN (d.pesoInicial > d.pesoObjetivo AND r.peso <= d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
-                                  OR (d.pesoInicial < d.pesoObjetivo AND r.peso >= d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
-                                 THEN 1 END) AS llego_al_objetivo,
-                     
-                        SUM(CASE WHEN (d.pesoInicial > d.pesoObjetivo AND r.peso > d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
-                                  OR (d.pesoInicial < d.pesoObjetivo AND r.peso < d.pesoObjetivo AND d.pesoFinal IS NOT NULL)
-                                 THEN 1 END) AS no_llego_al_objetivo,
-                     
-                        COUNT(CASE WHEN d.pesoFinal IS NULL THEN 1 END) AS en_proceso
-                     
+                        COUNT(CASE 
+                            WHEN (d.pesoInicial > d.pesoObjetivo AND r.peso <= d.pesoObjetivo AND d.pesoFinal IS NOT NULL AND d.pesoFinal != 0)
+                                 OR (d.pesoInicial < d.pesoObjetivo AND r.peso >= d.pesoObjetivo AND d.pesoFinal IS NOT NULL AND d.pesoFinal != 0)
+                            THEN 1
+                        END) AS llego_al_objetivo,
+                    
+                        COUNT(CASE 
+                            WHEN (d.pesoInicial > d.pesoObjetivo AND r.peso > d.pesoObjetivo AND d.pesoFinal IS NOT NULL AND d.pesoFinal != 0)
+                                 OR (d.pesoInicial < d.pesoObjetivo AND r.peso < d.pesoObjetivo AND d.pesoFinal IS NOT NULL AND d.pesoFinal != 0)
+                            THEN 1
+                        END) AS no_llego_al_objetivo,
+                    
+                        COUNT(CASE 
+                            WHEN d.pesoFinal = 0
+                            THEN 1
+                        END) AS en_proceso
                     FROM dieta d
-                    LEFT JOIN registro r ON d.idDieta = r.idDieta
-                    WHERE r.FechaRegistro = (
-                        SELECT MAX(FechaRegistro)
-                        FROM registro
-                        WHERE idDieta = d.idDieta
-                    ) OR d.pesoFinal IS NULL;
+                    LEFT JOIN paciente p ON d.idPaciente = p.idPaciente
+                    LEFT JOIN registro r ON r.idDieta = d.idDieta
+                        AND r.FechaRegistro = (
+                            SELECT MAX(FechaRegistro)
+                            FROM registro
+                            WHERE idDieta = d.idDieta
+                        )
+                    WHERE d.pesoFinal IS NOT NULL OR d.pesoFinal = 0;
                      """;
 
         try {

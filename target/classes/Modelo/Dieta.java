@@ -147,16 +147,5 @@ public class Dieta {
     public void setPesoFinal(float pesoFinal) {
         this.pesoFinal = pesoFinal;
     }
-    
-    
-    
-    public void cargarPesoyFinalizar(float peso){
-        
-    }
-    
-    public void imprimirDieta(){
-        
-    }
 
 }
-    

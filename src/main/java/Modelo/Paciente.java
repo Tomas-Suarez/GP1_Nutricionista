@@ -141,22 +141,8 @@ public class Paciente {
         return getNombre();
     }
 
-
-
-    public void cambiarPeso() {
-
-    }
-
-    public void actualizarPesoAct() {
-
-    }
-
     public float calcularIMC() {
         return (getPesoActual() / (float) Math.pow(getAltura() / 100, 2));
     }
 
-    //public boolean seAcercaAlPeso(Dieta dieta){
-    //}
-    //public List<Paciente> listarLosQueLlegaron(){
-    //}
 }

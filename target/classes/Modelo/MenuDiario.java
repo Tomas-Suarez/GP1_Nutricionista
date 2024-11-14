@@ -138,27 +138,4 @@ public class MenuDiario {
         return Objects.equals(this.dieta, other.dieta);
     }
 
-    
-    
-    
-    
-    public void alterarMenuDiaria(){
-        
-    }
-    
-   // public MenuDiario generarMenuDiario(){
-        
-    //}
-    
-    //public MenuDiario armarMenuDiaria(){
-        
-    //}
-    
-    //public MenuDiario armarMenuDiario(){
-        
-    //}
-    
-    public void addRenglon(RenglonDeMenu menu){
-        
-    }
 }

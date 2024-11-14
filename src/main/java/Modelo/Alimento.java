@@ -101,22 +101,4 @@ public class Alimento {
         return this.hashCode() == obj.hashCode();
     }
     
-    
-    //public List<Alimento> filtrarxIngred(Alimento a){
-        
-    //}
-    
-    //public String filtrarNombre(Alimento a){
-        
-    //}
-    
-    //public int filtrarxCalorias100(Alimento a){
-        
-    //}
-    
-    public void modificarAlimento(Alimento alimento){
-        
-    }
-    
-    
 }
